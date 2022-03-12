@@ -1,0 +1,9 @@
+{% extends "./layout.peb" %}
+
+{% block title %}
+Веб-приложение
+{% endblock %}
+
+{% block content %}
+{{model.description}}
+{% endblock %}
