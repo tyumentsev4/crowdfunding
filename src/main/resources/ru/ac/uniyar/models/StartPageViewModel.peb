@@ -1,0 +1,9 @@
+{% extends "./layout.peb" %}
+
+{% block title %}
+Совместное финансирование
+{% endblock %}
+
+{% block content %}
+Описание предметной области
+{% endblock %}

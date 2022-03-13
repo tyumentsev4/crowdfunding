@@ -1,0 +1,41 @@
+{% extends "./layout.peb" %}
+
+{% block title %}
+    Проект {{ model.project.name }}
+{% endblock %}
+
+{% block content %}
+    <h1>Проект</h1>
+    <table>
+        <tr>
+            <th>Название</th>
+            <td>{{ model.project.name }}</td>
+        </tr>
+        <tr>
+            <th>Предприниматель</th>
+            <td>{{ model.project.entrepreneur }}</td>
+        </tr>
+        <tr>
+            <th>Описание</th>
+            <td>{{ model.project.description }}</td>
+        </tr>
+        <tr>
+            <th>Целевой размер фонда</th>
+            <td>{{ model.project.fundSize }}</td>
+        </tr>
+        <tr>
+            <th>Дата начала сбора средств</th>
+            <td>
+                {{ model.project.fundraisingStart.toLocalDate() }}
+                {{ model.project.fundraisingStart.toLocalTime() }}
+            </td>
+        </tr>
+        <tr>
+            <th>Срок окончания сбора средств</th>
+            <td>
+                {{ model.project.fundraisingEnd.toLocalDate() }}
+                {{ model.project.fundraisingEnd.toLocalTime() }}
+            </td>
+        </tr>
+    </table>
+{% endblock %}

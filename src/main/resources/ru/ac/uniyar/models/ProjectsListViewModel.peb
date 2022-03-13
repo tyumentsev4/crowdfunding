@@ -1,0 +1,17 @@
+{% extends "./layout.peb" %}
+
+{% block title %}
+Список проектов
+{% endblock %}
+
+{% block content %}
+<ol class="h4">
+    {% for project in model.projects %}
+    <li>
+        <h3>{{ project.value.name }}</h3>
+        <a href="projects/{{ project.index + 1 }}">Подробнее</a>
+    </li>
+    {% endfor %}
+</ol>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "./layout.peb" %}
+
+{% block title %}
+Новый проект
+{% endblock %}
+
+{% block content %}
+<form method="POST">
+    <label>Название
+        <input type="text" name="name">
+    </label>
+    <label>Предпрениматель
+        <input type="text" name="entrepreneur">
+    </label>
+    <label>Описание
+        <textarea name="description" cols="30" rows="10"></textarea>
+    </label>
+    <label>Размер фонда
+        <input type="text" name="fundSize">
+    </label>
+    <label>Дата начала сбора средств
+        <input type="date" name="fundraisingStartDate">
+        <input type="time" name="fundraisingStartTime">
+    </label>
+    <label>Срок окончания сбора средств
+        <input type="date" name="fundraisingEndDate">
+        <input type="time" name="fundraisingEndTime">
+    </label>
+    <input type="submit" value="Добавить" class="button">
+</form>
+{% endblock %}
