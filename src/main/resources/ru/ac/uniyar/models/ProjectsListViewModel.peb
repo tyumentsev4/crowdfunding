@@ -5,11 +5,12 @@
 {% endblock %}
 
 {% block content %}
-<ol class="h4">
+<h2>Список проектов</h2>
+<ol class="h3">
     {% for project in model.projects %}
     <li>
-        <h3>{{ project.value.name }}</h3>
-        <a href="projects/{{ project.index + 1 }}">Подробнее</a>
+        {{ project.value.name }} -
+        <a href="projects/{{ project.index + 1 }}"> подробнее</a>
     </li>
     {% endfor %}
 </ol>

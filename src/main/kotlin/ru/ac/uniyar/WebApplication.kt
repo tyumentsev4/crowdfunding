@@ -23,11 +23,6 @@ fun respondWithPong(): HttpHandler = {
     Response(OK).body("pong")
 }
 
-fun showTemplate(renderer: TemplateRenderer): HttpHandler = {
-    val viewModel = PebbleViewModel("Hello there!")
-    Response(OK).body(renderer(viewModel))
-}
-
 fun showStartPage(renderer: TemplateRenderer): HttpHandler = {
     val viewModel = StartPageViewModel(0)
     Response(OK).body(renderer(viewModel))
@@ -72,7 +67,6 @@ fun showProject(renderer: TemplateRenderer, projects: Projects): HttpHandler = {
 
 fun app(renderer: TemplateRenderer, projects: Projects): HttpHandler = routes(
     "/ping" bind GET to respondWithPong(),
-    "/templates/pebble" bind GET to showTemplate(renderer),
     "/" bind GET to showStartPage(renderer),
     "/projects/" bind GET to showProjectsList(renderer, projects),
     "/projects/new" bind GET to showNewProjectForm(renderer),

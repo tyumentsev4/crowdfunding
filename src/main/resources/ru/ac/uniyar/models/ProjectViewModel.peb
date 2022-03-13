@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Проект</h1>
+    <h2>Проект</h2>
     <table>
         <tr>
             <th>Название</th>
