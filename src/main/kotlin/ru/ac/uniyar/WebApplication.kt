@@ -38,7 +38,7 @@ fun showNewProjectForm(renderer: TemplateRenderer): HttpHandler = {
     Response(OK).body(renderer(viewModel))
 }
 
-fun createNewProject(renderer: TemplateRenderer, projects: Projects): HttpHandler = {request ->
+fun createNewProject(projects: Projects): HttpHandler = { request ->
     val params = request.form()
     val name = params.findSingle("name").orEmpty()
     val entrepreneur = params.findSingle("entrepreneur").orEmpty()
@@ -70,7 +70,7 @@ fun app(renderer: TemplateRenderer, projects: Projects): HttpHandler = routes(
     "/" bind GET to showStartPage(renderer),
     "/projects/" bind GET to showProjectsList(renderer, projects),
     "/projects/new" bind GET to showNewProjectForm(renderer),
-    "/projects/new" bind Method.POST to createNewProject(renderer, projects),
+    "/projects/new" bind Method.POST to createNewProject(projects),
     "/projects/{number}" bind GET to showProject(renderer, projects),
     static(ResourceLoader.Classpath("/ru/ac/uniyar/public/")),
 )
