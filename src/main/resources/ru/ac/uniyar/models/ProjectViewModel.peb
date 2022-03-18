@@ -17,7 +17,7 @@
         </tr>
         <tr>
             <th>Описание</th>
-            <td>{{ model.project.description }}</td>
+            <td><pre class="h6">{{ model.project.description }}</pre></td>
         </tr>
         <tr>
             <th>Целевой размер фонда</th>
