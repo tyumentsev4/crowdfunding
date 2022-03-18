@@ -1,10 +1,14 @@
 package ru.ac.uniyar
 
-import org.http4k.core.*
+import org.http4k.core.HttpHandler
+import org.http4k.core.Method.POST
 import org.http4k.core.Method.GET
+import org.http4k.core.Response
 import org.http4k.core.Status.Companion.FOUND
 import org.http4k.core.Status.Companion.OK
 import org.http4k.core.body.form
+import org.http4k.core.findSingle
+import org.http4k.core.then
 import org.http4k.filter.DebuggingFilters.PrintRequestAndResponse
 import org.http4k.routing.*
 import org.http4k.server.Undertow
@@ -14,10 +18,7 @@ import org.http4k.template.TemplateRenderer
 import ru.ac.uniyar.domain.Project
 import ru.ac.uniyar.domain.Projects
 import ru.ac.uniyar.models.*
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
-
 
 fun respondWithPong(): HttpHandler = {
     Response(OK).body("pong")
@@ -44,14 +45,9 @@ fun createNewProject(projects: Projects): HttpHandler = { request ->
     val entrepreneur = params.findSingle("entrepreneur").orEmpty()
     val description = params.findSingle("description").orEmpty()
     val fundSize = params.findSingle("fundSize").orEmpty().toInt()
-    val fundraisingStart = LocalDateTime.of(
-        LocalDate.parse(params.findSingle("fundraisingStartDate")),
-        LocalTime.parse(params.findSingle("fundraisingStartTime"))
-    )
-    val fundraisingEnd = LocalDateTime.of(
-        LocalDate.parse(params.findSingle("fundraisingEndDate")),
-        LocalTime.parse(params.findSingle("fundraisingEndTime"))
-    )
+    val fundraisingStart = LocalDateTime.parse(params.findSingle("fundraisingStart"))
+
+    val fundraisingEnd = LocalDateTime.parse(params.findSingle("fundraisingEnd"))
 
     val project = Project(name, entrepreneur, description, fundSize, fundraisingStart, fundraisingEnd)
     projects.add(project)
@@ -59,10 +55,17 @@ fun createNewProject(projects: Projects): HttpHandler = { request ->
 }
 
 fun showProject(renderer: TemplateRenderer, projects: Projects): HttpHandler = { request ->
-    val number = request.path("number").orEmpty().toInt()
-    val project = projects.getProject(number-1)
+    val index = request.path("index").orEmpty().toInt()
+    val project = projects.getProject(index)
     val viewModel = ProjectViewModel(project)
     Response(OK).body(renderer(viewModel))
+}
+
+fun fundSumInc(projects: Projects): HttpHandler = { request ->
+    val index = request.path("index").orEmpty().toInt()
+    val project = projects.getProject(index)
+    project.fundSum++
+    Response(FOUND).header("Location", "/projects/$index")
 }
 
 fun app(renderer: TemplateRenderer, projects: Projects): HttpHandler = routes(
@@ -70,8 +73,9 @@ fun app(renderer: TemplateRenderer, projects: Projects): HttpHandler = routes(
     "/" bind GET to showStartPage(renderer),
     "/projects/" bind GET to showProjectsList(renderer, projects),
     "/projects/new" bind GET to showNewProjectForm(renderer),
-    "/projects/new" bind Method.POST to createNewProject(projects),
-    "/projects/{number}" bind GET to showProject(renderer, projects),
+    "/projects/new" bind POST to createNewProject(projects),
+    "/projects/{index}" bind GET to showProject(renderer, projects),
+    "/projects/{index}" bind POST to fundSumInc(projects),
     static(ResourceLoader.Classpath("/ru/ac/uniyar/public/")),
 )
 

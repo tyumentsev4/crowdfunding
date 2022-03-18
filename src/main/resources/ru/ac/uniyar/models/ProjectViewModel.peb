@@ -37,5 +37,14 @@
                 {{ model.project.fundraisingEnd.toLocalTime() }}
             </td>
         </tr>
+        <tr>
+            <th>Объем собранных средств</th>
+            <td>
+                {{ model.project.fundSum }}
+            </td>
+        </tr>
     </table>
+    <form method="POST">
+        <input type="submit" value="Профинансировать" class="button" name="fundSumInc">
+    </form>
 {% endblock %}

@@ -10,7 +10,7 @@
     {% for project in model.projects %}
     <li>
         {{ project.value.name }} -
-        <a href="projects/{{ project.index + 1 }}"> подробнее</a>
+        <a href="projects/{{ project.index }}"> подробнее</a>
     </li>
     {% endfor %}
 </ol>

@@ -20,12 +20,10 @@
         <input type="text" name="fundSize">
     </label>
     <label>Дата начала сбора средств
-        <input type="date" name="fundraisingStartDate">
-        <input type="time" name="fundraisingStartTime">
+        <input type="datetime-local" name="fundraisingStart">
     </label>
     <label>Срок окончания сбора средств
-        <input type="date" name="fundraisingEndDate">
-        <input type="time" name="fundraisingEndTime">
+        <input type="datetime-local" name="fundraisingEnd">
     </label>
     <input type="submit" value="Добавить" class="button">
 </form>
