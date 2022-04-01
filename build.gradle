@@ -11,6 +11,16 @@ buildscript {
     }
 }
 
+plugins{
+    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
+    id("org.jlleitschuh.gradle.ktlint-idea") version "10.2.1"
+    id "io.gitlab.arturbosch.detekt" version "1.19.0"
+}
+
+ktlint {
+    version = ktlintVersion
+}
+
 apply plugin: 'application'
 
 mainClassName = "ru.ac.uniyar.WebApplicationKt"

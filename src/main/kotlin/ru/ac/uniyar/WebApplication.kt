@@ -91,6 +91,6 @@ fun main() {
 
     val renderer = PebbleTemplates().HotReload("src/main/resources")
     val printingApp: HttpHandler = PrintRequestAndResponse().then(app(renderer, projects))
-    val server = printingApp.asServer(Undertow(9000)).start()
+    val server = printingApp.asServer(Undertow(port = 9000)).start()
     println("Server started on http://localhost:" + server.port())
 }

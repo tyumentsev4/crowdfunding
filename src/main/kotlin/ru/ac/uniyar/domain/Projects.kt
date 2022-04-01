@@ -1,17 +1,17 @@
 package ru.ac.uniyar.domain
 
 class Projects {
-    private val projects = mutableListOf<Project>()
+    private val projectsList = mutableListOf<Project>()
 
     fun add(project: Project) {
-        projects.add(project)
+        projectsList.add(project)
     }
 
     fun getAllProjects(): Iterable<IndexedValue<Project>> {
-        return projects.withIndex()
+        return projectsList.withIndex()
     }
 
     fun getProject(index: Int): Project {
-        return projects[index]
+        return projectsList[index]
     }
 }
