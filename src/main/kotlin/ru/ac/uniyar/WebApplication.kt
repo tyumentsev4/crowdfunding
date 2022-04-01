@@ -1,8 +1,8 @@
 package ru.ac.uniyar
 
 import org.http4k.core.HttpHandler
-import org.http4k.core.Method.POST
 import org.http4k.core.Method.GET
+import org.http4k.core.Method.POST
 import org.http4k.core.Response
 import org.http4k.core.Status.Companion.FOUND
 import org.http4k.core.Status.Companion.OK
@@ -10,14 +10,21 @@ import org.http4k.core.body.form
 import org.http4k.core.findSingle
 import org.http4k.core.then
 import org.http4k.filter.DebuggingFilters.PrintRequestAndResponse
-import org.http4k.routing.*
+import org.http4k.routing.ResourceLoader
+import org.http4k.routing.bind
+import org.http4k.routing.path
+import org.http4k.routing.routes
+import org.http4k.routing.static
 import org.http4k.server.Undertow
 import org.http4k.server.asServer
 import org.http4k.template.PebbleTemplates
 import org.http4k.template.TemplateRenderer
 import ru.ac.uniyar.domain.Project
 import ru.ac.uniyar.domain.Projects
-import ru.ac.uniyar.models.*
+import ru.ac.uniyar.models.NewProjectDataViewModel
+import ru.ac.uniyar.models.ProjectViewModel
+import ru.ac.uniyar.models.ProjectsListViewModel
+import ru.ac.uniyar.models.StartPageViewModel
 import java.time.LocalDateTime
 
 fun respondWithPong(): HttpHandler = {
