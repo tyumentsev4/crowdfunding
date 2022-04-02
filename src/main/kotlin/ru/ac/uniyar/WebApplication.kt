@@ -68,13 +68,6 @@ fun showProject(renderer: TemplateRenderer, projects: Projects): HttpHandler = {
     Response(OK).body(renderer(viewModel))
 }
 
-fun fundSumInc(projects: Projects): HttpHandler = { request ->
-    val index = request.path("index").orEmpty().toInt()
-    val project = projects.getProject(index)
-    project.fundSum++
-    Response(FOUND).header("Location", "/projects/$index")
-}
-
 fun app(renderer: TemplateRenderer, projects: Projects): HttpHandler = routes(
     "/ping" bind GET to respondWithPong(),
     "/" bind GET to showStartPage(renderer),
@@ -82,7 +75,6 @@ fun app(renderer: TemplateRenderer, projects: Projects): HttpHandler = routes(
     "/projects/new" bind GET to showNewProjectForm(renderer),
     "/projects/new" bind POST to createNewProject(projects),
     "/projects/{index}" bind GET to showProject(renderer, projects),
-    "/projects/{index}" bind POST to fundSumInc(projects),
     static(ResourceLoader.Classpath("/ru/ac/uniyar/public/")),
 )
 

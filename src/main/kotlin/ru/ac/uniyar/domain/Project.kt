@@ -9,5 +9,4 @@ data class Project(
     val fundSize: Int,
     val fundraisingStart: LocalDateTime,
     val fundraisingEnd: LocalDateTime,
-    var fundSum: Int = 0
 )
