@@ -1,0 +1,44 @@
+{% extends "./layout.peb" %}
+
+{% block title %}
+Новая инвестиция в проект
+{% endblock %}
+
+{% block content %}
+
+{% if model.form.errors is not empty %}
+<div class="grid-x grid-padding-x">
+    <div class="medium-12 cell warning">
+        <ul>
+            {% for error in model.form.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endif %}
+
+<h2>Новая инвестиция в проект</h2>
+<form method="POST">
+    <label>Название
+        <input type="text" name="name" value="{{ model.form.fields["name"] | first }}">
+    </label>
+    <label>Проект
+        <select name="project">
+            {% for project in model.projects %}
+            <option value="{{ project }}">{{ project.name }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <label>ФИО инвестора
+        <input type="text" name="investorName" value="{{ model.form.fields["investorName"] | first }}">
+    </label>
+    <label>Контактная информация телефон или email
+        <input type="text" name="contactInfo" value="{{ model.form.fields["contactInfo"] | first }}">
+    </label>
+    <label>Сумма
+        <input type="text" name="amount" value="{{ model.form.fields["amount"] | first }}">
+    </label>
+    <input type="submit" value="Добавить" class="button">
+</form>
+{% endblock %}

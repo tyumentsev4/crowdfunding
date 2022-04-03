@@ -16,8 +16,10 @@
                     <li><a href="/">Главная</a>
                     <li><a href="/projects">Список проектов</a></li>
                     <li><a href="/entrepreneurs">Список предпринимателей</a></li>
+                    <li><a href="/investments">Список инвестиций</a></li>
                     <li><a href="/entrepreneurs/new">Новый предприниматель</a></li>
                     <li><a href="/projects/new">Новый проект</a></li>
+                    <li><a href="/investments/new">Новая инвестиция</a></li>
                 </ul>
             </div>
         </div>

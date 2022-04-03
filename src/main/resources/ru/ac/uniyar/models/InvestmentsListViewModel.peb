@@ -1,0 +1,18 @@
+{% extends "./layout.peb" %}
+
+{% block title %}
+Список инвестиций
+{% endblock %}
+
+{% block content %}
+<h2>Список инвестиций</h2>
+<ol class="h3">
+    {% for investment in model.investments %}
+    <li>
+        {{ investment.project }} -
+        <a href="/investments/{{ investment.id }}"> подробнее</a>
+    </li>
+    {% endfor %}
+</ol>
+
+{% endblock %}

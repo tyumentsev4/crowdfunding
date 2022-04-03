@@ -12,6 +12,7 @@ import org.http4k.core.with
 import org.http4k.lens.BiDiBodyLens
 import org.http4k.lens.FormField
 import org.http4k.lens.Validator
+import org.http4k.lens.WebForm
 import org.http4k.lens.string
 import org.http4k.lens.webForm
 import org.http4k.routing.bind
@@ -19,6 +20,7 @@ import org.http4k.routing.routes
 import org.http4k.template.ViewModel
 import ru.ac.uniyar.domain.Entrepreneur
 import ru.ac.uniyar.domain.Entrepreneurs
+import ru.ac.uniyar.domain.Investments
 import ru.ac.uniyar.models.NewEntrepreneurViewModel
 import java.time.LocalDateTime
 
@@ -46,5 +48,5 @@ fun addEntrepreneur(entrepreneurs: Entrepreneurs, htmlView: BiDiBodyLens<ViewMod
 }
 
 fun showNewEntrepreneurForm(htmlView: BiDiBodyLens<ViewModel>): HttpHandler = {
-    Response(OK).with(htmlView of NewEntrepreneurViewModel())
+    Response(OK).with(htmlView of NewEntrepreneurViewModel(WebForm()))
 }

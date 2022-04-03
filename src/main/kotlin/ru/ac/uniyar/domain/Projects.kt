@@ -11,7 +11,7 @@ class Projects {
         projectsList.add(project)
     }
 
-    fun getAllProjects(): Iterable<Project> {
+    fun getAll(): Iterable<Project> {
         return projectsList
     }
 
