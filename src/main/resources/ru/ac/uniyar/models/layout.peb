@@ -15,6 +15,8 @@
                     <li class="menu-text">Совместное финансирование</li>
                     <li><a href="/">Главная</a>
                     <li><a href="/projects">Список проектов</a></li>
+                    <li><a href="/entrepreneurs">Список предпринимателей</a></li>
+                    <li><a href="/entrepreneurs/new">Новый предприниматель</a></li>
                     <li><a href="/projects/new">Новый проект</a></li>
                 </ul>
             </div>

@@ -9,8 +9,8 @@
 <ol class="h3">
     {% for project in model.projects %}
     <li>
-        {{ project.value.name }} -
-        <a href="projects/{{ project.index }}"> подробнее</a>
+        {{ project.name }} -
+        <a href="/projects/{{ project.id }}"> подробнее</a>
     </li>
     {% endfor %}
 </ol>

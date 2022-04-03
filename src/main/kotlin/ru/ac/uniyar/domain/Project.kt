@@ -2,10 +2,10 @@ package ru.ac.uniyar.domain
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 
 data class Project(
-    val projectAddTime: LocalDateTime,
+    val id: Int,
+    val addTime: LocalDateTime,
     val name: String,
     val entrepreneur: String,
     val description: String,
@@ -14,7 +14,7 @@ data class Project(
     val fundraisingEnd: LocalDateTime,
 ) {
     fun getProjectAddTime(): String {
-        return projectAddTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+        return addTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
     }
 
     fun getFundraisingStart(): String {

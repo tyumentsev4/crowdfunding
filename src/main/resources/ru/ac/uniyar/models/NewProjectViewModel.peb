@@ -24,7 +24,11 @@
         <input type="text" name="name" value="{{ model.form.fields["name"] | first }}">
     </label>
     <label>Предпрениматель
-        <input type="text" name="entrepreneur" value="{{ model.form.fields["entrepreneur"] | first }}">
+        <select name="entrepreneur">
+            {% for entrepreneur in model.entrepreneurs %}
+            <option value="{{ entrepreneur }}">{{ entrepreneur.name }}</option>
+            {% endfor %}
+        </select>
     </label>
     <label>Описание
         <textarea name="description" cols="30" rows="10" value="{{ model.form.fields["description"] | first }}"></textarea>

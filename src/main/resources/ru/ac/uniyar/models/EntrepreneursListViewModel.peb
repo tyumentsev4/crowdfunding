@@ -1,0 +1,18 @@
+{% extends "./layout.peb" %}
+
+{% block title %}
+Список предпренимателей
+{% endblock %}
+
+{% block content %}
+<h2>Список предпренимателей</h2>
+<ol class="h3">
+    {% for entrepreneur in model.entrepreneurs %}
+    <li>
+        {{ entrepreneur.name }} -
+        <a href="entrepreneurs/{{ entrepreneur.id }}"> подробнее</a>
+    </li>
+    {% endfor %}
+</ol>
+
+{% endblock %}
