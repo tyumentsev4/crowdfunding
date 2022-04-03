@@ -24,17 +24,21 @@
             <td>{{ model.project.fundSize }}</td>
         </tr>
         <tr>
+            <th>Дата и время добавления проекта</th>
+            <td>
+                {{ model.project.getProjectAddTime() }}
+            </td>
+        </tr>
+        <tr>
             <th>Дата начала сбора средств</th>
             <td>
-                {{ model.project.fundraisingStart.toLocalDate() }}
-                {{ model.project.fundraisingStart.toLocalTime() }}
+                {{ model.project.getFundraisingStart() }}
             </td>
         </tr>
         <tr>
             <th>Срок окончания сбора средств</th>
             <td>
-                {{ model.project.fundraisingEnd.toLocalDate() }}
-                {{ model.project.fundraisingEnd.toLocalTime() }}
+                {{ model.project.getFundraisingEnd() }}
             </td>
         </tr>
     </table>

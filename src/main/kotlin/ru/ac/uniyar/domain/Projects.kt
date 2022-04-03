@@ -11,7 +11,7 @@ class Projects {
         return projectsList.withIndex()
     }
 
-    fun getProject(index: Int): Project {
-        return projectsList[index]
+    fun getProject(index: Int): Project? {
+        return projectsList.getOrNull(index)
     }
 }
