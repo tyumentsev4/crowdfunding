@@ -1,0 +1,19 @@
+{% extends "./layout.peb" %}
+
+{% block title %}
+    Предприниматель {{ model.project.name }}
+{% endblock %}
+
+{% block content %}
+    <h2>Предприниматель</h2>
+    <table>
+        <tr>
+            <th>ФИО</th>
+            <td>{{ model.entrepreneur.name }}</td>
+        </tr>
+        <tr>
+            <th>Дата и время добавления</th>
+            <td>{{ model.entrepreneur.addTime }}</td>
+        </tr>
+    </table>
+{% endblock %}

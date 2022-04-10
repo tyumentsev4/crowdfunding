@@ -1,0 +1,26 @@
+{% macro showPagination(paginator, class) %}
+    {% if paginator.canNavigate() %}
+
+        <div class="{{ class }}">
+
+            {% if paginator.canGoBackward() %}
+                <a href="{{ paginator.previousPageLink() }}"><</a>
+            {% endif %}
+
+            {% for prevPageLink in paginator.previousPageLinks() %}
+                <a href="{{ prevPageLink.second }}">{{ prevPageLink.first }}</a>
+            {% endfor %}
+
+            {{ paginator.currentPage }}
+
+            {% for nextPageLink in paginator.nextPageLinks() %}
+                <a href="{{ nextPageLink.second }}">{{ nextPageLink.first }}</a>
+            {% endfor %}
+
+            {% if paginator.canGoFroward() %}
+                {% set nextPageLink = paginator.nextPageLink() %}
+                <a href="{{paginator.nextPageLink()}}">></a>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endmacro %}

@@ -20,9 +20,6 @@
 
 <h2>Новая инвестиция в проект</h2>
 <form method="POST">
-    <label>Название
-        <input type="text" name="name" value="{{ model.form.fields["name"] | first }}">
-    </label>
     <label>Проект
         <select name="project">
             {% for project in model.projects %}

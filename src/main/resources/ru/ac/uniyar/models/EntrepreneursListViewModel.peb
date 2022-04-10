@@ -1,18 +1,34 @@
 {% extends "./layout.peb" %}
 
+{% import "./paginator_utils.peb" %}
+
 {% block title %}
 Список предпренимателей
 {% endblock %}
 
 {% block content %}
 <h2>Список предпренимателей</h2>
-<ol class="h3">
+
+<div class="grid-x grid-padding-x">
+    {% if model.entrepreneurs.size == 0 %}
+    <div class="medium-12 cell">
+        <p>Записей не найдено</p>
+    </div>
+    {% endif %}
     {% for entrepreneur in model.entrepreneurs %}
-    <li>
-        {{ entrepreneur.name }} -
-        <a href="entrepreneurs/{{ entrepreneur.id }}"> подробнее</a>
-    </li>
+    <div class="medium-12 cell">
+        <div class="callout">
+            <p>
+                {{ entrepreneur.name }}
+            </p>
+            <p>
+                <a href="/entrepreneurs/{{ entrepreneur.id }}">Больше информации</a>
+            </p>
+        </div>
+    </div>
     {% endfor %}
-</ol>
+
+    {{ showPagination(model.paginator, "medium-12 cell") }}
+</div>
 
 {% endblock %}

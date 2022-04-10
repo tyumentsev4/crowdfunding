@@ -1,6 +1,7 @@
 package ru.ac.uniyar.handlers
 
 import org.http4k.core.HttpHandler
+import org.http4k.core.Request
 import org.http4k.core.Response
 import org.http4k.core.Status
 import org.http4k.core.removeQuery
@@ -11,10 +12,10 @@ import org.http4k.lens.Query
 import org.http4k.lens.int
 import org.http4k.template.ViewModel
 import ru.ac.uniyar.domain.Store
+import ru.ac.uniyar.models.InvestmentsListViewModel
 import ru.ac.uniyar.models.Paginator
-import ru.ac.uniyar.models.ProjectsListViewModel
 
-fun showProjectsList(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler = handler@{ request ->
+fun showInvestmentsList(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler = handler@{ request: Request ->
     val pageLens = Query.int().defaulted("page", 1)
     val safeReturnResponse = Response(Status.FOUND).header(
         "Location", request.uri.removeQuery("page").toString()
@@ -24,10 +25,10 @@ fun showProjectsList(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandl
     } catch (failure: LensFailure) {
         return@handler safeReturnResponse.header("Error", failure.message)
     }
-    val repository = store.projectsRepository
-    val elements = repository.listProjects(pageNumber)
+    val repository = store.investmentsRepository
+    val elements = repository.listInvestments(pageNumber)
     val paginator = Paginator(elements.pageCount, pageNumber, request.uri)
-    val model = ProjectsListViewModel(elements.values, paginator)
+    val model = InvestmentsListViewModel(elements.values, paginator)
 
     Response(Status.OK).with(htmlView of model)
 }

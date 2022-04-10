@@ -17,19 +17,18 @@ import org.http4k.lens.webForm
 import org.http4k.routing.bind
 import org.http4k.routing.routes
 import org.http4k.template.ViewModel
+import ru.ac.uniyar.domain.EMPTY_UUID
 import ru.ac.uniyar.domain.Investment
-import ru.ac.uniyar.domain.Investments
-import ru.ac.uniyar.domain.Projects
-import ru.ac.uniyar.models.NewEntrepreneurViewModel
+import ru.ac.uniyar.domain.Store
 import ru.ac.uniyar.models.NewInvestmentViewModel
 import java.time.LocalDateTime
 
-fun investmentsCreationRoute(investments: Investments, projects: Projects, htmlView: BiDiBodyLens<ViewModel>) = routes(
-    "/" bind Method.GET to showNewInvestmentForm(htmlView, projects),
-    "/" bind Method.POST to addInvestment(investments, htmlView)
+fun investmentsCreationRoute(htmlView: BiDiBodyLens<ViewModel>, store: Store) = routes(
+    "/" bind Method.GET to showNewInvestmentForm(htmlView, store),
+    "/" bind Method.POST to addInvestment(htmlView, store)
 )
 
-fun addInvestment(investments: Investments, htmlView: BiDiBodyLens<ViewModel>): HttpHandler = { request ->
+fun addInvestment(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler = { request ->
     val projectFormLens = FormField.string().required("project")
     val investorFormLens = FormField.string().required("investorName")
     val contactFormLens = FormField.string().required("contactInfo")
@@ -43,10 +42,12 @@ fun addInvestment(investments: Investments, htmlView: BiDiBodyLens<ViewModel>): 
     ).toLens()
 
     val webForm = entrepreneurFormLens(request)
+    val investmentsRepository = store.investmentsRepository
+    val projectsRepository = store.projectsRepository
     if (webForm.errors.isEmpty()) {
-        investments.add(
+        investmentsRepository.add(
             Investment(
-                investments.size(),
+                EMPTY_UUID,
                 LocalDateTime.now(),
                 projectFormLens(webForm),
                 investorFormLens(webForm),
@@ -55,9 +56,10 @@ fun addInvestment(investments: Investments, htmlView: BiDiBodyLens<ViewModel>): 
             )
         )
         Response(FOUND).header("Location", "/investments")
-    } else Response(OK).with(htmlView of NewEntrepreneurViewModel(webForm))
+    } else Response(OK).with(htmlView of NewInvestmentViewModel(webForm, projectsRepository.fetchAll()))
 }
 
-fun showNewInvestmentForm(htmlView: BiDiBodyLens<ViewModel>, projects: Projects): HttpHandler = {
-    Response(OK).with(htmlView of NewInvestmentViewModel(WebForm(), projects.getAll()))
+fun showNewInvestmentForm(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler = {
+    val projectsRepository = store.projectsRepository
+    Response(OK).with(htmlView of NewInvestmentViewModel(WebForm(), projectsRepository.fetchAll()))
 }
