@@ -34,6 +34,7 @@ import ru.ac.uniyar.models.StartPageViewModel
 import ru.ac.uniyar.routes.entrepreneurCreationRoute
 import ru.ac.uniyar.routes.investmentsCreationRoute
 import ru.ac.uniyar.routes.projectCreationRoute
+import kotlin.concurrent.thread
 
 fun respondWithPong(): HttpHandler = {
     Response(OK).body("pong")
@@ -96,6 +97,13 @@ fun showErrorMessageFilter(renderer: TemplateRenderer): Filter = Filter { next: 
 }
 
 fun main() {
+    val storeThread = thread(start = false, name = "Store file save") {
+        println("!!!!")
+//        save()
+    }
+    Runtime.getRuntime().addShutdownHook(storeThread)
+
+
     val projects = Projects()
     val entrepreneurs = Entrepreneurs()
     val investments = Investments()
