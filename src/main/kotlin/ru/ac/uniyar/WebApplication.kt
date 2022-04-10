@@ -2,18 +2,13 @@ package ru.ac.uniyar
 
 import org.http4k.core.Body
 import org.http4k.core.ContentType
-import org.http4k.core.Filter
 import org.http4k.core.HttpHandler
 import org.http4k.core.Method.GET
-import org.http4k.core.Response
-import org.http4k.core.Status.Companion.BAD_REQUEST
-import org.http4k.core.Status.Companion.OK
 import org.http4k.core.then
 import org.http4k.filter.DebuggingFilters.PrintRequestAndResponse
 import org.http4k.lens.BiDiBodyLens
 import org.http4k.routing.ResourceLoader
 import org.http4k.routing.bind
-import org.http4k.routing.path
 import org.http4k.routing.routes
 import org.http4k.routing.static
 import org.http4k.server.Undertow
@@ -25,46 +20,16 @@ import org.http4k.template.viewModel
 import ru.ac.uniyar.domain.Entrepreneurs
 import ru.ac.uniyar.domain.Investments
 import ru.ac.uniyar.domain.Projects
-import ru.ac.uniyar.models.EntrepreneursListViewModel
-import ru.ac.uniyar.models.InvestmentsListViewModel
-import ru.ac.uniyar.models.ProjectViewModel
-import ru.ac.uniyar.models.ProjectsListViewModel
-import ru.ac.uniyar.models.ShowErrorInfoViewModel
-import ru.ac.uniyar.models.StartPageViewModel
+import ru.ac.uniyar.filters.showErrorMessageFilter
+import ru.ac.uniyar.handlers.respondWithPong
+import ru.ac.uniyar.handlers.showEntrepreneursList
+import ru.ac.uniyar.handlers.showInvestmentsList
+import ru.ac.uniyar.handlers.showProject
+import ru.ac.uniyar.handlers.showProjectsList
+import ru.ac.uniyar.handlers.showStartPage
 import ru.ac.uniyar.routes.entrepreneurCreationRoute
 import ru.ac.uniyar.routes.investmentsCreationRoute
 import ru.ac.uniyar.routes.projectCreationRoute
-import kotlin.concurrent.thread
-
-fun respondWithPong(): HttpHandler = {
-    Response(OK).body("pong")
-}
-
-fun showStartPage(renderer: TemplateRenderer): HttpHandler = {
-    val viewModel = StartPageViewModel(0)
-    Response(OK).body(renderer(viewModel))
-}
-
-fun showProjectsList(renderer: TemplateRenderer, projects: Projects): HttpHandler = {
-    val viewModel = ProjectsListViewModel(projects.getAll())
-    Response(OK).body(renderer(viewModel))
-}
-
-fun showEntrepreneursList(renderer: TemplateRenderer, entrepreneurs: Entrepreneurs): HttpHandler = {
-    Response(OK).body(renderer(EntrepreneursListViewModel(entrepreneurs.getAll())))
-}
-
-fun showInvestmentsList(renderer: TemplateRenderer, investments: Investments): HttpHandler = {
-    Response(OK).body(renderer(InvestmentsListViewModel(investments.getAll())))
-}
-
-fun showProject(renderer: TemplateRenderer, projects: Projects): HttpHandler = handler@{ request ->
-    val indexString = request.path("index").orEmpty()
-    val index = indexString.toIntOrNull() ?: return@handler Response(BAD_REQUEST)
-    val project = projects.getProject(index) ?: return@handler Response(BAD_REQUEST)
-    val viewModel = ProjectViewModel(project)
-    Response(OK).body(renderer(viewModel))
-}
 
 fun app(
     renderer: TemplateRenderer,
@@ -85,25 +50,7 @@ fun app(
     static(ResourceLoader.Classpath("/ru/ac/uniyar/public/")),
 )
 
-fun showErrorMessageFilter(renderer: TemplateRenderer): Filter = Filter { next: HttpHandler ->
-    { request ->
-        val response = next(request)
-        if (response.status.successful) {
-            response
-        } else {
-            response.body(renderer(ShowErrorInfoViewModel(request.uri)))
-        }
-    }
-}
-
 fun main() {
-    val storeThread = thread(start = false, name = "Store file save") {
-        println("!!!!")
-//        save()
-    }
-    Runtime.getRuntime().addShutdownHook(storeThread)
-
-
     val projects = Projects()
     val entrepreneurs = Entrepreneurs()
     val investments = Investments()
