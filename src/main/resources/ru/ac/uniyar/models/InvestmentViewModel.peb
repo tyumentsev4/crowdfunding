@@ -25,7 +25,7 @@
         </tr>
         <tr>
             <th>Дата и время добавления</th>
-            <td>{{ model.entrepreneur.addTime }}</td>
+            <td>{{ model.investment.addTime }}</td>
         </tr>
     </table>
 {% endblock %}

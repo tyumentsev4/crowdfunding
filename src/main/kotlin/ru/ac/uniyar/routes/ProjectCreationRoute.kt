@@ -38,7 +38,7 @@ fun showNewProjectForm(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHan
 
 fun addProject(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler = { request ->
     val nameFormLens = FormField.string().required("name")
-    val entrepreneurFormLens = FormField.uuid().required("entrepreneur")
+    val entrepreneurIdFormLens = FormField.uuid().required("entrepreneur")
     val descriptionFormLens = FormField.string().required("description")
     val fundSizeFormLens = FormField.double().required("fundSize")
     val fundraisingStartFormLens = FormField.required("fundraisingStart")
@@ -46,7 +46,7 @@ fun addProject(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler = {
     val projectFormLens = Body.webForm(
         Validator.Feedback,
         nameFormLens,
-        entrepreneurFormLens,
+        entrepreneurIdFormLens,
         fundSizeFormLens,
         fundraisingStartFormLens,
         fundraisingEndFormLens,
@@ -61,7 +61,7 @@ fun addProject(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler = {
                 EMPTY_UUID,
                 LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS),
                 nameFormLens(webForm),
-                entrepreneurFormLens(webForm),
+                entrepreneurIdFormLens(webForm),
                 descriptionFormLens(webForm),
                 fundSizeFormLens(webForm),
                 LocalDateTime.parse(fundraisingStartFormLens(webForm)),

@@ -31,13 +31,13 @@ fun investmentsCreationRoute(htmlView: BiDiBodyLens<ViewModel>, store: Store) = 
 )
 
 fun addInvestment(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler = { request ->
-    val projectFormLens = FormField.uuid().required("projectId")
+    val projectIdFormLens = FormField.uuid().required("projectId")
     val investorFormLens = FormField.string().required("investorName")
     val contactFormLens = FormField.string().required("contactInfo")
     val amountFormLens = FormField.double().required("amount")
     val investmentFormLens = Body.webForm(
         Validator.Feedback,
-        projectFormLens,
+        projectIdFormLens,
         investorFormLens,
         contactFormLens,
         amountFormLens
@@ -47,16 +47,16 @@ fun addInvestment(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler 
     val investmentsRepository = store.investmentsRepository
     val projectsRepository = store.projectsRepository
     if (webForm.errors.isEmpty()) {
-        investmentsRepository.add(
-            Investment(
-                EMPTY_UUID,
-                LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS),
-                projectFormLens(webForm),
-                investorFormLens(webForm),
-                contactFormLens(webForm),
-                amountFormLens(webForm)
-            )
+        val investment = Investment(
+            EMPTY_UUID,
+            LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS),
+            projectIdFormLens(webForm),
+            investorFormLens(webForm),
+            contactFormLens(webForm),
+            amountFormLens(webForm)
         )
+        investmentsRepository.add(investment)
+        projectsRepository.fetch(investment.projectId)?.incAmount(investment.amount)
         Response(FOUND).header("Location", "/investments")
     } else Response(OK).with(htmlView of NewInvestmentViewModel(webForm, projectsRepository.fetchAll()))
 }

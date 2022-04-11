@@ -1,32 +1,26 @@
 {
   "projects" : [ {
-    "id" : "d9849944-283c-4798-b353-4d361217d55b",
-    "addTime" : "2022-04-11T20:35:47",
+    "id" : "13fcff81-1a22-412a-a509-483ce8d85f27",
+    "addTime" : "2022-04-11T21:35:51",
     "name" : "Школа 1",
-    "entrepreneurId" : "559cc147-5a19-4533-8920-911a3fe942e6",
+    "entrepreneurId" : "17fba66b-34bf-4275-882c-9f1559bd81f5",
     "description" : "",
-    "fundSize" : 1234,
-    "fundraisingStart" : "2022-04-01T20:35:00",
-    "fundraisingEnd" : "2022-04-30T20:35:00"
+    "fundSize" : 1E+4,
+    "fundraisingStart" : "2022-04-01T21:35:00",
+    "fundraisingEnd" : "2022-04-30T21:35:00",
+    "collectedAmount" : 213
   } ],
   "entrepreneurs" : [ {
-    "id" : "559cc147-5a19-4533-8920-911a3fe942e6",
+    "id" : "17fba66b-34bf-4275-882c-9f1559bd81f5",
     "name" : "Иван",
-    "addTime" : "2022-04-11T20:35:35"
+    "addTime" : "2022-04-11T21:35:29"
   } ],
   "investments" : [ {
-    "id" : "ab426eb7-30da-4cd6-b11a-bddcfa3fa4e4",
-    "addTime" : "2022-04-11T20:38:39",
-    "projectId" : "d9849944-283c-4798-b353-4d361217d55b",
+    "id" : "045e8a6f-2eee-4e0a-a807-0babd78b07da",
+    "addTime" : "2022-04-11T21:36:06",
+    "projectId" : "13fcff81-1a22-412a-a509-483ce8d85f27",
     "investorName" : "Карпов Алексей Викторович",
     "contactInfo" : "karpov@mail.ru",
-    "amount" : 1231
-  }, {
-    "id" : "1d6c2705-d93b-4c85-a8ac-5bb4472be49a",
-    "addTime" : "2022-04-11T20:39:19",
-    "projectId" : "d9849944-283c-4798-b353-4d361217d55b",
-    "investorName" : "Иванов",
-    "contactInfo" : "",
     "amount" : 213
   } ]
 }

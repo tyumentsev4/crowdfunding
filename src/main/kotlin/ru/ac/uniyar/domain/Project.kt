@@ -17,7 +17,7 @@ data class Project(
     val fundSize: Double,
     val fundraisingStart: LocalDateTime,
     val fundraisingEnd: LocalDateTime,
-    val collectedAmount: Double = 0.0
+    var collectedAmount: Double = 0.0
 ) {
     companion object {
         fun fromJson(node: JsonNode): Project {
@@ -31,6 +31,7 @@ data class Project(
                 jsonObject["fundSize"].asDouble(),
                 LocalDateTime.parse(jsonObject["fundraisingStart"].asText(), DateTimeFormatter.ISO_DATE_TIME),
                 LocalDateTime.parse(jsonObject["fundraisingEnd"].asText(), DateTimeFormatter.ISO_DATE_TIME),
+                jsonObject["collectedAmount"].asDouble()
             )
         }
     }
@@ -44,7 +45,8 @@ data class Project(
             "description" to description.asJsonValue(),
             "fundSize" to fundSize.asJsonObject(),
             "fundraisingStart" to fundraisingStart.format(DateTimeFormatter.ISO_DATE_TIME).asJsonValue(),
-            "fundraisingEnd" to fundraisingEnd.format(DateTimeFormatter.ISO_DATE_TIME).asJsonValue()
+            "fundraisingEnd" to fundraisingEnd.format(DateTimeFormatter.ISO_DATE_TIME).asJsonValue(),
+            "collectedAmount" to collectedAmount.asJsonValue()
         ).asJsonObject()
     }
 
@@ -66,5 +68,9 @@ data class Project(
 
     fun necessaryInvestments(): Double {
         return fundSize - collectedAmount
+    }
+
+    fun incAmount(amount: Double) {
+        collectedAmount += amount
     }
 }
