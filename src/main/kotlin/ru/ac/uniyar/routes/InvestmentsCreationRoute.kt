@@ -13,6 +13,7 @@ import org.http4k.lens.Validator
 import org.http4k.lens.WebForm
 import org.http4k.lens.double
 import org.http4k.lens.string
+import org.http4k.lens.uuid
 import org.http4k.lens.webForm
 import org.http4k.routing.bind
 import org.http4k.routing.routes
@@ -22,6 +23,7 @@ import ru.ac.uniyar.domain.Investment
 import ru.ac.uniyar.domain.Store
 import ru.ac.uniyar.models.NewInvestmentViewModel
 import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 
 fun investmentsCreationRoute(htmlView: BiDiBodyLens<ViewModel>, store: Store) = routes(
     "/" bind Method.GET to showNewInvestmentForm(htmlView, store),
@@ -29,11 +31,11 @@ fun investmentsCreationRoute(htmlView: BiDiBodyLens<ViewModel>, store: Store) = 
 )
 
 fun addInvestment(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler = { request ->
-    val projectFormLens = FormField.string().required("project")
+    val projectFormLens = FormField.uuid().required("projectId")
     val investorFormLens = FormField.string().required("investorName")
     val contactFormLens = FormField.string().required("contactInfo")
     val amountFormLens = FormField.double().required("amount")
-    val entrepreneurFormLens = Body.webForm(
+    val investmentFormLens = Body.webForm(
         Validator.Feedback,
         projectFormLens,
         investorFormLens,
@@ -41,14 +43,14 @@ fun addInvestment(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler 
         amountFormLens
     ).toLens()
 
-    val webForm = entrepreneurFormLens(request)
+    val webForm = investmentFormLens(request)
     val investmentsRepository = store.investmentsRepository
     val projectsRepository = store.projectsRepository
     if (webForm.errors.isEmpty()) {
         investmentsRepository.add(
             Investment(
                 EMPTY_UUID,
-                LocalDateTime.now(),
+                LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS),
                 projectFormLens(webForm),
                 investorFormLens(webForm),
                 contactFormLens(webForm),

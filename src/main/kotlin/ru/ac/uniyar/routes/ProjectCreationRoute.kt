@@ -11,8 +11,9 @@ import org.http4k.lens.BiDiBodyLens
 import org.http4k.lens.FormField
 import org.http4k.lens.Validator
 import org.http4k.lens.WebForm
-import org.http4k.lens.int
+import org.http4k.lens.double
 import org.http4k.lens.string
+import org.http4k.lens.uuid
 import org.http4k.lens.webForm
 import org.http4k.routing.bind
 import org.http4k.routing.routes
@@ -22,6 +23,7 @@ import ru.ac.uniyar.domain.Project
 import ru.ac.uniyar.domain.Store
 import ru.ac.uniyar.models.NewProjectViewModel
 import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 
 fun projectCreationRoute(htmlView: BiDiBodyLens<ViewModel>, store: Store) = routes(
     "/" bind Method.GET to showNewProjectForm(htmlView, store),
@@ -36,9 +38,9 @@ fun showNewProjectForm(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHan
 
 fun addProject(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler = { request ->
     val nameFormLens = FormField.string().required("name")
-    val entrepreneurFormLens = FormField.string().required("entrepreneur")
+    val entrepreneurFormLens = FormField.uuid().required("entrepreneur")
     val descriptionFormLens = FormField.string().required("description")
-    val fundSizeFormLens = FormField.int().required("fundSize")
+    val fundSizeFormLens = FormField.double().required("fundSize")
     val fundraisingStartFormLens = FormField.required("fundraisingStart")
     val fundraisingEndFormLens = FormField.required("fundraisingEnd")
     val projectFormLens = Body.webForm(
@@ -57,7 +59,7 @@ fun addProject(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler = {
         projectRepository.add(
             Project(
                 EMPTY_UUID,
-                LocalDateTime.now(),
+                LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS),
                 nameFormLens(webForm),
                 entrepreneurFormLens(webForm),
                 descriptionFormLens(webForm),

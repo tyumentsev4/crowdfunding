@@ -10,7 +10,7 @@ import java.util.UUID
 data class Investment(
     val id: UUID,
     val addTime: LocalDateTime,
-    val project: String,
+    val projectId: UUID,
     val investorName: String,
     val contactInfo: String,
     val amount: Double
@@ -21,7 +21,7 @@ data class Investment(
             return Investment(
                 UUID.fromString(jsonObject["id"].asText()),
                 LocalDateTime.parse(jsonObject["addTime"].asText(), DateTimeFormatter.ISO_DATE_TIME),
-                jsonObject["project"].asText(),
+                UUID.fromString(jsonObject["projectId"].asText()),
                 jsonObject["investorName"].asText(),
                 jsonObject["contactInfo"].asText(),
                 jsonObject["amount"].asDouble()
@@ -33,7 +33,7 @@ data class Investment(
         return listOf(
             "id" to id.toString().asJsonValue(),
             "addTime" to addTime.format(DateTimeFormatter.ISO_DATE_TIME).asJsonValue(),
-            "project" to project.asJsonValue(),
+            "projectId" to projectId.toString().asJsonValue(),
             "investorName" to investorName.asJsonValue(),
             "contactInfo" to contactInfo.asJsonValue(),
             "amount" to amount.asJsonValue(),

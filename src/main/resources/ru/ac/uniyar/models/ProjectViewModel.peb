@@ -13,7 +13,7 @@
         </tr>
         <tr>
             <th>Предприниматель</th>
-            <td>{{ model.project.entrepreneur }}</td>
+            <td><a href="/entrepreneurs/{{model.entrepreneur.id}}">{{ model.entrepreneur.name }}</a></td>
         </tr>
         <tr>
             <th>Описание</th>
@@ -21,25 +21,68 @@
         </tr>
         <tr>
             <th>Целевой размер фонда</th>
-            <td>{{ model.project.fundSize }}</td>
+            <td>{{ model.project.fundSize }}₽</td>
         </tr>
         <tr>
-            <th>Дата и время добавления проекта</th>
+            <th>Последние пять инвестиций</th>
             <td>
-                {{ model.project.getProjectAddTime() }}
+                <ul>
+                {% for investment in model.investments.lastInvestments() %}
+                    <li><a href="/investments/{{ investment.id }}">{{ investment.investorName }} - {{ investment.amount }}₽</a></li>
+                {% endfor %}
+                </ul>
             </td>
         </tr>
+
+        {% if model.project.isOpen() %}
+            <tr>
+                <th>Срок окончания сбора средств</th>
+                <td>
+                    {{ model.project.getFundraisingEnd() }}
+                </td>
+            </tr>
+            <tr>
+                <th>Дней до окончания сбора средств</th>
+                <td>{{ model.project.daysUntilTheEnd() }}</td>
+            </tr>
+
+            <tr>
+                <th>Собранная на настоящий момент сумма</th>
+                <td>{{ model.project.collectedAmount }}₽</td>
+            </tr>
+
+            <tr>
+                <th>Количество инвестиций</th>
+                <td>{{ model.investments.getCount() }}</td>
+            </tr>
+
+            <tr>
+                <th>Количество инвестиций, ожидающих обратную связь (не анонимных)</th>
+                <td>{{ model.investments.getNonAnonymousCount() }}</td>
+            </tr>
+            <tr>
+                <th>Объем необходимых инвестиций</th>
+                <td> {{ model.project.necessaryInvestments() }}₽</td>
+            </tr>
+            <tr>
+                <th>Прогноз успешности сбора</th>
+                <td></td>
+            </tr>
+        {% else %}
+            <tr>
+                <th>Статус проекта</th>
+                <td>
+                    {% if model.project.isSuccessful() %}
+                        Успешен
+                    {% else %}
+                        Не успешен
+                    {% endif %}
+                </td>
+            </tr>
+        {% endif %}
         <tr>
-            <th>Дата начала сбора средств</th>
-            <td>
-                {{ model.project.getFundraisingStart() }}
-            </td>
-        </tr>
-        <tr>
-            <th>Срок окончания сбора средств</th>
-            <td>
-                {{ model.project.getFundraisingEnd() }}
-            </td>
+            <th>Дата и время добавления</th>
+            <td>{{ model.entrepreneur.addTime }}</td>
         </tr>
     </table>
 {% endblock %}

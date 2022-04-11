@@ -19,7 +19,9 @@ fun showEntrepreneur(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandl
     } catch (error: LensFailure) {
         return@handler Response(Status.BAD_REQUEST).header("error", error.toString())
     }
-    val repository = store.entrepreneursRepository
-    val entrepreneur = repository.fetch(id) ?: return@handler Response(Status.BAD_REQUEST)
-    Response(Status.OK).with(htmlView of EntrepreneurViewModel(entrepreneur))
+    val entrepreneurRepository = store.entrepreneursRepository
+    val projectRepository = store.projectsRepository
+    val entrepreneur = entrepreneurRepository.fetch(id) ?: return@handler Response(Status.BAD_REQUEST)
+    val hisProjects = projectRepository.fetchAll().filter { it.entrepreneurId == entrepreneur.id }.sortedByDescending { it.fundraisingStart }
+    Response(Status.OK).with(htmlView of EntrepreneurViewModel(entrepreneur, hisProjects))
 }

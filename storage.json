@@ -1,49 +1,32 @@
 {
   "projects" : [ {
-    "id" : "01b2e25e-db57-4de1-b6a0-093e1e729855",
-    "addTime" : "2022-04-10T20:40:10.463351684",
-    "name" : "Школа №1",
-    "entrepreneur" : "Entrepreneur(id=3d1cf7d5-5390-4610-b650-dc20028bcfe1, name=Иванов Иван Иванович, addTime=2022-04-10T20:39:03.282089340)",
-    "description" : "Хочу построить школу",
-    "fundSize" : 555550,
-    "fundraisingStart" : "2022-02-04T11:11:00",
-    "fundraisingEnd" : "2022-02-04T11:11:00"
+    "id" : "d9849944-283c-4798-b353-4d361217d55b",
+    "addTime" : "2022-04-11T20:35:47",
+    "name" : "Школа 1",
+    "entrepreneurId" : "559cc147-5a19-4533-8920-911a3fe942e6",
+    "description" : "",
+    "fundSize" : 1234,
+    "fundraisingStart" : "2022-04-01T20:35:00",
+    "fundraisingEnd" : "2022-04-30T20:35:00"
   } ],
   "entrepreneurs" : [ {
-    "id" : "3d1cf7d5-5390-4610-b650-dc20028bcfe1",
-    "name" : "Иванов Иван Иванович",
-    "addTime" : "2022-04-10T20:39:03.28208934"
-  }, {
-    "id" : "c8093187-77cc-4e1b-ba2b-96c2a2d901a0",
-    "name" : "Зайцев Илья Николаевич",
-    "addTime" : "2022-04-10T20:41:12.279363644"
-  }, {
-    "id" : "eae7273d-2df8-471c-bc00-e4da8f7f52b0",
-    "name" : "Григорьева Александра Сергеевна",
-    "addTime" : "2022-04-10T20:41:38.479022587"
-  }, {
-    "id" : "0f416938-eef8-4265-ad59-0707c0a49740",
-    "name" : "Павлов Антон Иванович",
-    "addTime" : "2022-04-10T20:49:14.872425235"
-  }, {
-    "id" : "b6cfea4d-e8ad-4df3-8f29-13107caced67",
-    "name" : "Романова Мария Евгеньевна",
-    "addTime" : "2022-04-10T20:51:13.680907463"
-  }, {
-    "id" : "224e7b5d-c7c6-4433-beba-dcc59ff9fa97",
-    "name" : "Шипов Леонид Владимирович",
-    "addTime" : "2022-04-10T20:51:52.693164575"
-  }, {
-    "id" : "421074f8-73ab-4360-b5b0-334cdcc35158",
-    "name" : "Михайлов Аркадий Николаевич",
-    "addTime" : "2022-04-10T20:52:24.434388149"
+    "id" : "559cc147-5a19-4533-8920-911a3fe942e6",
+    "name" : "Иван",
+    "addTime" : "2022-04-11T20:35:35"
   } ],
   "investments" : [ {
-    "id" : "3bcaed33-a455-45b4-a296-58ed01514e95",
-    "addTime" : "2022-04-10T20:40:33.638250806",
-    "project" : "Project(id=01b2e25e-db57-4de1-b6a0-093e1e729855, addTime=2022-04-10T20:40:10.463351684, name=Школа №1, entrepreneur=Entrepreneur(id=3d1cf7d5-5390-4610-b650-dc20028bcfe1, name=Иванов Иван Иванович, addTime=2022-04-10T20:39:03.282089340), description=Хочу построить школу, fundSize=555550, fundraisingStart=2022-02-04T11:11, fundraisingEnd=2022-01-31T11:11)",
-    "investorName" : "Петров Иван Сергеевич",
-    "contactInfo" : "petroff1@mail.ru",
-    "amount" : 100
+    "id" : "ab426eb7-30da-4cd6-b11a-bddcfa3fa4e4",
+    "addTime" : "2022-04-11T20:38:39",
+    "projectId" : "d9849944-283c-4798-b353-4d361217d55b",
+    "investorName" : "Карпов Алексей Викторович",
+    "contactInfo" : "karpov@mail.ru",
+    "amount" : 1231
+  }, {
+    "id" : "1d6c2705-d93b-4c85-a8ac-5bb4472be49a",
+    "addTime" : "2022-04-11T20:39:19",
+    "projectId" : "d9849944-283c-4798-b353-4d361217d55b",
+    "investorName" : "Иванов",
+    "contactInfo" : "",
+    "amount" : 213
   } ]
 }

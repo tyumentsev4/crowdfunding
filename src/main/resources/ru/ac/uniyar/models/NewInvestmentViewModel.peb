@@ -21,20 +21,20 @@
 <h2>Новая инвестиция в проект</h2>
 <form method="POST">
     <label>Проект
-        <select name="project">
+        <select required name="projectId">
             {% for project in model.projects %}
-            <option value="{{ project }}">{{ project.name }}</option>
+            <option value="{{ project.id }}">{{ project.name }}</option>
             {% endfor %}
         </select>
     </label>
     <label>ФИО инвестора
-        <input type="text" name="investorName" value="{{ model.form.fields["investorName"] | first }}">
+        <input required type="text" name="investorName" value="{{ model.form.fields["investorName"] | first }}">
     </label>
-    <label>Контактная информация телефон или email
-        <input type="text" name="contactInfo" value="{{ model.form.fields["contactInfo"] | first }}">
+    <label>Email
+        <input type="email" name="contactInfo" value="{{ model.form.fields["contactInfo"] | first }}">
     </label>
     <label>Сумма
-        <input type="text" name="amount" value="{{ model.form.fields["amount"] | first }}">
+        <input required type="text" name="amount" value="{{ model.form.fields["amount"] | first }}">
     </label>
     <input type="submit" value="Добавить" class="button">
 </form>

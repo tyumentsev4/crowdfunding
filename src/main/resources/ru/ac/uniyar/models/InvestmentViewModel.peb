@@ -1,7 +1,7 @@
 {% extends "./layout.peb" %}
 
 {% block title %}
-    Инвестиция в {{ model.investment.project }}
+    Инвестиция в {{ model.project.name }}
 {% endblock %}
 
 {% block content %}
@@ -9,7 +9,7 @@
     <table>
         <tr>
             <th>Проект</th>
-            <td>{{ model.investment.project }}</td>
+            <td><a href="/projects/{{ model.project.id }}">{{ model.project.name }}</a></td>
         </tr>
         <tr>
             <th>ФИО инвестора</th>
@@ -21,7 +21,11 @@
         </tr>
         <tr>
             <th>Сумма</th>
-            <td>{{ model.investment.amount }}</td>
+            <td>{{ model.investment.amount }}₽</td>
+        </tr>
+        <tr>
+            <th>Дата и время добавления</th>
+            <td>{{ model.entrepreneur.addTime }}</td>
         </tr>
     </table>
 {% endblock %}

@@ -42,7 +42,7 @@ class InvestmentsRepository(investments: Iterable<Investment> = emptyList()) {
         return PagedResult(pagedList, countPageNumbers(list.size, PAGE_SIZE))
     }
 
-    fun fetchAll(): Iterable<Investment> {
-        return investmentsMap.values
+    fun fetchAll(): List<Investment> {
+        return investmentsMap.values.toList()
     }
 }

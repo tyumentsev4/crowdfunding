@@ -21,6 +21,7 @@ import ru.ac.uniyar.domain.Entrepreneur
 import ru.ac.uniyar.domain.Store
 import ru.ac.uniyar.models.NewEntrepreneurViewModel
 import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 
 fun entrepreneurCreationRoute(htmlView: BiDiBodyLens<ViewModel>, store: Store) = routes(
     "/" bind Method.GET to showNewEntrepreneurForm(htmlView),
@@ -41,7 +42,7 @@ fun addEntrepreneur(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandle
             Entrepreneur(
                 EMPTY_UUID,
                 nameFormLens(webForm),
-                LocalDateTime.now()
+                LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS)
             )
         )
         Response(FOUND).header("Location", "/entrepreneurs")

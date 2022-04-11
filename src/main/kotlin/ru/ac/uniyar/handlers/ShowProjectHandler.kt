@@ -9,6 +9,7 @@ import org.http4k.lens.LensFailure
 import org.http4k.lens.Path
 import org.http4k.lens.uuid
 import org.http4k.template.ViewModel
+import ru.ac.uniyar.domain.Investments
 import ru.ac.uniyar.domain.Store
 import ru.ac.uniyar.models.ProjectViewModel
 
@@ -19,7 +20,11 @@ fun showProject(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler = 
     } catch (error: LensFailure) {
         return@handler Response(Status.BAD_REQUEST).header("error", error.toString())
     }
-    val repository = store.projectsRepository
-    val project = repository.fetch(id) ?: return@handler Response(Status.BAD_REQUEST)
-    Response(Status.OK).with(htmlView of ProjectViewModel(project))
+    val projectRepository = store.projectsRepository
+    val entrepreneurRepository = store.entrepreneursRepository
+    val investmentRepository = store.investmentsRepository
+    val project = projectRepository.fetch(id) ?: return@handler Response(Status.BAD_REQUEST)
+    val entrepreneur = entrepreneurRepository.fetch(project.entrepreneurId) ?: return@handler Response(Status.BAD_REQUEST)
+    val investments = Investments(investmentRepository.fetchAll().filter { it.projectId == project.id })
+    Response(Status.OK).with(htmlView of ProjectViewModel(project, entrepreneur, investments))
 }

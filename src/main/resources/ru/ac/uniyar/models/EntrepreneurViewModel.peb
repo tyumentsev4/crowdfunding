@@ -12,6 +12,18 @@
             <td>{{ model.entrepreneur.name }}</td>
         </tr>
         <tr>
+            <th>Список проектов</th>
+            <td>
+                <ul>
+                {% for project in model.projects %}
+                    <li>
+                        <a href="/projects/{{ project.id }}">{{ project.name }}</a>
+                    </li>
+                {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
             <th>Дата и время добавления</th>
             <td>{{ model.entrepreneur.addTime }}</td>
         </tr>
