@@ -30,6 +30,11 @@ fun investmentsCreationRoute(htmlView: BiDiBodyLens<ViewModel>, store: Store) = 
     "/" bind Method.POST to addInvestment(htmlView, store)
 )
 
+fun showNewInvestmentForm(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler = {
+    val projectsRepository = store.projectsRepository
+    Response(OK).with(htmlView of NewInvestmentViewModel(WebForm(), projectsRepository.fetchAll()))
+}
+
 fun addInvestment(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler = { request ->
     val projectIdFormLens = FormField.uuid().required("projectId")
     val investorFormLens = FormField.string().required("investorName")
@@ -58,10 +63,8 @@ fun addInvestment(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler 
         investmentsRepository.add(investment)
         projectsRepository.fetch(investment.projectId)?.incAmount(investment.amount)
         Response(FOUND).header("Location", "/investments")
-    } else Response(OK).with(htmlView of NewInvestmentViewModel(webForm, projectsRepository.fetchAll()))
+    } else {
+        Response(OK).with(htmlView of NewInvestmentViewModel(webForm, projectsRepository.fetchAll()))
+    }
 }
 
-fun showNewInvestmentForm(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler = {
-    val projectsRepository = store.projectsRepository
-    Response(OK).with(htmlView of NewInvestmentViewModel(WebForm(), projectsRepository.fetchAll()))
-}
