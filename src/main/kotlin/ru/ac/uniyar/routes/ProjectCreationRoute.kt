@@ -11,6 +11,7 @@ import org.http4k.lens.BiDiBodyLens
 import org.http4k.lens.FormField
 import org.http4k.lens.Validator
 import org.http4k.lens.WebForm
+import org.http4k.lens.dateTime
 import org.http4k.lens.double
 import org.http4k.lens.string
 import org.http4k.lens.uuid
@@ -41,8 +42,8 @@ fun addProject(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler = {
     val entrepreneurIdFormLens = FormField.uuid().required("entrepreneur")
     val descriptionFormLens = FormField.string().required("description")
     val fundSizeFormLens = FormField.double().required("fundSize")
-    val fundraisingStartFormLens = FormField.required("fundraisingStart")
-    val fundraisingEndFormLens = FormField.required("fundraisingEnd")
+    val fundraisingStartFormLens = FormField.dateTime().required("fundraisingStart")
+    val fundraisingEndFormLens = FormField.dateTime().required("fundraisingEnd")
     val projectFormLens = Body.webForm(
         Validator.Feedback,
         nameFormLens,
@@ -64,8 +65,8 @@ fun addProject(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler = {
                 entrepreneurIdFormLens(webForm),
                 descriptionFormLens(webForm),
                 fundSizeFormLens(webForm),
-                LocalDateTime.parse(fundraisingStartFormLens(webForm)),
-                LocalDateTime.parse(fundraisingEndFormLens(webForm))
+                fundraisingStartFormLens(webForm),
+                fundraisingEndFormLens(webForm)
             )
         )
         Response(FOUND).header("Location", "/projects")

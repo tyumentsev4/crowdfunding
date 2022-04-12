@@ -61,10 +61,10 @@ fun addInvestment(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler 
             amountFormLens(webForm)
         )
         investmentsRepository.add(investment)
-        projectsRepository.fetch(investment.projectId)?.incAmount(investment.amount)
+        val project = projectsRepository.fetch(investment.projectId)!!
+        projectsRepository.update(project.copy(collectedAmount = project.collectedAmount + investment.amount))
         Response(FOUND).header("Location", "/investments")
     } else {
         Response(OK).with(htmlView of NewInvestmentViewModel(webForm, projectsRepository.fetchAll()))
     }
 }
-

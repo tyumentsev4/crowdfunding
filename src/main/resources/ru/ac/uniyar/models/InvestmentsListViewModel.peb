@@ -19,7 +19,7 @@
     <div class="medium-12 cell">
         <div class="callout">
             <p>
-                {{ investment.project }}
+                {{ investment.investorName }} - {{ investment.amount }}
             </p>
             <p>
                 <a href="/investments/{{ investment.id }}">Больше информации</a>

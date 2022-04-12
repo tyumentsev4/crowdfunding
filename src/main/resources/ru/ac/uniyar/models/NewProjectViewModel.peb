@@ -23,7 +23,7 @@
     <label>Название
         <input required type="text" name="name" value="{{ model.form.fields["name"] | first }}">
     </label>
-    <label>Предпрениматель
+    <label>Предприниматель
         <select name="entrepreneur">
             {% for entrepreneur in model.entrepreneurs %}
             <option value="{{ entrepreneur.id }}">{{ entrepreneur.name }}</option>

@@ -33,6 +33,10 @@ class ProjectsRepository(projects: Iterable<Project> = emptyList()) {
         return newId
     }
 
+    fun update(project: Project) {
+        projectsMap[project.id] = project
+    }
+
     fun listProjects(
         page: Int = 0
     ): PagedResult<Project> {

@@ -3,11 +3,11 @@
 {% import "./paginator_utils.peb" %}
 
 {% block title %}
-Список предпренимателей
+Список предпринимателей
 {% endblock %}
 
 {% block content %}
-<h2>Список предпренимателей</h2>
+<h2>Список предпринимателей</h2>
 
 <div class="grid-x grid-padding-x">
     {% if model.entrepreneurs.size == 0 %}

@@ -66,7 +66,13 @@
             </tr>
             <tr>
                 <th>Прогноз успешности сбора</th>
-                <td></td>
+                <td>
+                    {% if model.investments.isSuccessForecast(model.project.fundSize, model.project.daysUntilTheEnd()) %}
+                        Должен быть успешен
+                    {% else %}
+                        Не должен быть успешен
+                    {% endif %}
+                </td>
             </tr>
         {% else %}
             <tr>

@@ -17,7 +17,7 @@ data class Project(
     val fundSize: Double,
     val fundraisingStart: LocalDateTime,
     val fundraisingEnd: LocalDateTime,
-    var collectedAmount: Double = 0.0
+    val collectedAmount: Double = 0.0
 ) {
     companion object {
         fun fromJson(node: JsonNode): Project {
@@ -58,19 +58,19 @@ data class Project(
         return (fundraisingEnd > LocalDateTime.now()) && (fundraisingStart <= LocalDateTime.now())
     }
 
-    fun daysUntilTheEnd(): Long {
-        return ChronoUnit.DAYS.between(LocalDateTime.now(), fundraisingEnd)
+    fun daysUntilTheEnd(): Int {
+        return ChronoUnit.DAYS.between(LocalDateTime.now(), fundraisingEnd).toInt()
     }
 
-    fun isSuccessful(): Boolean {
+    fun isSuccessful(): Boolean? {
+        if (isOpen())
+            return null
         return collectedAmount >= fundSize
     }
 
     fun necessaryInvestments(): Double {
+        if (fundSize < collectedAmount)
+            return 0.0
         return fundSize - collectedAmount
-    }
-
-    fun incAmount(amount: Double) {
-        collectedAmount += amount
     }
 }
