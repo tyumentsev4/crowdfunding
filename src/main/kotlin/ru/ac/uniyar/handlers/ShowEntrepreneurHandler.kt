@@ -22,6 +22,8 @@ fun showEntrepreneur(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandl
     val entrepreneurRepository = store.entrepreneursRepository
     val projectRepository = store.projectsRepository
     val entrepreneur = entrepreneurRepository.fetch(id) ?: return@handler Response(Status.BAD_REQUEST)
-    val hisProjects = projectRepository.fetchAll().filter { it.entrepreneurId == entrepreneur.id }.sortedByDescending { it.fundraisingStart }
+    val hisProjects = projectRepository.fetchAll()
+        .filter { it.entrepreneurId == entrepreneur.id }
+        .sortedByDescending { it.fundraisingStart }
     Response(Status.OK).with(htmlView of EntrepreneurViewModel(entrepreneur, hisProjects))
 }
