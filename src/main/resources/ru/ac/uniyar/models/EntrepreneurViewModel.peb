@@ -32,7 +32,7 @@
         </tr>
         <tr>
             <th>Дата и время добавления</th>
-            <td>{{ model.entrepreneur.addTime }}</td>
+            <td>{{ model.entrepreneur.addTime | date("dd.MM.yyyy HH:mm") }}</td>
         </tr>
     </table>
 {% endblock %}

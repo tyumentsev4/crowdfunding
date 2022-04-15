@@ -33,12 +33,16 @@
                 </ul>
             </td>
         </tr>
+        <tr>
+            <th>Дата начала сбора средств</th>
+            <td>{{ model.project.fundraisingStart | date("dd.MM.yyyy HH:mm") }}</td>
+        </tr>
 
         {% if model.project.isOpen() %}
             <tr>
                 <th>Срок окончания сбора средств</th>
                 <td>
-                    {{ model.project.getFundraisingEnd() }}
+                    {{ model.project.fundraisingEnd | date("dd.MM.yyyy HH:mm") }}
                 </td>
             </tr>
             <tr>
@@ -88,7 +92,7 @@
         {% endif %}
         <tr>
             <th>Дата и время добавления</th>
-            <td>{{ model.entrepreneur.addTime }}</td>
+            <td>{{ model.entrepreneur.addTime | date("dd.MM.yyyy HH:mm")}}</td>
         </tr>
     </table>
 {% endblock %}
