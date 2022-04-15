@@ -60,7 +60,7 @@ fun addProject(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler = {
         projectRepository.add(
             Project(
                 EMPTY_UUID,
-                LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS),
+                LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
                 nameFormLens(webForm),
                 entrepreneurIdFormLens(webForm),
                 descriptionFormLens(webForm),

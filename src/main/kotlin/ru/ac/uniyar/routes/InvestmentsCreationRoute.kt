@@ -54,7 +54,7 @@ fun addInvestment(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler 
     if (webForm.errors.isEmpty()) {
         val investment = Investment(
             EMPTY_UUID,
-            LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS),
+            LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
             projectIdFormLens(webForm),
             investorFormLens(webForm),
             contactFormLens(webForm),

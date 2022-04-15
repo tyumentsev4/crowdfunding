@@ -42,7 +42,7 @@ fun addEntrepreneur(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandle
             Entrepreneur(
                 EMPTY_UUID,
                 nameFormLens(webForm),
-                LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS)
+                LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES)
             )
         )
         Response(FOUND).header("Location", "/entrepreneurs")
