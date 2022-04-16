@@ -1,12 +1,11 @@
-package ru.ac.uniyar.models
+package ru.ac.uniyar.domain.queries
 
-import org.http4k.template.ViewModel
 import ru.ac.uniyar.domain.storage.Entrepreneur
 import ru.ac.uniyar.domain.storage.Investments
 import ru.ac.uniyar.domain.storage.Project
 
-data class ProjectViewModel(
+data class ProjectInfo(
     val project: Project,
     val entrepreneur: Entrepreneur,
     val investments: Investments
-) : ViewModel
+)

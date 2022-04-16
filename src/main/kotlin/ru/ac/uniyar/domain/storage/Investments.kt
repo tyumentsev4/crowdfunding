@@ -1,4 +1,4 @@
-package ru.ac.uniyar.domain
+package ru.ac.uniyar.domain.storage
 
 import java.time.LocalDate
 

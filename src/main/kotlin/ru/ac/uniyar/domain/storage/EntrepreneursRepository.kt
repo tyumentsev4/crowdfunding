@@ -1,4 +1,4 @@
-package ru.ac.uniyar.domain
+package ru.ac.uniyar.domain.storage
 
 import com.fasterxml.jackson.databind.JsonNode
 import org.http4k.format.Jackson.asJsonArray
@@ -24,25 +24,14 @@ class EntrepreneursRepository(entrepreneurs: Iterable<Entrepreneur> = emptyList(
 
     fun fetch(id: UUID): Entrepreneur? = entrepreneursMap[id]
 
-    fun fetchAll(): Iterable<Entrepreneur> {
-        return entrepreneursMap.values
-    }
-
     fun add(entrepreneur: Entrepreneur): UUID {
         var newId = entrepreneur.id
         while (entrepreneursMap.containsKey(newId) || newId == EMPTY_UUID) {
             newId = UUID.randomUUID()
         }
-        entrepreneursMap[newId] = entrepreneur.setUuid(newId)
+        entrepreneursMap[newId] = entrepreneur.setId(newId)
         return newId
     }
 
-    fun listEntrepreneurs(
-        page: Int = 0
-    ): PagedResult<Entrepreneur> {
-        val list = entrepreneursMap.values.toList()
-        val pagedList = list.subListOrEmpty((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
-
-        return PagedResult(pagedList, countPageNumbers(list.size, PAGE_SIZE))
-    }
+    fun list() = entrepreneursMap.values.toList()
 }

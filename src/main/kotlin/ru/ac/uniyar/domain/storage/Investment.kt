@@ -1,4 +1,4 @@
-package ru.ac.uniyar.domain
+package ru.ac.uniyar.domain.storage
 
 import com.fasterxml.jackson.databind.JsonNode
 import org.http4k.format.Jackson.asJsonObject
@@ -40,7 +40,7 @@ data class Investment(
         ).asJsonObject()
     }
 
-    fun setUuid(uuid: UUID): Investment {
+    fun setId(uuid: UUID): Investment {
         return this.copy(id = uuid)
     }
 }

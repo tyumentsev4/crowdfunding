@@ -1,29 +1,36 @@
 package ru.ac.uniyar.handlers
 
 import org.http4k.core.HttpHandler
+import org.http4k.core.Request
 import org.http4k.core.Response
 import org.http4k.core.Status
 import org.http4k.core.with
 import org.http4k.lens.BiDiBodyLens
-import org.http4k.lens.LensFailure
 import org.http4k.lens.Path
 import org.http4k.lens.uuid
 import org.http4k.template.ViewModel
-import ru.ac.uniyar.domain.Store
+import ru.ac.uniyar.domain.queries.EntrepreneurFetchError
+import ru.ac.uniyar.domain.queries.FetchEntrepreneurQuery
 import ru.ac.uniyar.models.EntrepreneurViewModel
 
-fun showEntrepreneur(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler = handler@{ request ->
-    val idLens = Path.uuid().of("id")
-    val id = try {
-        idLens(request)
-    } catch (error: LensFailure) {
-        return@handler Response(Status.BAD_REQUEST).header("error", error.toString())
+class ShowEntrepreneurHandler(
+    private val htmlView: BiDiBodyLens<ViewModel>,
+    private val fetchEntrepreneurQuery: FetchEntrepreneurQuery
+) : HttpHandler {
+
+    companion object {
+        private val idLens = Path.uuid().of("id")
     }
-    val entrepreneurRepository = store.entrepreneursRepository
-    val projectRepository = store.projectsRepository
-    val entrepreneur = entrepreneurRepository.fetch(id) ?: return@handler Response(Status.BAD_REQUEST)
-    val hisProjects = projectRepository.fetchAll()
-        .filter { it.entrepreneurId == entrepreneur.id }
-        .sortedByDescending { it.fundraisingStart }
-    Response(Status.OK).with(htmlView of EntrepreneurViewModel(entrepreneur, hisProjects))
+
+    override fun invoke(request: Request): Response {
+        val id = lensOrNull(idLens, request) ?: return Response(Status.BAD_REQUEST)
+        return try {
+            val entrepreneurInfo = fetchEntrepreneurQuery.invoke(id)
+            Response(Status.OK).with(
+                htmlView of EntrepreneurViewModel(entrepreneurInfo.entrepreneur, entrepreneurInfo.projects)
+            )
+        } catch (_: EntrepreneurFetchError) {
+            Response(Status.BAD_REQUEST)
+        }
+    }
 }

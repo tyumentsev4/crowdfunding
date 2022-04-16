@@ -1,7 +1,10 @@
-package ru.ac.uniyar.domain
+package ru.ac.uniyar.domain.storage
 
 import com.fasterxml.jackson.databind.JsonNode
 import org.http4k.format.Jackson.asJsonArray
+import ru.ac.uniyar.domain.queries.PagedResult
+import ru.ac.uniyar.domain.queries.countPageNumbers
+import ru.ac.uniyar.domain.queries.subListOrEmpty
 import java.util.UUID
 
 class InvestmentsRepository(investments: Iterable<Investment> = emptyList()) {
@@ -29,9 +32,11 @@ class InvestmentsRepository(investments: Iterable<Investment> = emptyList()) {
         while (investmentsMap.containsKey(newId) || newId == EMPTY_UUID) {
             newId = UUID.randomUUID()
         }
-        investmentsMap[newId] = investment.setUuid(newId)
+        investmentsMap[newId] = investment.setId(newId)
         return newId
     }
+
+    fun list() = investmentsMap.values.toList()
 
     fun listInvestments(
         page: Int = 0
@@ -40,9 +45,5 @@ class InvestmentsRepository(investments: Iterable<Investment> = emptyList()) {
         val pagedList = list.subListOrEmpty((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
 
         return PagedResult(pagedList, countPageNumbers(list.size, PAGE_SIZE))
-    }
-
-    fun fetchAll(): List<Investment> {
-        return investmentsMap.values.toList()
     }
 }

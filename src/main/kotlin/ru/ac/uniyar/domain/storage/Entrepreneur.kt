@@ -1,4 +1,4 @@
-package ru.ac.uniyar.domain
+package ru.ac.uniyar.domain.storage
 
 import com.fasterxml.jackson.databind.JsonNode
 import org.http4k.format.Jackson.asJsonObject
@@ -31,7 +31,7 @@ data class Entrepreneur(
         ).asJsonObject()
     }
 
-    fun setUuid(uuid: UUID): Entrepreneur {
+    fun setId(uuid: UUID): Entrepreneur {
         return this.copy(id = uuid)
     }
 }

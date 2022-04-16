@@ -4,51 +4,26 @@ import org.http4k.core.Body
 import org.http4k.core.ContentType
 import org.http4k.core.Filter
 import org.http4k.core.HttpHandler
-import org.http4k.core.Method.GET
 import org.http4k.core.NoOp
 import org.http4k.core.then
-import org.http4k.lens.BiDiBodyLens
-import org.http4k.routing.ResourceLoader
-import org.http4k.routing.bind
-import org.http4k.routing.routes
-import org.http4k.routing.static
 import org.http4k.server.Undertow
 import org.http4k.server.asServer
 import org.http4k.template.PebbleTemplates
-import org.http4k.template.ViewModel
 import org.http4k.template.viewModel
-import ru.ac.uniyar.domain.Store
+import ru.ac.uniyar.domain.queries.AddEntrepreneurQuery
+import ru.ac.uniyar.domain.queries.AddInvestmentQuery
+import ru.ac.uniyar.domain.queries.AddProjectQuery
+import ru.ac.uniyar.domain.queries.FetchEntrepreneurQuery
+import ru.ac.uniyar.domain.queries.FetchInvestmentQuery
+import ru.ac.uniyar.domain.queries.FetchProjectQuery
+import ru.ac.uniyar.domain.queries.ListEntrepreneursPerPageQuery
+import ru.ac.uniyar.domain.queries.ListEntrepreneursQuery
+import ru.ac.uniyar.domain.queries.ListInvestmentsPerPageQuery
+import ru.ac.uniyar.domain.queries.ListProjectsPerPageQuery
+import ru.ac.uniyar.domain.queries.ListProjectsQuery
+import ru.ac.uniyar.domain.storage.Store
 import ru.ac.uniyar.filters.showErrorMessageFilter
-import ru.ac.uniyar.handlers.respondWithPong
-import ru.ac.uniyar.handlers.showEntrepreneur
-import ru.ac.uniyar.handlers.showEntrepreneursList
-import ru.ac.uniyar.handlers.showInvestment
-import ru.ac.uniyar.handlers.showInvestmentsList
-import ru.ac.uniyar.handlers.showProject
-import ru.ac.uniyar.handlers.showProjectsList
-import ru.ac.uniyar.handlers.showStartPage
-import ru.ac.uniyar.routes.entrepreneurCreationRoute
-import ru.ac.uniyar.routes.investmentsCreationRoute
-import ru.ac.uniyar.routes.projectCreationRoute
 import kotlin.io.path.Path
-
-fun app(
-    htmlView: BiDiBodyLens<ViewModel>,
-    store: Store
-): HttpHandler = routes(
-    "/ping" bind GET to respondWithPong(),
-    "/" bind GET to showStartPage(htmlView),
-    "/projects/" bind GET to showProjectsList(htmlView, store),
-    "/entrepreneurs" bind GET to showEntrepreneursList(htmlView, store),
-    "/investments" bind GET to showInvestmentsList(htmlView, store),
-    "/projects/new" bind projectCreationRoute(htmlView, store),
-    "/entrepreneurs/new" bind entrepreneurCreationRoute(htmlView, store),
-    "/investments/new" bind investmentsCreationRoute(htmlView, store),
-    "/projects/{id}" bind GET to showProject(htmlView, store),
-    "/entrepreneurs/{id}" bind GET to showEntrepreneur(htmlView, store),
-    "/investments/{id}" bind GET to showInvestment(htmlView, store),
-    static(ResourceLoader.Classpath("/ru/ac/uniyar/public/")),
-)
 
 const val SERVER_PORT = 9000
 
@@ -56,11 +31,38 @@ fun main() {
     val store = Store(Path("storage.json"))
     val renderer = PebbleTemplates().HotReload("src/main/resources")
     val htmlView = Body.viewModel(renderer, ContentType.TEXT_HTML).toLens()
-    val application = app(htmlView, store)
+
+    val listProjectsPerPageQuery = ListProjectsPerPageQuery(store)
+    val listEntrepreneursPerPageQuery = ListEntrepreneursPerPageQuery(store)
+    val fetchEntrepreneurQuery = FetchEntrepreneurQuery(store)
+    val addEntrepreneurQuery = AddEntrepreneurQuery(store)
+    val fetchProjectQuery = FetchProjectQuery(store)
+    val listEntrepreneursQuery = ListEntrepreneursQuery(store)
+    val addProjectQuery = AddProjectQuery(store)
+    val listInvestmentsPerPageQuery = ListInvestmentsPerPageQuery(store)
+    val listProjectQuery = ListProjectsQuery(store)
+    val addInvestmentQuery = AddInvestmentQuery(store)
+    val fetchInvestmentQuery = FetchInvestmentQuery(store)
+
+    val router = Router(
+        htmlView,
+        listProjectsPerPageQuery,
+        listEntrepreneursPerPageQuery,
+        fetchEntrepreneurQuery,
+        addEntrepreneurQuery,
+        fetchProjectQuery,
+        listEntrepreneursQuery,
+        addProjectQuery,
+        listInvestmentsPerPageQuery,
+        listProjectQuery,
+        addInvestmentQuery,
+        fetchInvestmentQuery
+    )
+
     val printingApp: HttpHandler =
         Filter.NoOp
             .then(showErrorMessageFilter(renderer))
-            .then(application)
+            .then(router())
     val server = printingApp.asServer(Undertow(SERVER_PORT)).start()
     println("Server started on http://localhost:" + server.port())
 }

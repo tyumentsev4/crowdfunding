@@ -4,31 +4,29 @@ import org.http4k.core.HttpHandler
 import org.http4k.core.Request
 import org.http4k.core.Response
 import org.http4k.core.Status
-import org.http4k.core.removeQuery
 import org.http4k.core.with
 import org.http4k.lens.BiDiBodyLens
-import org.http4k.lens.LensFailure
 import org.http4k.lens.Query
 import org.http4k.lens.int
 import org.http4k.template.ViewModel
-import ru.ac.uniyar.domain.Store
+import ru.ac.uniyar.domain.queries.ListInvestmentsPerPageQuery
 import ru.ac.uniyar.models.InvestmentsListViewModel
 import ru.ac.uniyar.models.Paginator
 
-fun showInvestmentsList(htmlView: BiDiBodyLens<ViewModel>, store: Store): HttpHandler = handler@{ request: Request ->
-    val pageLens = Query.int().defaulted("page", 1)
-    val safeReturnResponse = Response(Status.FOUND).header(
-        "Location", request.uri.removeQuery("page").toString()
-    )
-    val pageNumber = try {
-        pageLens(request)
-    } catch (failure: LensFailure) {
-        return@handler safeReturnResponse.header("Error", failure.message)
+class ShowInvestmentsListHandler(
+    private val htmlView: BiDiBodyLens<ViewModel>,
+    private val listInvestmentsPerPageQuery: ListInvestmentsPerPageQuery
+) : HttpHandler {
+    companion object {
+        val pageLens = Query.int().defaulted("page", 1)
     }
-    val repository = store.investmentsRepository
-    val elements = repository.listInvestments(pageNumber)
-    val paginator = Paginator(elements.pageCount, pageNumber, request.uri)
-    val model = InvestmentsListViewModel(elements.values, paginator)
 
-    Response(Status.OK).with(htmlView of model)
+    override fun invoke(request: Request): Response {
+        val pageNumber = lensOrDefault(pageLens, request, 1)
+        val pagedResult = listInvestmentsPerPageQuery.invoke(pageNumber)
+        val paginator = Paginator(pagedResult.pageCount, pageNumber, request.uri)
+        val model = InvestmentsListViewModel(pagedResult.values, paginator)
+
+        return Response(Status.OK).with(htmlView of model)
+    }
 }
