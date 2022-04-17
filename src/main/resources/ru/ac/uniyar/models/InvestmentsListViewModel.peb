@@ -8,7 +8,38 @@
 
 {% block content %}
 <h2>Список инвестиций</h2>
-
+<form method="GET">
+    <div class="grid-x grid-padding-x align-bottom">
+        <div class="medium-4 cell">
+            Дата добавления
+            <label>От:
+                <input type="datetime-local" name="fromDateTime" value="{{ model.fromDateTime }}">
+            </label>
+        </div>
+        <div class="medium-4 cell">
+            <label>До:
+                <input type="datetime-local" name="toDateTime" value="{{ model.toDateTime }}">
+            </label>
+        </div>
+    </div>
+    <div class="grid-x grid-padding-x align-bottom">
+        <div class="medium-4 cell">
+            Сумма инвестиции
+            <label>От:
+                <input type="text" name="fromAmount" value="{{ model.fromAmount }}">
+            </label>
+        </div>
+        <div class="medium-4 cell">
+            <label>До:
+                <input type="text" name="toAmount" value="{{ model.toAmount }}">
+            </label>
+        </div>
+        <div class="medium-4 cell">
+            <input type="submit" value="Фильтровать" class="button">
+            <a href="/investments" class="button">Сбросить</a>
+        </div>
+    </div>
+</form>
 <div class="grid-x grid-padding-x">
     {% if model.investments.size == 0 %}
     <div class="medium-12 cell">
