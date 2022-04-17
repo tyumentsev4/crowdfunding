@@ -8,7 +8,6 @@ import org.http4k.core.with
 import org.http4k.lens.BiDiBodyLens
 import org.http4k.lens.Query
 import org.http4k.lens.boolean
-import org.http4k.lens.double
 import org.http4k.lens.int
 import org.http4k.template.ViewModel
 import ru.ac.uniyar.domain.queries.ListProjectsPerPageQuery
@@ -21,8 +20,8 @@ class ShowProjectsListHandler(
 ) : HttpHandler {
     companion object {
         private val pageLens = Query.int().defaulted("page", 1)
-        private val fromLens = Query.double().optional("fromFoundSize")
-        private val toLens = Query.double().optional("toFoundSize")
+        private val fromLens = Query.int().optional("fromFoundSize")
+        private val toLens = Query.int().optional("toFoundSize")
         private val isOpenLens = Query.boolean().optional("isOpen")
     }
 

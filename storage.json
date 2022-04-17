@@ -1,57 +1,19 @@
 {
   "projects" : [ {
-    "id" : "7826ec8c-70f6-41f3-a6c0-f4539d8e472d",
-    "addTime" : "2022-04-16T15:30:00",
+    "id" : "8c4d1411-7e22-47f1-8588-aed70e3323d8",
+    "addTime" : "2022-04-17T13:04:00",
     "name" : "Подарок для Боно",
-    "entrepreneurId" : "0cf5a4e0-4bb7-4831-ba2b-c86034ba0a1b",
-    "description" : "Подарок для БоноПодарок для БоноПодарок для БоноПодарок для Боно\r\nПодарок для БоноПодарок для Боно\r\n\r\n\r\nПодарок для БоноПодарок для Боно\r\n\r\n\r\n\r\nПодарок для Боно",
-    "fundSize" : 1E+3,
-    "fundraisingStart" : "2022-04-16T15:29:00",
-    "fundraisingEnd" : "2022-04-16T15:30:00",
-    "collectedAmount" : 200
-  }, {
-    "id" : "f44010f1-35f1-4536-91e7-241b0707600e",
-    "addTime" : "2022-04-16T15:32:00",
-    "name" : "Школа 1",
-    "entrepreneurId" : "0cf5a4e0-4bb7-4831-ba2b-c86034ba0a1b",
-    "description" : "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
-    "fundSize" : 1234,
-    "fundraisingStart" : "2022-04-16T15:32:00",
-    "fundraisingEnd" : "2022-04-30T15:32:00",
-    "collectedAmount" : 313
+    "entrepreneurId" : "5d05d337-eaf5-4c76-9ba7-7957e11d1385",
+    "description" : "\r\n\r\n\r\n",
+    "fundSize" : 10000,
+    "fundraisingStart" : "2022-04-11T13:04:00",
+    "fundraisingEnd" : "2022-04-25T13:04:00",
+    "collectedAmount" : 0
   } ],
   "entrepreneurs" : [ {
-    "id" : "0cf5a4e0-4bb7-4831-ba2b-c86034ba0a1b",
+    "id" : "5d05d337-eaf5-4c76-9ba7-7957e11d1385",
     "name" : "Хэмильтон Льюис",
-    "addTime" : "2022-04-16T15:29:00"
+    "addTime" : "2022-04-17T13:03:00"
   } ],
-  "investments" : [ {
-    "id" : "f3860c46-c161-4d06-8339-971c0e6f213b",
-    "addTime" : "2022-04-16T15:31:00",
-    "projectId" : "7826ec8c-70f6-41f3-a6c0-f4539d8e472d",
-    "investorName" : "Тото Вольф",
-    "contactInfo" : "mikeItsmy@email.mc",
-    "amount" : 100
-  }, {
-    "id" : "b0ee4582-1bb3-4b39-972c-4de470b8b57e",
-    "addTime" : "2022-04-16T15:34:00",
-    "projectId" : "f44010f1-35f1-4536-91e7-241b0707600e",
-    "investorName" : "Иванов",
-    "contactInfo" : "mikeItsmy@email.mc",
-    "amount" : 213
-  }, {
-    "id" : "03791e35-1630-4b77-964c-500f553e2b2d",
-    "addTime" : "2022-04-16T15:34:00",
-    "projectId" : "7826ec8c-70f6-41f3-a6c0-f4539d8e472d",
-    "investorName" : "Иванов",
-    "contactInfo" : "",
-    "amount" : 100
-  }, {
-    "id" : "a2d942db-0897-470b-912c-d40f0ba87478",
-    "addTime" : "2022-04-16T15:34:00",
-    "projectId" : "f44010f1-35f1-4536-91e7-241b0707600e",
-    "investorName" : "Иванов",
-    "contactInfo" : "",
-    "amount" : 100
-  } ]
+  "investments" : [ ]
 }

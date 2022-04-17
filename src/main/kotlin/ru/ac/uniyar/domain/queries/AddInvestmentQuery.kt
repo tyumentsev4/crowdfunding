@@ -15,7 +15,7 @@ class AddInvestmentQuery(store: Store) {
         projectId: UUID,
         investorName: String,
         contactInfo: String,
-        amount: Double
+        amount: Int
     ): UUID {
         val investment = Investment(
             EMPTY_UUID,

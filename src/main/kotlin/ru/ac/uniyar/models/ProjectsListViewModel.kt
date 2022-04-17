@@ -6,7 +6,7 @@ import ru.ac.uniyar.domain.storage.Project
 data class ProjectsListViewModel(
     val projects: Iterable<Project>,
     val paginator: Paginator,
-    val fromFoundSize: Double? = null,
-    val toFoundSize: Double? = null,
+    val fromFoundSize: Int? = null,
+    val toFoundSize: Int? = null,
     val isOpen: Boolean? = null
 ) : ViewModel

@@ -15,13 +15,13 @@ class ListInvestmentsPerPageQuery(store: Store) {
         pageNumber: Int,
         fromDateTime: LocalDateTime?,
         toDateTime: LocalDateTime?,
-        fromAmount: Double?,
-        toAmount: Double?
+        fromAmount: Int?,
+        toAmount: Int?
     ): PagedResult<Investment> {
         val baseFromDate = fromDateTime ?: LocalDateTime.MIN
         val baseToDate = toDateTime ?: LocalDateTime.MAX
-        val baseFromAmount = fromAmount ?: Double.MIN_VALUE
-        val baseToAmount = toAmount ?: Double.MAX_VALUE
+        val baseFromAmount = fromAmount ?: Int.MIN_VALUE
+        val baseToAmount = toAmount ?: Int.MAX_VALUE
         val list = repository.list().filter {
             it.addTime in baseFromDate..baseToDate &&
                 it.amount in baseFromAmount..baseToAmount

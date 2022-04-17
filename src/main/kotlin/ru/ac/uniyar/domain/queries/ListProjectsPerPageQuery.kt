@@ -12,12 +12,12 @@ class ListProjectsPerPageQuery(store: Store) {
 
     operator fun invoke(
         pageNumber: Int,
-        fromFoundSize: Double?,
-        toFoundSize: Double?,
+        fromFoundSize: Int?,
+        toFoundSize: Int?,
         isOpen: Boolean?
     ): PagedResult<Project> {
-        val baseFrom = fromFoundSize ?: Double.MIN_VALUE
-        val baseTo = toFoundSize ?: Double.MAX_VALUE
+        val baseFrom = fromFoundSize ?: Int.MIN_VALUE
+        val baseTo = toFoundSize ?: Int.MAX_VALUE
         var list = repository.list().filter {
             it.fundSize in baseFrom..baseTo
         }

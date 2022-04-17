@@ -15,7 +15,7 @@ class AddProjectQuery(store: Store) {
         name: String,
         entrepreneurId: UUID,
         description: String,
-        fundSize: Double,
+        fundSize: Int,
         fundraisingStart: LocalDateTime,
         fundraisingEnd: LocalDateTime,
     ): UUID {

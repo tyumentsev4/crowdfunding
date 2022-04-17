@@ -13,7 +13,7 @@ data class Investment(
     val projectId: UUID,
     val investorName: String,
     val contactInfo: String,
-    val amount: Double
+    val amount: Int
 ) {
     companion object {
         fun fromJson(node: JsonNode): Investment {
@@ -24,7 +24,7 @@ data class Investment(
                 UUID.fromString(jsonObject["projectId"].asText()),
                 jsonObject["investorName"].asText(),
                 jsonObject["contactInfo"].asText(),
-                jsonObject["amount"].asDouble()
+                jsonObject["amount"].asInt()
             )
         }
     }

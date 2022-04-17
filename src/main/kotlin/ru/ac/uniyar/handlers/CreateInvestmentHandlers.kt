@@ -10,7 +10,7 @@ import org.http4k.lens.BiDiBodyLens
 import org.http4k.lens.FormField
 import org.http4k.lens.Validator
 import org.http4k.lens.WebForm
-import org.http4k.lens.double
+import org.http4k.lens.int
 import org.http4k.lens.string
 import org.http4k.lens.uuid
 import org.http4k.lens.webForm
@@ -39,7 +39,7 @@ class AddInvestmentHandler(
         private val projectIdFormLens = FormField.uuid().required("projectId")
         private val investorFormLens = FormField.string().required("investorName")
         private val contactFormLens = FormField.string().required("contactInfo")
-        private val amountFormLens = FormField.double().required("amount")
+        private val amountFormLens = FormField.int().required("amount")
         private val investmentFormLens = Body.webForm(
             Validator.Feedback,
             projectIdFormLens,

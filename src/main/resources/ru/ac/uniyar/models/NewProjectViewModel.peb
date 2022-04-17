@@ -34,7 +34,7 @@
         <textarea name="description" cols="30" rows="10">{{ model.form.fields["description"] | first }}</textarea>
     </label>
     <label>Размер фонда
-        <input required type="text" name="fundSize" value="{{ model.form.fields["fundSize"] | first }}">
+        <input required type="number" min="0" name="fundSize" value="{{ model.form.fields["fundSize"] | first }}">
     </label>
     <label>Дата начала сбора средств
         <input required type="datetime-local" name="fundraisingStart" value="{{ model.form.fields["fundraisingStart"] | first }}">

@@ -8,7 +8,6 @@ import org.http4k.core.with
 import org.http4k.lens.BiDiBodyLens
 import org.http4k.lens.Query
 import org.http4k.lens.dateTime
-import org.http4k.lens.double
 import org.http4k.lens.int
 import org.http4k.template.ViewModel
 import ru.ac.uniyar.domain.queries.ListInvestmentsPerPageQuery
@@ -23,8 +22,8 @@ class ShowInvestmentsListHandler(
         val pageLens = Query.int().defaulted("page", 1)
         private val fromLens = Query.dateTime().optional("fromDateTime")
         private val toLens = Query.dateTime().optional("toDateTime")
-        private val fromAmount = Query.double().optional("fromAmount")
-        private val toAmount = Query.double().optional("toAmount")
+        private val fromAmount = Query.int().optional("fromAmount")
+        private val toAmount = Query.int().optional("toAmount")
     }
 
     override fun invoke(request: Request): Response {

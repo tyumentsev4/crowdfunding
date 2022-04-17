@@ -7,7 +7,7 @@ class Investments(val investments: List<Investment>) {
         private const val MAX_LENGTH_ON_PAGE = 5
     }
 
-    private fun getAmount(): Double {
+    private fun getAmount(): Int {
         return investments.sumOf { it.amount }
     }
 
@@ -25,11 +25,13 @@ class Investments(val investments: List<Investment>) {
         else investments
     }
 
-    fun isSuccessForecast(goal: Double, remainingDays: Int): Boolean {
+    fun isSuccessForecast(goal: Int, remainingDays: Int): Boolean {
         val days = mutableSetOf<LocalDate>()
         investments.forEach { investment ->
             days.add(investment.addTime.toLocalDate())
         }
+        if (days.size == 0)
+            return false
         return getAmount() / days.size * remainingDays >= goal
     }
 }

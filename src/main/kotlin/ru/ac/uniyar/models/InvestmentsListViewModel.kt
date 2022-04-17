@@ -9,6 +9,6 @@ data class InvestmentsListViewModel(
     val paginator: Paginator,
     val fromDateTime: LocalDateTime? = null,
     val toDateTime: LocalDateTime? = null,
-    val fromAmount: Double? = null,
-    val toAmount: Double? = null
+    val fromAmount: Int? = null,
+    val toAmount: Int? = null
 ) : ViewModel
