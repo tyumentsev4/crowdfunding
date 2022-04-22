@@ -1,26 +1,31 @@
 {% macro showPagination(paginator) %}
-    {% if paginator.canNavigate() %}
+{% if paginator.canNavigate() %}
 
-        <div class="small button-group cell">
+<nav aria-label="Pagination">
+    <ul class="pagination">
+        {% if paginator.canGoBackward() %}
+        <li class="pagination-previous"><a href="{{ paginator.previousPageLink() }}"></a></li>
+        {% else %}
+        <li class="pagination-previous disabled"></li>
+        {% endif %}
 
-            {% if paginator.canGoBackward() %}
-                <a class="button" href="{{ paginator.previousPageLink() }}"><</a>
-            {% endif %}
+        {% for prevPageLink in paginator.previousPageLinks() %}
+        <li><a href="{{ prevPageLink.second }}">{{ prevPageLink.first }}</a></li>
+        {% endfor %}
 
-            {% for prevPageLink in paginator.previousPageLinks() %}
-                <a class="button" href="{{ prevPageLink.second }}">{{ prevPageLink.first }}</a>
-            {% endfor %}
+        <li class="current">{{ paginator.currentPage }}</li>
 
-            <span class="button disabled">{{ paginator.currentPage }}</span>
+        {% for nextPageLink in paginator.nextPageLinks() %}
+        <li><a href="{{ nextPageLink.second }}">{{ nextPageLink.first }}</a></li>
+        {% endfor %}
 
-            {% for nextPageLink in paginator.nextPageLinks() %}
-                <a class="button" href="{{ nextPageLink.second }}">{{ nextPageLink.first }}</a>
-            {% endfor %}
-
-            {% if paginator.canGoFroward() %}
-                {% set nextPageLink = paginator.nextPageLink() %}
-                <a class="button" href="{{paginator.nextPageLink()}}">></a>
-            {% endif %}
-        </div>
-    {% endif %}
+        {% if paginator.canGoFroward() %}
+        {% set nextPageLink = paginator.nextPageLink() %}
+        <li class="pagination-next"><a href="{{paginator.nextPageLink()}}"></a></li>
+        {% else %}
+        <li class="pagination-next disabled"></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
 {% endmacro %}
