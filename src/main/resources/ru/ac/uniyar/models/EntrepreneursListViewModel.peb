@@ -51,7 +51,7 @@
     </div>
     {% endfor %}
 
-    {{ showPagination(model.paginator, "medium-12 cell") }}
+    {{ showPagination(model.paginator) }}
 </div>
 
 {% endblock %}

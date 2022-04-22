@@ -1,7 +1,7 @@
-{% macro showPagination(paginator, class) %}
+{% macro showPagination(paginator) %}
     {% if paginator.canNavigate() %}
 
-        <div class="{{ class }}">
+        <div class="small button-group cell">
 
             {% if paginator.canGoBackward() %}
                 <a class="button" href="{{ paginator.previousPageLink() }}"><</a>
@@ -11,7 +11,7 @@
                 <a class="button" href="{{ prevPageLink.second }}">{{ prevPageLink.first }}</a>
             {% endfor %}
 
-            <span class="button">{{ paginator.currentPage }}</span>
+            <span class="button disabled">{{ paginator.currentPage }}</span>
 
             {% for nextPageLink in paginator.nextPageLinks() %}
                 <a class="button" href="{{ nextPageLink.second }}">{{ nextPageLink.first }}</a>

@@ -1,5 +1,6 @@
 package ru.ac.uniyar.domain.queries
 
+import ru.ac.uniyar.domain.storage.Project
 import ru.ac.uniyar.domain.storage.Store
 import java.util.UUID
 
@@ -11,7 +12,7 @@ class FetchEntrepreneurQuery(store: Store) {
         val entrepreneur = entrepreneursRepository.fetch(id) ?: throw EntrepreneurFetchError("Not found")
         val hisProjects = projectsRepository.list()
             .filter { it.entrepreneurId == entrepreneur.id }
-            .sortedByDescending { it.fundraisingStart }
+            .sortedWith(compareBy(Project::fundraisingEnd, Project::fundraisingStart)).reversed()
         return EntrepreneurInfo(entrepreneur, hisProjects)
     }
 }

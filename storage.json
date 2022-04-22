@@ -9,6 +9,66 @@
     "fundraisingStart" : "2022-04-11T13:04:00",
     "fundraisingEnd" : "2022-04-25T13:04:00",
     "collectedAmount" : 1667
+  }, {
+    "id" : "53a09d08-fdeb-43fa-a3e4-712d7beb3e0b",
+    "addTime" : "2022-04-22T16:04:00",
+    "name" : "Школа 1",
+    "entrepreneurId" : "5d05d337-eaf5-4c76-9ba7-7957e11d1385",
+    "description" : "Кака",
+    "fundSize" : 1234,
+    "fundraisingStart" : "2022-04-22T16:04:00",
+    "fundraisingEnd" : "2022-04-30T16:04:00",
+    "collectedAmount" : 0
+  }, {
+    "id" : "c562b42b-49a0-48f2-bab0-d1c05f969a99",
+    "addTime" : "2022-04-22T16:05:00",
+    "name" : "Школа 2",
+    "entrepreneurId" : "5d05d337-eaf5-4c76-9ba7-7957e11d1385",
+    "description" : "",
+    "fundSize" : 13221,
+    "fundraisingStart" : "2022-04-18T16:05:00",
+    "fundraisingEnd" : "2022-04-21T16:05:00",
+    "collectedAmount" : 0
+  }, {
+    "id" : "211816b3-7202-40c5-8dca-bffb90f9111c",
+    "addTime" : "2022-04-22T16:34:00",
+    "name" : "22-04 - 30-04",
+    "entrepreneurId" : "dc0e6217-8709-4698-ab44-83d0c81014eb",
+    "description" : "",
+    "fundSize" : 1,
+    "fundraisingStart" : "2022-04-22T13:00:00",
+    "fundraisingEnd" : "2022-04-30T13:00:00",
+    "collectedAmount" : 0
+  }, {
+    "id" : "d20d1b45-3e9e-4d36-b004-a2f4b86e199f",
+    "addTime" : "2022-04-22T16:35:00",
+    "name" : "23-04 - 30-04",
+    "entrepreneurId" : "dc0e6217-8709-4698-ab44-83d0c81014eb",
+    "description" : "",
+    "fundSize" : 1,
+    "fundraisingStart" : "2022-04-23T13:00:00",
+    "fundraisingEnd" : "2022-04-30T13:00:00",
+    "collectedAmount" : 0
+  }, {
+    "id" : "9995397f-988a-45a7-8c85-80c2b6c5a4d2",
+    "addTime" : "2022-04-22T16:36:00",
+    "name" : "01-05 - 09-05",
+    "entrepreneurId" : "5d05d337-eaf5-4c76-9ba7-7957e11d1385",
+    "description" : "",
+    "fundSize" : 1,
+    "fundraisingStart" : "2022-05-01T13:00:00",
+    "fundraisingEnd" : "2022-05-09T13:00:00",
+    "collectedAmount" : 0
+  }, {
+    "id" : "806598a4-0f41-434e-9f7d-c2aea87d496d",
+    "addTime" : "2022-04-22T16:37:00",
+    "name" : "22-04 - 22-07",
+    "entrepreneurId" : "dc0e6217-8709-4698-ab44-83d0c81014eb",
+    "description" : "",
+    "fundSize" : 1,
+    "fundraisingStart" : "2022-04-22T13:00:00",
+    "fundraisingEnd" : "2022-07-22T13:00:00",
+    "collectedAmount" : 0
   } ],
   "entrepreneurs" : [ {
     "id" : "5d05d337-eaf5-4c76-9ba7-7957e11d1385",

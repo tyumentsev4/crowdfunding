@@ -69,7 +69,7 @@ class AddProjectHandler(
                 )
                 return Response(Status.FOUND).header("Location", "/projects")
             } catch (_: StartTimeShouldBeLower) {
-                val newErrors = webForm.errors + Invalid(fundraisingStartFormLens.meta.copy(description = "Invalid"))
+                val newErrors = webForm.errors + Invalid(fundraisingStartFormLens.meta)
                 webForm = webForm.copy(errors = newErrors)
             }
         }
