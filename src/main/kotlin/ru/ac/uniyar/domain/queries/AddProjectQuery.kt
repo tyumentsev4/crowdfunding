@@ -21,7 +21,8 @@ class AddProjectQuery(store: Store) {
     ): UUID {
         if (fundraisingEnd <= fundraisingStart)
             throw StartTimeShouldBeLower()
-
+        if (fundSize <= 0)
+            throw FundSizeShouldBePositiveInt()
         return projectsRepository.add(
             Project(
                 EMPTY_UUID,
@@ -37,4 +38,6 @@ class AddProjectQuery(store: Store) {
     }
 }
 
-class StartTimeShouldBeLower : java.lang.RuntimeException("Start date should be lower")
+class StartTimeShouldBeLower : RuntimeException("Start date should be lower")
+
+class FundSizeShouldBePositiveInt : RuntimeException("Fund size should be positive int")

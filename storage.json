@@ -8,12 +8,90 @@
     "fundSize" : 10000,
     "fundraisingStart" : "2022-04-11T13:04:00",
     "fundraisingEnd" : "2022-04-25T13:04:00",
-    "collectedAmount" : 0
+    "collectedAmount" : 1667
   } ],
   "entrepreneurs" : [ {
     "id" : "5d05d337-eaf5-4c76-9ba7-7957e11d1385",
     "name" : "Хэмильтон Льюис",
     "addTime" : "2022-04-17T13:03:00"
+  }, {
+    "id" : "2f6ead03-8b8e-49e7-80e0-295df9add9f5",
+    "name" : "   ",
+    "addTime" : "2022-04-18T14:45:00"
+  }, {
+    "id" : "dbd9cf0e-2c87-4b07-98b3-b38aae249f55",
+    "name" : "   ",
+    "addTime" : "2022-04-18T14:45:00"
+  }, {
+    "id" : "aa3936e3-7f48-4681-aed4-24caea015608",
+    "name" : "Лоуренс Стролл",
+    "addTime" : "2022-04-22T15:31:00"
+  }, {
+    "id" : "97db8079-15c6-4de9-919f-033de932fc7f",
+    "name" : "Марк Авен",
+    "addTime" : "2022-04-22T15:31:00"
+  }, {
+    "id" : "dc0e6217-8709-4698-ab44-83d0c81014eb",
+    "name" : "Дмитрий Мазепин",
+    "addTime" : "2022-04-22T15:32:00"
+  }, {
+    "id" : "aa894235-c42a-473c-a878-4d1ec1f0352f",
+    "name" : "Сергей Смирнов",
+    "addTime" : "2022-04-22T15:32:00"
+  }, {
+    "id" : "4fc84029-8ffb-4d67-98ab-3d2d0fb9efdd",
+    "name" : "Слава Карелин",
+    "addTime" : "2022-04-22T15:32:00"
+  }, {
+    "id" : "1b39cca9-e769-4e2a-ae96-47e4b57baa13",
+    "name" : "Константин Лавен",
+    "addTime" : "2022-04-22T15:32:00"
+  }, {
+    "id" : "962e1510-0fa9-475f-951c-1ef1250bed4c",
+    "name" : "Карлос Сайнц",
+    "addTime" : "2022-04-22T15:35:00"
   } ],
-  "investments" : [ ]
+  "investments" : [ {
+    "id" : "1f738ca4-5dba-4290-9e84-f7b21cfb8f85",
+    "addTime" : "2022-04-18T14:14:00",
+    "projectId" : "8c4d1411-7e22-47f1-8588-aed70e3323d8",
+    "investorName" : "Иванов",
+    "contactInfo" : "",
+    "amount" : 213
+  }, {
+    "id" : "4757abed-8b76-486a-ad0f-71ee4b824d66",
+    "addTime" : "2022-04-18T14:15:00",
+    "projectId" : "8c4d1411-7e22-47f1-8588-aed70e3323d8",
+    "investorName" : "Карпов Алексей Викторович",
+    "contactInfo" : "",
+    "amount" : 12
+  }, {
+    "id" : "76cd39c9-299c-4c46-87a5-5eab4689e933",
+    "addTime" : "2022-04-18T14:15:00",
+    "projectId" : "8c4d1411-7e22-47f1-8588-aed70e3323d8",
+    "investorName" : "Тото Вольф",
+    "contactInfo" : "",
+    "amount" : 1321
+  }, {
+    "id" : "74610b7b-7eb0-41b9-9d21-a3cd8002fa78",
+    "addTime" : "2022-04-18T14:16:00",
+    "projectId" : "8c4d1411-7e22-47f1-8588-aed70e3323d8",
+    "investorName" : "Карпов Алексей Викторович",
+    "contactInfo" : "mikeItsmy@email.mc",
+    "amount" : 100
+  }, {
+    "id" : "5c32abae-7e14-4efd-85c4-8b57a3b2cdcb",
+    "addTime" : "2022-04-18T14:17:00",
+    "projectId" : "8c4d1411-7e22-47f1-8588-aed70e3323d8",
+    "investorName" : "Тото Вольф",
+    "contactInfo" : "",
+    "amount" : 20
+  }, {
+    "id" : "7572d2fb-a195-4399-8360-536f52dd20a7",
+    "addTime" : "2022-04-18T14:17:00",
+    "projectId" : "8c4d1411-7e22-47f1-8588-aed70e3323d8",
+    "investorName" : "Карпов Алексей Викторович",
+    "contactInfo" : "",
+    "amount" : 1
+  } ]
 }

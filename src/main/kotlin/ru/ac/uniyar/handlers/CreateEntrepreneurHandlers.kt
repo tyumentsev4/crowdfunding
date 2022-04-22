@@ -10,7 +10,7 @@ import org.http4k.lens.BiDiBodyLens
 import org.http4k.lens.FormField
 import org.http4k.lens.Validator
 import org.http4k.lens.WebForm
-import org.http4k.lens.string
+import org.http4k.lens.nonEmptyString
 import org.http4k.lens.webForm
 import org.http4k.template.ViewModel
 import ru.ac.uniyar.domain.queries.AddEntrepreneurQuery
@@ -27,7 +27,7 @@ class AddEntrepreneurHandler(
     private val addEntrepreneurQuery: AddEntrepreneurQuery
 ) : HttpHandler {
     companion object {
-        private val nameFormLens = FormField.string().required("name")
+        private val nameFormLens = FormField.nonEmptyString().required("name")
         val entrepreneurFormLens = Body.webForm(
             Validator.Feedback,
             nameFormLens

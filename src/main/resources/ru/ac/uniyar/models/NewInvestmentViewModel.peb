@@ -34,7 +34,7 @@
         <input type="email" name="contactInfo" value="{{ model.form.fields["contactInfo"] | first }}">
     </label>
     <label>Сумма
-        <input required type="number" min="0" name="amount" value="{{ model.form.fields["amount"] | first }}">
+        <input required type="number" min="1" name="amount" value="{{ model.form.fields["amount"] | first }}">
     </label>
     <input type="submit" value="Добавить" class="button">
 </form>

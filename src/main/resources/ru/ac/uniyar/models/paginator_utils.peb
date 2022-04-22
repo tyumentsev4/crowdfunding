@@ -4,22 +4,22 @@
         <div class="{{ class }}">
 
             {% if paginator.canGoBackward() %}
-                <a href="{{ paginator.previousPageLink() }}"><</a>
+                <a class="button" href="{{ paginator.previousPageLink() }}"><</a>
             {% endif %}
 
             {% for prevPageLink in paginator.previousPageLinks() %}
-                <a href="{{ prevPageLink.second }}">{{ prevPageLink.first }}</a>
+                <a class="button" href="{{ prevPageLink.second }}">{{ prevPageLink.first }}</a>
             {% endfor %}
 
-            {{ paginator.currentPage }}
+            <span class="button">{{ paginator.currentPage }}</span>
 
             {% for nextPageLink in paginator.nextPageLinks() %}
-                <a href="{{ nextPageLink.second }}">{{ nextPageLink.first }}</a>
+                <a class="button" href="{{ nextPageLink.second }}">{{ nextPageLink.first }}</a>
             {% endfor %}
 
             {% if paginator.canGoFroward() %}
                 {% set nextPageLink = paginator.nextPageLink() %}
-                <a href="{{paginator.nextPageLink()}}">></a>
+                <a class="button" href="{{paginator.nextPageLink()}}">></a>
             {% endif %}
         </div>
     {% endif %}

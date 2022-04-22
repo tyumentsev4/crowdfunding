@@ -17,6 +17,8 @@ class AddInvestmentQuery(store: Store) {
         contactInfo: String,
         amount: Int
     ): UUID {
+        if (amount <= 0)
+            throw AmountShouldBePositiveInt()
         val investment = Investment(
             EMPTY_UUID,
             LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
@@ -30,3 +32,5 @@ class AddInvestmentQuery(store: Store) {
         return investmentsRepository.add(investment)
     }
 }
+
+class AmountShouldBePositiveInt : RuntimeException("Amount should be positive int")

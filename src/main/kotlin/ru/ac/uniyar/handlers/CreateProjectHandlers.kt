@@ -13,6 +13,7 @@ import org.http4k.lens.Validator
 import org.http4k.lens.WebForm
 import org.http4k.lens.dateTime
 import org.http4k.lens.int
+import org.http4k.lens.nonEmptyString
 import org.http4k.lens.string
 import org.http4k.lens.uuid
 import org.http4k.lens.webForm
@@ -38,7 +39,7 @@ class AddProjectHandler(
     private val addProjectQuery: AddProjectQuery
 ) : HttpHandler {
     companion object {
-        private val nameFormLens = FormField.string().required("name")
+        private val nameFormLens = FormField.nonEmptyString().required("name")
         private val entrepreneurIdFormLens = FormField.uuid().required("entrepreneur")
         private val descriptionFormLens = FormField.string().required("description")
         private val fundSizeFormLens = FormField.int().required("fundSize")

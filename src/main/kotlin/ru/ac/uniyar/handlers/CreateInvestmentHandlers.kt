@@ -11,6 +11,7 @@ import org.http4k.lens.FormField
 import org.http4k.lens.Validator
 import org.http4k.lens.WebForm
 import org.http4k.lens.int
+import org.http4k.lens.nonEmptyString
 import org.http4k.lens.string
 import org.http4k.lens.uuid
 import org.http4k.lens.webForm
@@ -37,7 +38,7 @@ class AddInvestmentHandler(
 ) : HttpHandler {
     companion object {
         private val projectIdFormLens = FormField.uuid().required("projectId")
-        private val investorFormLens = FormField.string().required("investorName")
+        private val investorFormLens = FormField.nonEmptyString().required("investorName")
         private val contactFormLens = FormField.string().required("contactInfo")
         private val amountFormLens = FormField.int().required("amount")
         private val investmentFormLens = Body.webForm(
