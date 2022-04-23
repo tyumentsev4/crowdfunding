@@ -19,24 +19,23 @@ import org.http4k.lens.webForm
 import org.http4k.template.ViewModel
 import ru.ac.uniyar.domain.queries.AddInvestmentQuery
 import ru.ac.uniyar.domain.queries.AmountShouldBePositiveInt
-import ru.ac.uniyar.domain.queries.ListProjectsQuery
-import ru.ac.uniyar.domain.queries.ProjectFetchError
+import ru.ac.uniyar.domain.queries.ListOpenProjectsQuery
 import ru.ac.uniyar.domain.queries.ProjectNotFound
 import ru.ac.uniyar.models.NewInvestmentViewModel
 
 class ShowNewInvestmentFormHandler(
     private val htmlView: BiDiBodyLens<ViewModel>,
-    private val listProjectsQuery: ListProjectsQuery
+    private val listOpenProjectsQuery: ListOpenProjectsQuery
 ) : HttpHandler {
     override fun invoke(request: Request): Response {
-        val projects = listProjectsQuery.invoke()
+        val projects = listOpenProjectsQuery.invoke()
         return Response(Status.OK).with(htmlView of NewInvestmentViewModel(WebForm(), projects))
     }
 }
 
 class AddInvestmentHandler(
     private val htmlView: BiDiBodyLens<ViewModel>,
-    private val listProjectsQuery: ListProjectsQuery,
+    private val listOpenProjectsQuery: ListOpenProjectsQuery,
     private val addInvestmentQuery: AddInvestmentQuery
 ) : HttpHandler {
     companion object {
@@ -72,7 +71,7 @@ class AddInvestmentHandler(
                 webForm.copy(errors = newErrors)
             }
         }
-        val projects = listProjectsQuery.invoke()
+        val projects = listOpenProjectsQuery.invoke()
         return Response(Status.OK).with(htmlView of NewInvestmentViewModel(webForm, projects))
     }
 }

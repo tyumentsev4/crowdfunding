@@ -34,9 +34,3 @@ class AddProjectQuery(store: Store) {
         )
     }
 }
-
-class StartTimeShouldBeLower : RuntimeException("Start date should be lower")
-
-class FundSizeShouldBePositiveInt : RuntimeException("Fund size should be positive int")
-
-class EntrepreneurNotFoundError : RuntimeException("Entrepreneur not found")

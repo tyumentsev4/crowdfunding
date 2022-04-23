@@ -13,5 +13,3 @@ class FetchInvestmentQuery(store: Store) {
         return InvestmentInfo(investment, project)
     }
 }
-
-class InvestmentFetchError(message: String) : RuntimeException(message)

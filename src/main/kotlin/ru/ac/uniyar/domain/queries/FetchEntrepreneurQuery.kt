@@ -16,5 +16,3 @@ class FetchEntrepreneurQuery(store: Store) {
         return EntrepreneurInfo(entrepreneur, hisProjects)
     }
 }
-
-class EntrepreneurFetchError(message: String) : RuntimeException(message)

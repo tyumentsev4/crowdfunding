@@ -63,9 +63,9 @@ data class Project(
     }
 
     fun isSuccessful(): Boolean? {
-        if (isOpen())
+        if ((fundraisingStart > LocalDateTime.now()) || (isOpen() && collectedAmount < fundSize))
             return null
-        return collectedAmount >= fundSize
+        return (collectedAmount >= fundSize)
     }
 
     fun necessaryInvestments(): Int {

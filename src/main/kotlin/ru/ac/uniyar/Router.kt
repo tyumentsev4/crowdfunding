@@ -17,8 +17,8 @@ import ru.ac.uniyar.domain.queries.FetchProjectQuery
 import ru.ac.uniyar.domain.queries.ListEntrepreneursPerPageQuery
 import ru.ac.uniyar.domain.queries.ListEntrepreneursQuery
 import ru.ac.uniyar.domain.queries.ListInvestmentsPerPageQuery
+import ru.ac.uniyar.domain.queries.ListOpenProjectsQuery
 import ru.ac.uniyar.domain.queries.ListProjectsPerPageQuery
-import ru.ac.uniyar.domain.queries.ListProjectsQuery
 import ru.ac.uniyar.handlers.AddEntrepreneurHandler
 import ru.ac.uniyar.handlers.AddInvestmentHandler
 import ru.ac.uniyar.handlers.AddProjectHandler
@@ -44,7 +44,7 @@ class Router(
     private val listEntrepreneursQuery: ListEntrepreneursQuery,
     private val addProjectQuery: AddProjectQuery,
     private val listInvestmentsPerPageQuery: ListInvestmentsPerPageQuery,
-    private val listProjectsQuery: ListProjectsQuery,
+    private val listOpenProjectsQuery: ListOpenProjectsQuery,
     private val addInvestmentQuery: AddInvestmentQuery,
     private val fetchInvestmentQuery: FetchInvestmentQuery
 
@@ -60,8 +60,12 @@ class Router(
         "/projects/new" bind Method.POST to AddProjectHandler(htmlView, listEntrepreneursQuery, addProjectQuery),
         "/projects/{id}" bind Method.GET to ShowProjectHandler(htmlView, fetchProjectQuery),
         "/investments" bind Method.GET to ShowInvestmentsListHandler(htmlView, listInvestmentsPerPageQuery),
-        "/investments/new" bind Method.GET to ShowNewInvestmentFormHandler(htmlView, listProjectsQuery),
-        "/investments/new" bind Method.POST to AddInvestmentHandler(htmlView, listProjectsQuery, addInvestmentQuery),
+        "/investments/new" bind Method.GET to ShowNewInvestmentFormHandler(htmlView, listOpenProjectsQuery),
+        "/investments/new" bind Method.POST to AddInvestmentHandler(
+            htmlView,
+            listOpenProjectsQuery,
+            addInvestmentQuery
+        ),
         "/investments/{id}" bind Method.GET to ShowInvestmentHandler(htmlView, fetchInvestmentQuery),
         static(ResourceLoader.Classpath("/ru/ac/uniyar/public/")),
     )

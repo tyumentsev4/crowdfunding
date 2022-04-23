@@ -82,10 +82,12 @@
             <tr>
                 <th>Статус проекта</th>
                 <td>
-                    {% if model.project.isSuccessful() %}
+                    {% if model.project.isSuccessful() == true %}
                         Успешен
-                    {% else %}
+                    {% elseif model.project.isSuccessful() == false %}
                         Не успешен
+                    {% else %}
+                        Не начат
                     {% endif %}
                 </td>
             </tr>

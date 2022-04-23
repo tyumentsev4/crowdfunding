@@ -19,8 +19,8 @@ import ru.ac.uniyar.domain.queries.FetchProjectQuery
 import ru.ac.uniyar.domain.queries.ListEntrepreneursPerPageQuery
 import ru.ac.uniyar.domain.queries.ListEntrepreneursQuery
 import ru.ac.uniyar.domain.queries.ListInvestmentsPerPageQuery
+import ru.ac.uniyar.domain.queries.ListOpenProjectsQuery
 import ru.ac.uniyar.domain.queries.ListProjectsPerPageQuery
-import ru.ac.uniyar.domain.queries.ListProjectsQuery
 import ru.ac.uniyar.domain.storage.Store
 import ru.ac.uniyar.filters.showErrorMessageFilter
 import kotlin.io.path.Path
@@ -40,7 +40,7 @@ fun main() {
     val listEntrepreneursQuery = ListEntrepreneursQuery(store)
     val addProjectQuery = AddProjectQuery(store)
     val listInvestmentsPerPageQuery = ListInvestmentsPerPageQuery(store)
-    val listProjectQuery = ListProjectsQuery(store)
+    val listProjectQuery = ListOpenProjectsQuery(store)
     val addInvestmentQuery = AddInvestmentQuery(store)
     val fetchInvestmentQuery = FetchInvestmentQuery(store)
 

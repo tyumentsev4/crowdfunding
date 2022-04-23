@@ -34,7 +34,3 @@ class AddInvestmentQuery(store: Store) {
         return investmentsRepository.add(investment)
     }
 }
-
-class AmountShouldBePositiveInt : RuntimeException("Amount should be positive int")
-
-class ProjectNotFound : RuntimeException("Project not found")

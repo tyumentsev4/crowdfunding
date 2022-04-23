@@ -26,12 +26,12 @@
         <div class="medium-4 cell">
             Сумма инвестиции
             <label>От:
-                <input type="text" name="fromAmount" value="{{ model.fromAmount }}">
+                <input type="number" min="0" name="fromAmount" value="{{ model.fromAmount }}">
             </label>
         </div>
         <div class="medium-4 cell">
             <label>До:
-                <input type="text" name="toAmount" value="{{ model.toAmount }}">
+                <input type="number" min="0" name="toAmount" value="{{ model.toAmount }}">
             </label>
         </div>
         <div class="medium-4 cell">

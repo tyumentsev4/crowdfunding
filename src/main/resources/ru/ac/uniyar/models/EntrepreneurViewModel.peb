@@ -18,11 +18,9 @@
                 {% for project in model.projects %}
                     <li>
                         <a href="/projects/{{ project.id }}">{{ project.name }}</a>
-                        {% if project.isSuccessful() is null %}
-                            - открыт
-                        {% elseif project.isSuccessful() %}
+                        {% if project.isSuccessful() == true %}
                             - успешен
-                        {% else %}
+                        {% elseif project.isSuccessful() == false %}
                             - провален
                         {% endif %}
                     </li>
