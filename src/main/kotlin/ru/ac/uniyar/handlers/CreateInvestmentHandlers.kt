@@ -8,6 +8,7 @@ import org.http4k.core.Status
 import org.http4k.core.with
 import org.http4k.lens.BiDiBodyLens
 import org.http4k.lens.FormField
+import org.http4k.lens.Invalid
 import org.http4k.lens.Validator
 import org.http4k.lens.WebForm
 import org.http4k.lens.int
@@ -17,8 +18,10 @@ import org.http4k.lens.uuid
 import org.http4k.lens.webForm
 import org.http4k.template.ViewModel
 import ru.ac.uniyar.domain.queries.AddInvestmentQuery
+import ru.ac.uniyar.domain.queries.AmountShouldBePositiveInt
 import ru.ac.uniyar.domain.queries.ListProjectsQuery
 import ru.ac.uniyar.domain.queries.ProjectFetchError
+import ru.ac.uniyar.domain.queries.ProjectNotFound
 import ru.ac.uniyar.models.NewInvestmentViewModel
 
 class ShowNewInvestmentFormHandler(
@@ -51,18 +54,22 @@ class AddInvestmentHandler(
     }
 
     override fun invoke(request: Request): Response {
-        val webForm = investmentFormLens(request)
+        var webForm = investmentFormLens(request)
         if (webForm.errors.isEmpty()) {
-            return try {
+            webForm = try {
                 addInvestmentQuery.invoke(
                     projectIdFormLens(webForm),
                     investorFormLens(webForm),
                     contactFormLens(webForm),
                     amountFormLens(webForm)
                 )
-                Response(Status.FOUND).header("Location", "/investments")
-            } catch (_: ProjectFetchError) {
-                Response(Status.BAD_REQUEST)
+                return Response(Status.FOUND).header("Location", "/investments")
+            } catch (_: ProjectNotFound) {
+                val newErrors = webForm.errors + Invalid(projectIdFormLens.meta)
+                webForm.copy(errors = newErrors)
+            } catch (_: AmountShouldBePositiveInt) {
+                val newErrors = webForm.errors + Invalid(amountFormLens.meta)
+                webForm.copy(errors = newErrors)
             }
         }
         val projects = listProjectsQuery.invoke()

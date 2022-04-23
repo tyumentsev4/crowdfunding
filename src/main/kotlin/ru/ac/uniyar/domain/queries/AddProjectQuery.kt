@@ -3,36 +3,33 @@ package ru.ac.uniyar.domain.queries
 import ru.ac.uniyar.domain.storage.EMPTY_UUID
 import ru.ac.uniyar.domain.storage.Project
 import ru.ac.uniyar.domain.storage.Store
+import ru.ac.uniyar.handlers.ProjectFromForm
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 import java.util.UUID
 
 class AddProjectQuery(store: Store) {
     private val projectsRepository = store.projectsRepository
+    private val entrepreneursRepository = store.entrepreneursRepository
 
-    @Suppress("LongParameterList")
-    operator fun invoke(
-        name: String,
-        entrepreneurId: UUID,
-        description: String,
-        fundSize: Int,
-        fundraisingStart: LocalDateTime,
-        fundraisingEnd: LocalDateTime,
-    ): UUID {
-        if (fundraisingEnd <= fundraisingStart)
+    @Suppress("ThrowsCount")
+    operator fun invoke(projectFromForm: ProjectFromForm): UUID {
+        if (entrepreneursRepository.fetch(projectFromForm.entrepreneurId) == null)
+            throw EntrepreneurNotFoundError()
+        if (projectFromForm.fundraisingEnd <= projectFromForm.fundraisingStart)
             throw StartTimeShouldBeLower()
-        if (fundSize <= 0)
+        if (projectFromForm.fundSize <= 0)
             throw FundSizeShouldBePositiveInt()
         return projectsRepository.add(
             Project(
                 EMPTY_UUID,
                 LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
-                name,
-                entrepreneurId,
-                description,
-                fundSize,
-                fundraisingStart,
-                fundraisingEnd
+                projectFromForm.name,
+                projectFromForm.entrepreneurId,
+                projectFromForm.description,
+                projectFromForm.fundSize,
+                projectFromForm.fundraisingStart,
+                projectFromForm.fundraisingEnd
             )
         )
     }
@@ -41,3 +38,5 @@ class AddProjectQuery(store: Store) {
 class StartTimeShouldBeLower : RuntimeException("Start date should be lower")
 
 class FundSizeShouldBePositiveInt : RuntimeException("Fund size should be positive int")
+
+class EntrepreneurNotFoundError : RuntimeException("Entrepreneur not found")

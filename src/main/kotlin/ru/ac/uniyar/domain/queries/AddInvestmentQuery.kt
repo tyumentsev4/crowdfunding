@@ -17,6 +17,8 @@ class AddInvestmentQuery(store: Store) {
         contactInfo: String,
         amount: Int
     ): UUID {
+        if (projectsRepository.fetch(projectId) == null)
+            throw ProjectNotFound()
         if (amount <= 0)
             throw AmountShouldBePositiveInt()
         val investment = Investment(
@@ -27,10 +29,12 @@ class AddInvestmentQuery(store: Store) {
             contactInfo,
             amount
         )
-        val project = projectsRepository.fetch(investment.projectId) ?: throw ProjectFetchError("Not found")
+        val project = projectsRepository.fetch(investment.projectId)!!
         projectsRepository.update(project.copy(collectedAmount = project.collectedAmount + investment.amount))
         return investmentsRepository.add(investment)
     }
 }
 
 class AmountShouldBePositiveInt : RuntimeException("Amount should be positive int")
+
+class ProjectNotFound : RuntimeException("Project not found")

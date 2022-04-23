@@ -19,9 +19,13 @@ import org.http4k.lens.uuid
 import org.http4k.lens.webForm
 import org.http4k.template.ViewModel
 import ru.ac.uniyar.domain.queries.AddProjectQuery
+import ru.ac.uniyar.domain.queries.EntrepreneurNotFoundError
+import ru.ac.uniyar.domain.queries.FundSizeShouldBePositiveInt
 import ru.ac.uniyar.domain.queries.ListEntrepreneursQuery
 import ru.ac.uniyar.domain.queries.StartTimeShouldBeLower
 import ru.ac.uniyar.models.NewProjectViewModel
+import java.time.LocalDateTime
+import java.util.UUID
 
 class ShowNewProjectFormHandler(
     private val htmlView: BiDiBodyLens<ViewModel>,
@@ -32,6 +36,15 @@ class ShowNewProjectFormHandler(
         return Response(Status.OK).with(htmlView of NewProjectViewModel(WebForm(), entrepreneurs))
     }
 }
+
+data class ProjectFromForm(
+    val name: String,
+    val entrepreneurId: UUID,
+    val description: String,
+    val fundSize: Int,
+    val fundraisingStart: LocalDateTime,
+    val fundraisingEnd: LocalDateTime
+)
 
 class AddProjectHandler(
     private val htmlView: BiDiBodyLens<ViewModel>,
@@ -58,19 +71,27 @@ class AddProjectHandler(
     override fun invoke(request: Request): Response {
         var webForm = projectFormLens(request)
         if (webForm.errors.isEmpty()) {
-            try {
+            webForm = try {
                 addProjectQuery.invoke(
-                    nameFormLens(webForm),
-                    entrepreneurIdFormLens(webForm),
-                    descriptionFormLens(webForm),
-                    fundSizeFormLens(webForm),
-                    fundraisingStartFormLens(webForm),
-                    fundraisingEndFormLens(webForm)
+                    ProjectFromForm(
+                        nameFormLens(webForm),
+                        entrepreneurIdFormLens(webForm),
+                        descriptionFormLens(webForm),
+                        fundSizeFormLens(webForm),
+                        fundraisingStartFormLens(webForm),
+                        fundraisingEndFormLens(webForm)
+                    )
                 )
                 return Response(Status.FOUND).header("Location", "/projects")
             } catch (_: StartTimeShouldBeLower) {
                 val newErrors = webForm.errors + Invalid(fundraisingStartFormLens.meta)
-                webForm = webForm.copy(errors = newErrors)
+                webForm.copy(errors = newErrors)
+            } catch (_: FundSizeShouldBePositiveInt) {
+                val newErrors = webForm.errors + Invalid(fundSizeFormLens.meta)
+                webForm.copy(errors = newErrors)
+            } catch (_: EntrepreneurNotFoundError) {
+                val newErrors = webForm.errors + Invalid(entrepreneurIdFormLens.meta)
+                webForm.copy(errors = newErrors)
             }
         }
         val entrepreneurs = listEntrepreneursQuery.invoke()
