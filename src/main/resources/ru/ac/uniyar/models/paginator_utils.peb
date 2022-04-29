@@ -1,7 +1,7 @@
 {% macro showPagination(paginator) %}
 {% if paginator.canNavigate() %}
 
-<nav aria-label="Pagination">
+<nav class="text-center cell" aria-label="Pagination">
     <ul class="pagination">
         {% if paginator.canGoBackward() %}
         <li class="pagination-previous"><a href="{{ paginator.previousPageLink() }}"></a></li>
