@@ -28,7 +28,7 @@
         </select>
     </label>
     <label>ФИО инвестора
-        <input required type="text" name="investorName" value="{{ model.form.fields["investorName"] | first }}">
+        <input type="text" name="investorName" value="{{ model.form.fields["investorName"] | first }}">
     </label>
     <label>Email
         <input type="email" name="contactInfo" value="{{ model.form.fields["contactInfo"] | first }}">

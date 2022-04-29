@@ -1,5 +1,6 @@
-package ru.ac.uniyar.domain.storage
+package ru.ac.uniyar.domain.queries
 
+import ru.ac.uniyar.domain.storage.Investment
 import java.time.LocalDate
 
 class Investments(val investments: List<Investment>) {

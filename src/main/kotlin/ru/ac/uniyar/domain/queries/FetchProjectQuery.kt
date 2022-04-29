@@ -1,6 +1,5 @@
 package ru.ac.uniyar.domain.queries
 
-import ru.ac.uniyar.domain.storage.Investments
 import ru.ac.uniyar.domain.storage.Store
 import java.util.UUID
 
