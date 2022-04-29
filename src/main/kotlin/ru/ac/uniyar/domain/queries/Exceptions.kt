@@ -13,3 +13,5 @@ class EntrepreneurNotFoundError : RuntimeException("Entrepreneur not found")
 class EntrepreneurFetchError(message: String) : RuntimeException(message)
 
 class InvestmentFetchError(message: String) : RuntimeException(message)
+
+class ProjectFetchError(message: String) : RuntimeException(message)

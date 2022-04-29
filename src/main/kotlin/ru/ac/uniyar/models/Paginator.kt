@@ -5,10 +5,15 @@ import org.http4k.core.query
 import org.http4k.core.removeQuery
 
 class Paginator(
-    val pageCount: Int,
-    val pageNumber: Int,
-    val uri: Uri,
+    private val pageCount: Int,
+    private val pageNumber: Int,
+    private val uri: Uri,
 ) {
+    data class PageLink(
+        val number: Int,
+        val uri: Uri
+    )
+
     fun canNavigate(): Boolean {
         return pageCount > 1
     }
@@ -25,22 +30,18 @@ class Paginator(
         return uri.removeQuery("page").query("page", (pageNumber - 1).toString()).toString()
     }
 
-    fun previousPageLinks(): Iterable<Pair<Int, Uri>> {
-        val res = ArrayList<Pair<Int, Uri>>()
-        for (i in 1 until pageNumber)
-            res.add(Pair(i, uri.removeQuery("page").query("page", i.toString())))
-        return res.asIterable()
+    fun previousPageLinks(): List<PageLink> {
+        val range = 1.until(pageNumber)
+        return range.map { PageLink(it, uri.removeQuery("page").query("page", it.toString())) }
     }
 
     fun nextPageLink(): String {
         return uri.removeQuery("page").query("page", (pageNumber + 1).toString()).toString()
     }
 
-    fun nextPageLinks(): Iterable<Pair<Int, Uri>> {
-        val res = ArrayList<Pair<Int, Uri>>()
-        for (i in pageNumber + 1..pageCount)
-            res.add(Pair(i, uri.removeQuery("page").query("page", i.toString())))
-        return res.asIterable()
+    fun nextPageLinks(): List<PageLink> {
+        val range = pageNumber.inc().rangeTo(pageCount)
+        return range.map { PageLink(it, uri.removeQuery("page").query("page", it.toString())) }
     }
 
     fun currentPage(): Int {

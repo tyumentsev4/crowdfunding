@@ -8,7 +8,7 @@
     "fundSize" : 1000000,
     "fundraisingStart" : "2022-04-01T12:00:00",
     "fundraisingEnd" : "2022-08-31T00:00:00",
-    "collectedAmount" : 15012
+    "collectedAmount" : 29640
   }, {
     "id" : "4cf8e25c-3670-4758-8da0-e2bd3820925c",
     "addTime" : "2022-04-23T14:46:00",
@@ -70,5 +70,19 @@
     "investorName" : "",
     "contactInfo" : "",
     "amount" : 12
+  }, {
+    "id" : "83dcac3c-b803-44ad-bc80-8815d2c9b053",
+    "addTime" : "2022-04-29T18:49:00",
+    "projectId" : "424eb4c5-791f-4938-8e71-5856ab3ad91d",
+    "investorName" : "",
+    "contactInfo" : "",
+    "amount" : 1213
+  }, {
+    "id" : "bf7989e5-1b17-49a2-b86e-a024e5625f93",
+    "addTime" : "2022-04-29T18:49:00",
+    "projectId" : "424eb4c5-791f-4938-8e71-5856ab3ad91d",
+    "investorName" : "",
+    "contactInfo" : "",
+    "amount" : 13415
   } ]
 }
