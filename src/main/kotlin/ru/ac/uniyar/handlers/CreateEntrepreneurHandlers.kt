@@ -37,8 +37,8 @@ class AddEntrepreneurHandler(
     override fun invoke(request: Request): Response {
         val webForm = entrepreneurFormLens(request)
         if (webForm.errors.isEmpty()) {
-            addEntrepreneurQuery.invoke(nameFormLens(webForm))
-            return Response(Status.FOUND).header("Location", "/entrepreneurs")
+            val uuid = addEntrepreneurQuery.invoke(nameFormLens(webForm))
+            return Response(Status.FOUND).header("Location", "/entrepreneurs/$uuid")
         }
         return Response(Status.OK).with(htmlView of NewEntrepreneurViewModel(webForm))
     }

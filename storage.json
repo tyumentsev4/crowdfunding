@@ -8,7 +8,7 @@
     "fundSize" : 1000000,
     "fundraisingStart" : "2022-04-01T12:00:00",
     "fundraisingEnd" : "2022-08-31T00:00:00",
-    "collectedAmount" : 29640
+    "collectedAmount" : 49640
   }, {
     "id" : "4cf8e25c-3670-4758-8da0-e2bd3820925c",
     "addTime" : "2022-04-23T14:46:00",
@@ -28,12 +28,26 @@
     "fundSize" : 10000000,
     "fundraisingStart" : "2022-05-01T14:53:00",
     "fundraisingEnd" : "2022-12-31T14:53:00",
+    "collectedAmount" : 123
+  }, {
+    "id" : "74fbee55-484e-4eb3-b13b-d05239ae1158",
+    "addTime" : "2022-05-17T18:32:00",
+    "name" : "Магазин у дома",
+    "entrepreneurId" : "2099193a-49ca-45b4-ae8d-31b8b7416373",
+    "description" : "",
+    "fundSize" : 21312,
+    "fundraisingStart" : "2022-05-03T00:03:00",
+    "fundraisingEnd" : "2022-05-09T03:21:00",
     "collectedAmount" : 0
   } ],
   "entrepreneurs" : [ {
     "id" : "2ff1ab66-a760-479d-8251-138ad0750228",
     "name" : "Иванов Иван Иванович",
     "addTime" : "2022-04-23T14:09:00"
+  }, {
+    "id" : "2099193a-49ca-45b4-ae8d-31b8b7416373",
+    "name" : "Сидоров Сергей Евгеньевич",
+    "addTime" : "2022-05-17T18:31:00"
   } ],
   "investments" : [ {
     "id" : "12f5217f-49b0-4a45-981f-d663f66ff8da",
@@ -84,5 +98,19 @@
     "investorName" : "",
     "contactInfo" : "",
     "amount" : 13415
+  }, {
+    "id" : "80a8b33d-54f2-4883-bb41-c255ebc0f4aa",
+    "addTime" : "2022-05-17T18:17:00",
+    "projectId" : "424eb4c5-791f-4938-8e71-5856ab3ad91d",
+    "investorName" : "Петров Иван Сергеевич",
+    "contactInfo" : "",
+    "amount" : 20000
+  }, {
+    "id" : "3aee8158-8a38-494b-9b03-221eab453c2f",
+    "addTime" : "2022-05-17T18:33:00",
+    "projectId" : "e88bba9c-ded0-402c-a94a-005c2b52abab",
+    "investorName" : "Сергей",
+    "contactInfo" : "",
+    "amount" : 123
   } ]
 }

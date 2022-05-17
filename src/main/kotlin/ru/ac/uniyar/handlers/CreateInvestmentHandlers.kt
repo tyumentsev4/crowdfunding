@@ -55,13 +55,13 @@ class AddInvestmentHandler(
         var webForm = investmentFormLens(request)
         if (webForm.errors.isEmpty()) {
             webForm = try {
-                addInvestmentQuery.invoke(
+                val uuid = addInvestmentQuery.invoke(
                     projectIdFormLens(webForm),
                     investorFormLens(webForm),
                     contactFormLens(webForm),
                     amountFormLens(webForm)
                 )
-                return Response(Status.FOUND).header("Location", "/investments")
+                return Response(Status.FOUND).header("Location", "/investments/$uuid")
             } catch (_: ProjectNotFound) {
                 val newErrors = webForm.errors + Invalid(projectIdFormLens.meta)
                 webForm.copy(errors = newErrors)

@@ -73,4 +73,11 @@ data class Project(
             return 0
         return fundSize - collectedAmount
     }
+
+    fun isSuccessForecast(): Boolean {
+        val daysFromTheBegin = ChronoUnit.DAYS.between(fundraisingStart, LocalDateTime.now()).toInt()
+        if (daysFromTheBegin == 0)
+            return true
+        return (collectedAmount / daysFromTheBegin) * daysUntilTheEnd() >= fundSize
+    }
 }

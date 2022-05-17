@@ -71,7 +71,7 @@
             <tr>
                 <th>Прогноз успешности сбора</th>
                 <td>
-                    {% if model.investments.isSuccessForecast(model.project.fundSize, model.project.daysUntilTheEnd()) %}
+                    {% if model.project.isSuccessForecast() %}
                         Должен быть успешен
                     {% else %}
                         Не должен быть успешен

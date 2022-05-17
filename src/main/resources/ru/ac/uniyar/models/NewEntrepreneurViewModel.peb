@@ -21,7 +21,7 @@
 <h2>Новый предприниматель</h2>
 <form method="POST">
     <label>ФИО
-        <input required type="text" name="name" value="{{ model.form.fields["name"] | first }}">
+        <input type="text" name="name" value="{{ model.form.fields["name"] | first }}">
     </label>
     <input type="submit" value="Добавить" class="button">
 </form>

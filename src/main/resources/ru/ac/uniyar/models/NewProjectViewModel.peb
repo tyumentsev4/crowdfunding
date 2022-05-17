@@ -21,7 +21,7 @@
 <h2>Новый проект</h2>
 <form method="POST">
     <label>Название
-        <input required type="text" name="name" value="{{ model.form.fields["name"] | first }}">
+        <input type="text" name="name" value="{{ model.form.fields["name"] | first }}">
     </label>
     <label>Предприниматель
         <select name="entrepreneur">
@@ -34,13 +34,13 @@
         <textarea name="description" cols="30" rows="10">{{ model.form.fields["description"] | first }}</textarea>
     </label>
     <label>Размер фонда
-        <input required type="number" min="1" name="fundSize" value="{{ model.form.fields["fundSize"] | first }}">
+        <input type="number" min="1" name="fundSize" value="{{ model.form.fields["fundSize"] | first }}">
     </label>
     <label>Дата начала сбора средств
-        <input required type="datetime-local" name="fundraisingStart" value="{{ model.form.fields["fundraisingStart"] | first }}">
+        <input type="datetime-local" name="fundraisingStart" value="{{ model.form.fields["fundraisingStart"] | first }}">
     </label>
     <label>Срок окончания сбора средств
-        <input required type="datetime-local" name="fundraisingEnd" value="{{ model.form.fields["fundraisingEnd"] | first }}">
+        <input type="datetime-local" name="fundraisingEnd" value="{{ model.form.fields["fundraisingEnd"] | first }}">
     </label>
     <input type="submit" value="Добавить" class="button">
 </form>

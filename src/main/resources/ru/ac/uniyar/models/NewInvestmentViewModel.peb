@@ -21,7 +21,7 @@
 <h2>Новая инвестиция в проект</h2>
 <form method="POST">
     <label>Проект
-        <select required name="projectId">
+        <select name="projectId">
             {% for project in model.projects %}
             <option value="{{ project.id }}">{{ project.name }}</option>
             {% endfor %}
@@ -34,7 +34,7 @@
         <input type="email" name="contactInfo" value="{{ model.form.fields["contactInfo"] | first }}">
     </label>
     <label>Сумма
-        <input required type="number" min="1" name="amount" value="{{ model.form.fields["amount"] | first }}">
+        <input type="number" min="1" name="amount" value="{{ model.form.fields["amount"] | first }}">
     </label>
     <input type="submit" value="Добавить" class="button">
 </form>

@@ -72,7 +72,7 @@ class AddProjectHandler(
         var webForm = projectFormLens(request)
         if (webForm.errors.isEmpty()) {
             webForm = try {
-                addProjectQuery.invoke(
+                val uuid = addProjectQuery.invoke(
                     ProjectFromForm(
                         nameFormLens(webForm),
                         entrepreneurIdFormLens(webForm),
@@ -82,7 +82,7 @@ class AddProjectHandler(
                         fundraisingEndFormLens(webForm)
                     )
                 )
-                return Response(Status.FOUND).header("Location", "/projects")
+                return Response(Status.FOUND).header("Location", "/projects/$uuid")
             } catch (_: StartTimeShouldBeLower) {
                 val newErrors = webForm.errors + Invalid(fundraisingStartFormLens.meta)
                 webForm.copy(errors = newErrors)
