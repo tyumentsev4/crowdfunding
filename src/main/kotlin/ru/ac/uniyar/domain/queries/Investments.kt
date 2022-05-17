@@ -7,7 +7,7 @@ class Investments(val investments: List<Investment>) {
         private const val MAX_LENGTH_ON_PAGE = 5
     }
 
-    fun getCount(): Int {
+    fun getSize(): Int {
         return investments.size
     }
 
@@ -15,7 +15,7 @@ class Investments(val investments: List<Investment>) {
         return investments.filter { it.contactInfo != "" }.size
     }
 
-    fun lastInvestments(): Iterable<Investment> {
+    fun lastInvestments(): List<Investment> {
         return if (investments.size > MAX_LENGTH_ON_PAGE)
             investments.subList(investments.size - MAX_LENGTH_ON_PAGE, investments.size)
         else investments

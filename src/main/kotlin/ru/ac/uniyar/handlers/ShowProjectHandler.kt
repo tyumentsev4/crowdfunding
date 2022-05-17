@@ -27,7 +27,7 @@ class ShowProjectHandler(
         return try {
             val projectInfo = fetchProjectQuery.invoke(id)
             Response(Status.OK).with(
-                htmlView of ProjectViewModel(projectInfo.project, projectInfo.entrepreneur, projectInfo.investments)
+                htmlView of ProjectViewModel(projectInfo)
             )
         } catch (_: ProjectFetchError) {
             Response(Status.BAD_REQUEST)

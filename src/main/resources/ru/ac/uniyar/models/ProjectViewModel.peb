@@ -1,33 +1,33 @@
-{% extends "./layout.peb" %}
+    {% extends "./layout.peb" %}
 
-{% block title %}
+        {% block title %}
     Проект {{ model.project.name }}
-{% endblock %}
+        {% endblock %}
 
-{% block content %}
+    {% block content %}
     <h2>Проект</h2>
     <table>
         <tr>
             <th>Название</th>
-            <td>{{ model.project.name }}</td>
+            <td>{{ model.projectInfo.project.name }}</td>
         </tr>
         <tr>
             <th>Предприниматель</th>
-            <td><a href="/entrepreneurs/{{model.entrepreneur.id}}">{{ model.entrepreneur.name }}</a></td>
+            <td><a href="/entrepreneurs/{{model.projectInfo.entrepreneur.id}}">{{ model.projectInfo.entrepreneur.name }}</a></td>
         </tr>
         <tr>
             <th>Описание</th>
-            <td><pre class="h6">{{ model.project.description }}</pre></td>
+            <td><pre class="h6">{{ model.projectInfo.project.description }}</pre></td>
         </tr>
         <tr>
             <th>Целевой размер фонда</th>
-            <td>{{ model.project.fundSize }}₽</td>
+            <td>{{ model.projectInfo.project.fundSize }}₽</td>
         </tr>
         <tr>
             <th>Последние пять инвестиций</th>
             <td>
                 <ul>
-                {% for investment in model.investments.lastInvestments() %}
+                {% for investment in model.projectInfo.lastInvestments %}
                     <li><a href="/investments/{{ investment.id }}">{{ investment.investorName }} - {{ investment.amount }}₽</a></li>
                 {% endfor %}
                 </ul>
@@ -35,43 +35,43 @@
         </tr>
         <tr>
             <th>Дата начала сбора средств</th>
-            <td>{{ model.project.fundraisingStart | date("dd.MM.yyyy HH:mm") }}</td>
+            <td>{{ model.projectInfo.project.fundraisingStart | date("dd.MM.yyyy HH:mm") }}</td>
         </tr>
 
-        {% if model.project.isOpen() %}
+        {% if model.projectInfo.isProjectOpen %}
             <tr>
                 <th>Срок окончания сбора средств</th>
                 <td>
-                    {{ model.project.fundraisingEnd | date("dd.MM.yyyy HH:mm") }}
+                    {{ model.projectInfo.project.fundraisingEnd | date("dd.MM.yyyy HH:mm") }}
                 </td>
             </tr>
             <tr>
                 <th>Дней до окончания сбора средств</th>
-                <td>{{ model.project.daysUntilTheEnd() }}</td>
+                <td>{{ model.projectInfo.daysUntilTheEndOfProject }}</td>
             </tr>
 
             <tr>
                 <th>Собранная на настоящий момент сумма</th>
-                <td>{{ model.project.collectedAmount }}₽</td>
+                <td>{{ model.projectInfo.project.collectedAmount }}₽</td>
             </tr>
 
             <tr>
                 <th>Количество инвестиций</th>
-                <td>{{ model.investments.getCount() }}</td>
+                <td>{{ model.projectInfo.investmentsSize }}</td>
             </tr>
 
             <tr>
                 <th>Количество инвестиций, ожидающих обратную связь (не анонимных)</th>
-                <td>{{ model.investments.getNonAnonymousCount() }}</td>
+                <td>{{ model.projectInfo.nonAnonymousInvestmentsNumber }}</td>
             </tr>
             <tr>
                 <th>Объем необходимых инвестиций</th>
-                <td> {{ model.project.necessaryInvestments() }}₽</td>
+                <td> {{ model.projectInfo.necessaryInvestmentsToProject }}₽</td>
             </tr>
             <tr>
                 <th>Прогноз успешности сбора</th>
                 <td>
-                    {% if model.project.isSuccessForecast() %}
+                    {% if model.projectInfo.isProjectSuccessForecast %}
                         Должен быть успешен
                     {% else %}
                         Не должен быть успешен
@@ -82,9 +82,9 @@
             <tr>
                 <th>Статус проекта</th>
                 <td>
-                    {% if model.project.isSuccessful() == true %}
+                    {% if model.projectInfo.isSuccessfulProject == true %}
                         Успешен
-                    {% elseif model.project.isSuccessful() == false %}
+                    {% elseif model.projectInfo.isSuccessfulProject == false %}
                         Не успешен
                     {% else %}
                         Не начат
@@ -94,7 +94,7 @@
         {% endif %}
         <tr>
             <th>Дата и время добавления</th>
-            <td>{{ model.entrepreneur.addTime | date("dd.MM.yyyy HH:mm")}}</td>
+            <td>{{ model.projectInfo.entrepreneur.addTime | date("dd.MM.yyyy HH:mm")}}</td>
         </tr>
     </table>
 {% endblock %}

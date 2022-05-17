@@ -13,6 +13,17 @@ class FetchProjectQuery(store: Store) {
         val entrepreneur =
             entrepreneursRepository.fetch(project.entrepreneurId) ?: throw EntrepreneurFetchError("Not found")
         val investments = Investments(investmentRepository.list().filter { it.projectId == project.id })
-        return ProjectInfo(project, entrepreneur, investments)
+        return ProjectInfo(
+            project,
+            entrepreneur,
+            investments.lastInvestments(),
+            investments.getSize(),
+            investments.getNonAnonymousCount(),
+            project.isSuccessful(),
+            project.isSuccessForecast(),
+            project.necessaryInvestments(),
+            project.daysUntilTheEnd(),
+            project.isOpen()
+        )
     }
 }
