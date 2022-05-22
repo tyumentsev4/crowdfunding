@@ -2,6 +2,7 @@ package ru.ac.uniyar.handlers
 
 import org.http4k.lens.RequestContextLens
 import ru.ac.uniyar.domain.StoreHolder
+import ru.ac.uniyar.domain.storage.User
 import ru.ac.uniyar.filters.JwtTools
 import ru.ac.uniyar.models.template.ContextAwareViewRender
 

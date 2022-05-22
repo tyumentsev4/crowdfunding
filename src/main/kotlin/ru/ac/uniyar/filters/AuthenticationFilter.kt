@@ -6,6 +6,8 @@ import org.http4k.core.Request
 import org.http4k.core.cookie.cookie
 import org.http4k.core.with
 import org.http4k.lens.BiDiLens
+import ru.ac.uniyar.domain.queries.FetchUserViaUserId
+import ru.ac.uniyar.domain.storage.User
 
 fun authenticationFilter(
     currentUser: BiDiLens<Request, User?>,

@@ -13,7 +13,7 @@ class Store(private val documentStoragePath: Path) {
     val entrepreneursRepository: EntrepreneursRepository
     val investmentsRepository: InvestmentsRepository
 
-    val storeThread = thread(start = false) {
+    private val storeThread = thread(start = false) {
         save()
     }
 

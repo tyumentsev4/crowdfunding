@@ -13,6 +13,7 @@ import org.http4k.server.Undertow
 import org.http4k.server.asServer
 import ru.ac.uniyar.domain.StoreHolder
 import ru.ac.uniyar.domain.storage.SettingFileError
+import ru.ac.uniyar.domain.storage.User
 import ru.ac.uniyar.filters.JwtTools
 import ru.ac.uniyar.filters.showErrorMessageFilter
 import ru.ac.uniyar.handlers.HttpHandlerHolder
