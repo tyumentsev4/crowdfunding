@@ -1,12 +1,15 @@
 package ru.ac.uniyar.domain.queries
 
-import ru.ac.uniyar.domain.storage.Store
-import java.util.UUID
+import ru.ac.uniyar.domain.storage.EntrepreneursRepository
+import ru.ac.uniyar.domain.storage.InvestmentsRepository
+import ru.ac.uniyar.domain.storage.ProjectsRepository
+import java.util.*
 
-class FetchProjectQuery(store: Store) {
-    private val projectsRepository = store.projectsRepository
-    private val entrepreneursRepository = store.entrepreneursRepository
-    private val investmentRepository = store.investmentsRepository
+class FetchProjectQuery(
+    private val projectsRepository: ProjectsRepository,
+    private val entrepreneursRepository: EntrepreneursRepository,
+    private val investmentRepository: InvestmentsRepository
+) {
 
     operator fun invoke(id: UUID): ProjectInfo {
         val project = projectsRepository.fetch(id) ?: throw ProjectFetchError("Not found")

@@ -1,12 +1,10 @@
 package ru.ac.uniyar.domain.queries
 
 import ru.ac.uniyar.domain.storage.Investment
-import ru.ac.uniyar.domain.storage.Store
+import ru.ac.uniyar.domain.storage.InvestmentsRepository
 import java.time.LocalDateTime
 
-class ListInvestmentsPerPageQuery(store: Store) {
-    private val repository = store.investmentsRepository
-
+class ListInvestmentsPerPageQuery(private val repository: InvestmentsRepository) {
     companion object {
         const val PAGE_SIZE = 3
     }

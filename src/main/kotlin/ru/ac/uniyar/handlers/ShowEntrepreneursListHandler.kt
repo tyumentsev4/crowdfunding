@@ -5,18 +5,17 @@ import org.http4k.core.Request
 import org.http4k.core.Response
 import org.http4k.core.Status
 import org.http4k.core.with
-import org.http4k.lens.BiDiBodyLens
 import org.http4k.lens.Query
 import org.http4k.lens.dateTime
 import org.http4k.lens.int
 import org.http4k.lens.string
-import org.http4k.template.ViewModel
 import ru.ac.uniyar.domain.queries.ListEntrepreneursPerPageQuery
 import ru.ac.uniyar.models.EntrepreneursListViewModel
 import ru.ac.uniyar.models.Paginator
+import ru.ac.uniyar.models.template.ContextAwareViewRender
 
 class ShowEntrepreneursListHandler(
-    private val htmlView: BiDiBodyLens<ViewModel>,
+    private val htmlView: ContextAwareViewRender,
     private val listEntrepreneursPerPageQuery: ListEntrepreneursPerPageQuery
 ) : HttpHandler {
     companion object {
@@ -35,6 +34,6 @@ class ShowEntrepreneursListHandler(
         val paginator = Paginator(pagedElements.pageCount, pageNumber, request.uri)
         val model = EntrepreneursListViewModel(pagedElements.values, paginator, fromDateTime, toDateTime, nameSearch)
 
-        return Response(Status.OK).with(htmlView of model)
+        return Response(Status.OK).with(htmlView(request) of model)
     }
 }

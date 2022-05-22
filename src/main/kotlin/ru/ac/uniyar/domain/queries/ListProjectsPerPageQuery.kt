@@ -1,10 +1,9 @@
 package ru.ac.uniyar.domain.queries
 
 import ru.ac.uniyar.domain.storage.Project
-import ru.ac.uniyar.domain.storage.Store
+import ru.ac.uniyar.domain.storage.ProjectsRepository
 
-class ListProjectsPerPageQuery(store: Store) {
-    private val repository = store.projectsRepository
+class ListProjectsPerPageQuery(private val projectsRepository: ProjectsRepository) {
 
     companion object {
         const val PAGE_SIZE = 3
@@ -18,7 +17,7 @@ class ListProjectsPerPageQuery(store: Store) {
     ): PagedResult<Project> {
         val baseFrom = fromFoundSize ?: Int.MIN_VALUE
         val baseTo = toFoundSize ?: Int.MAX_VALUE
-        var list = repository.list().filter {
+        var list = projectsRepository.list().filter {
             it.fundSize in baseFrom..baseTo
         }
         if (isOpen != null) {

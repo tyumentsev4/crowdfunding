@@ -6,7 +6,6 @@ import org.http4k.core.Request
 import org.http4k.core.Response
 import org.http4k.core.Status
 import org.http4k.core.with
-import org.http4k.lens.BiDiBodyLens
 import org.http4k.lens.FormField
 import org.http4k.lens.Invalid
 import org.http4k.lens.Validator
@@ -17,23 +16,23 @@ import org.http4k.lens.nonEmptyString
 import org.http4k.lens.string
 import org.http4k.lens.uuid
 import org.http4k.lens.webForm
-import org.http4k.template.ViewModel
 import ru.ac.uniyar.domain.queries.AddProjectQuery
 import ru.ac.uniyar.domain.queries.EntrepreneurNotFoundError
 import ru.ac.uniyar.domain.queries.FundSizeShouldBePositiveInt
 import ru.ac.uniyar.domain.queries.ListEntrepreneursQuery
 import ru.ac.uniyar.domain.queries.StartTimeShouldBeLower
 import ru.ac.uniyar.models.NewProjectViewModel
+import ru.ac.uniyar.models.template.ContextAwareViewRender
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 class ShowNewProjectFormHandler(
-    private val htmlView: BiDiBodyLens<ViewModel>,
+    private val htmlView: ContextAwareViewRender,
     private val listEntrepreneursQuery: ListEntrepreneursQuery
 ) : HttpHandler {
     override fun invoke(request: Request): Response {
         val entrepreneurs = listEntrepreneursQuery.invoke()
-        return Response(Status.OK).with(htmlView of NewProjectViewModel(WebForm(), entrepreneurs))
+        return Response(Status.OK).with(htmlView(request) of NewProjectViewModel(WebForm(), entrepreneurs))
     }
 }
 
@@ -47,7 +46,7 @@ data class ProjectFromForm(
 )
 
 class AddProjectHandler(
-    private val htmlView: BiDiBodyLens<ViewModel>,
+    private val htmlView: ContextAwareViewRender,
     private val listEntrepreneursQuery: ListEntrepreneursQuery,
     private val addProjectQuery: AddProjectQuery
 ) : HttpHandler {
@@ -95,6 +94,6 @@ class AddProjectHandler(
             }
         }
         val entrepreneurs = listEntrepreneursQuery.invoke()
-        return Response(Status.OK).with(htmlView of NewProjectViewModel(webForm, entrepreneurs))
+        return Response(Status.OK).with(htmlView(request) of NewProjectViewModel(webForm, entrepreneurs))
     }
 }

@@ -6,7 +6,6 @@ import org.http4k.core.Request
 import org.http4k.core.Response
 import org.http4k.core.Status
 import org.http4k.core.with
-import org.http4k.lens.BiDiBodyLens
 import org.http4k.lens.FormField
 import org.http4k.lens.Invalid
 import org.http4k.lens.Validator
@@ -15,25 +14,25 @@ import org.http4k.lens.int
 import org.http4k.lens.string
 import org.http4k.lens.uuid
 import org.http4k.lens.webForm
-import org.http4k.template.ViewModel
 import ru.ac.uniyar.domain.queries.AddInvestmentQuery
 import ru.ac.uniyar.domain.queries.AmountShouldBePositiveInt
 import ru.ac.uniyar.domain.queries.ListOpenProjectsQuery
 import ru.ac.uniyar.domain.queries.ProjectNotFound
 import ru.ac.uniyar.models.NewInvestmentViewModel
+import ru.ac.uniyar.models.template.ContextAwareViewRender
 
 class ShowNewInvestmentFormHandler(
-    private val htmlView: BiDiBodyLens<ViewModel>,
+    private val htmlView: ContextAwareViewRender,
     private val listOpenProjectsQuery: ListOpenProjectsQuery
 ) : HttpHandler {
     override fun invoke(request: Request): Response {
         val projects = listOpenProjectsQuery.invoke()
-        return Response(Status.OK).with(htmlView of NewInvestmentViewModel(WebForm(), projects))
+        return Response(Status.OK).with(htmlView(request) of NewInvestmentViewModel(WebForm(), projects))
     }
 }
 
 class AddInvestmentHandler(
-    private val htmlView: BiDiBodyLens<ViewModel>,
+    private val htmlView: ContextAwareViewRender,
     private val listOpenProjectsQuery: ListOpenProjectsQuery,
     private val addInvestmentQuery: AddInvestmentQuery
 ) : HttpHandler {
@@ -71,6 +70,6 @@ class AddInvestmentHandler(
             }
         }
         val projects = listOpenProjectsQuery.invoke()
-        return Response(Status.OK).with(htmlView of NewInvestmentViewModel(webForm, projects))
+        return Response(Status.OK).with(htmlView(request) of NewInvestmentViewModel(webForm, projects))
     }
 }

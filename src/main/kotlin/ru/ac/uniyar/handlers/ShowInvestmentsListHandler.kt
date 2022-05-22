@@ -5,17 +5,16 @@ import org.http4k.core.Request
 import org.http4k.core.Response
 import org.http4k.core.Status
 import org.http4k.core.with
-import org.http4k.lens.BiDiBodyLens
 import org.http4k.lens.Query
 import org.http4k.lens.dateTime
 import org.http4k.lens.int
-import org.http4k.template.ViewModel
 import ru.ac.uniyar.domain.queries.ListInvestmentsPerPageQuery
 import ru.ac.uniyar.models.InvestmentsListViewModel
 import ru.ac.uniyar.models.Paginator
+import ru.ac.uniyar.models.template.ContextAwareViewRender
 
 class ShowInvestmentsListHandler(
-    private val htmlView: BiDiBodyLens<ViewModel>,
+    private val htmlView: ContextAwareViewRender,
     private val listInvestmentsPerPageQuery: ListInvestmentsPerPageQuery
 ) : HttpHandler {
     companion object {
@@ -37,6 +36,6 @@ class ShowInvestmentsListHandler(
         val model =
             InvestmentsListViewModel(pagedResult.values, paginator, fromDateTime, toDateTime, fromAmount, toAmount)
 
-        return Response(Status.OK).with(htmlView of model)
+        return Response(Status.OK).with(htmlView(request) of model)
     }
 }

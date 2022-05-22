@@ -1,67 +1,72 @@
 package ru.ac.uniyar
 
-import org.http4k.core.Body
 import org.http4k.core.ContentType
-import org.http4k.core.Filter
 import org.http4k.core.HttpHandler
-import org.http4k.core.NoOp
+import org.http4k.core.RequestContexts
 import org.http4k.core.then
+import org.http4k.filter.ServerFilters
+import org.http4k.lens.RequestContextKey
+import org.http4k.lens.RequestContextLens
+import org.http4k.routing.ResourceLoader
+import org.http4k.routing.static
 import org.http4k.server.Undertow
 import org.http4k.server.asServer
-import org.http4k.template.PebbleTemplates
-import org.http4k.template.viewModel
-import ru.ac.uniyar.domain.queries.AddEntrepreneurQuery
-import ru.ac.uniyar.domain.queries.AddInvestmentQuery
-import ru.ac.uniyar.domain.queries.AddProjectQuery
-import ru.ac.uniyar.domain.queries.FetchEntrepreneurQuery
-import ru.ac.uniyar.domain.queries.FetchInvestmentQuery
-import ru.ac.uniyar.domain.queries.FetchProjectQuery
-import ru.ac.uniyar.domain.queries.ListEntrepreneursPerPageQuery
-import ru.ac.uniyar.domain.queries.ListEntrepreneursQuery
-import ru.ac.uniyar.domain.queries.ListInvestmentsPerPageQuery
-import ru.ac.uniyar.domain.queries.ListOpenProjectsQuery
-import ru.ac.uniyar.domain.queries.ListProjectsPerPageQuery
-import ru.ac.uniyar.domain.storage.Store
+import ru.ac.uniyar.domain.StoreHolder
+import ru.ac.uniyar.domain.storage.SettingFileError
+import ru.ac.uniyar.filters.JwtTools
 import ru.ac.uniyar.filters.showErrorMessageFilter
-import kotlin.io.path.Path
+import ru.ac.uniyar.handlers.HttpHandlerHolder
+import ru.ac.uniyar.models.template.ContextAwarePebbleTemplates
+import ru.ac.uniyar.models.template.ContextAwareViewRender
 
 const val SERVER_PORT = 9000
 
 fun main() {
-    val store = Store(Path("storage.json"))
-    val renderer = PebbleTemplates().HotReload("src/main/resources")
-    val htmlView = Body.viewModel(renderer, ContentType.TEXT_HTML).toLens()
+    val storeHolder = try {
+        StoreHolder(java.nio.file.Path.of("storage.json"), java.nio.file.Path.of("settings.json"))
+    } catch (error: SettingFileError) {
+        println(error.message)
+        return
+    }
 
-    val listProjectsPerPageQuery = ListProjectsPerPageQuery(store)
-    val listEntrepreneursPerPageQuery = ListEntrepreneursPerPageQuery(store)
-    val fetchEntrepreneurQuery = FetchEntrepreneurQuery(store)
-    val addEntrepreneurQuery = AddEntrepreneurQuery(store)
-    val fetchProjectQuery = FetchProjectQuery(store)
-    val listEntrepreneursQuery = ListEntrepreneursQuery(store)
-    val addProjectQuery = AddProjectQuery(store)
-    val listInvestmentsPerPageQuery = ListInvestmentsPerPageQuery(store)
-    val listProjectQuery = ListOpenProjectsQuery(store)
-    val addInvestmentQuery = AddInvestmentQuery(store)
-    val fetchInvestmentQuery = FetchInvestmentQuery(store)
+    val renderer = ContextAwarePebbleTemplates().HotReload("src/main/resources")
+    val htmlView = ContextAwareViewRender(renderer, ContentType.TEXT_HTML)
+
+    val contexts = RequestContexts()
+    val currentUserLens: RequestContextLens<User?> = RequestContextKey.optional(contexts, "user")
+    htmlView.associateContextLens("currentUser", currentUserLens)
+
+    val jwtTools = JwtTools(storeHolder.settings.salt, "ru.ac.uniyar.WebApplication")
+
+    val handlerHolder = HttpHandlerHolder(
+        currentUserLens,
+        htmlView,
+        storeHolder,
+        jwtTools
+    )
+
+    val routingHttpHandler = static(ResourceLoader.Classpath("/ru/ac/uniyar/public/"))
 
     val router = Router(
-        htmlView,
-        listProjectsPerPageQuery,
-        listEntrepreneursPerPageQuery,
-        fetchEntrepreneurQuery,
-        addEntrepreneurQuery,
-        fetchProjectQuery,
-        listEntrepreneursQuery,
-        addProjectQuery,
-        listInvestmentsPerPageQuery,
-        listProjectQuery,
-        addInvestmentQuery,
-        fetchInvestmentQuery
+        handlerHolder.showNewEntrepreneurFormHandler,
+        handlerHolder.addEntrepreneurHandler,
+        handlerHolder.showNewInvestmentFormHandler,
+        handlerHolder.addInvestmentHandler,
+        handlerHolder.showNewProjectFormHandler,
+        handlerHolder.addProjectHandler,
+        handlerHolder.showEntrepreneurHandler,
+        handlerHolder.showEntrepreneursListHandler,
+        handlerHolder.showInvestmentHandler,
+        handlerHolder.showInvestmentsListHandler,
+        handlerHolder.showProjectHandler,
+        handlerHolder.showProjectsListHandler,
+        handlerHolder.showStartPageHandler,
+        routingHttpHandler
     )
 
     val printingApp: HttpHandler =
-        Filter.NoOp
-            .then(showErrorMessageFilter(renderer))
+        ServerFilters.InitialiseRequestContext(contexts)
+            .then(showErrorMessageFilter(htmlView))
             .then(router())
     val server = printingApp.asServer(Undertow(SERVER_PORT)).start()
     println("Server started on http://localhost:" + server.port())

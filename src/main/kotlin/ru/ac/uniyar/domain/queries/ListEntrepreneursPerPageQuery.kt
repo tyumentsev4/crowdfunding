@@ -1,11 +1,10 @@
 package ru.ac.uniyar.domain.queries
 
 import ru.ac.uniyar.domain.storage.Entrepreneur
-import ru.ac.uniyar.domain.storage.Store
+import ru.ac.uniyar.domain.storage.EntrepreneursRepository
 import java.time.LocalDateTime
 
-class ListEntrepreneursPerPageQuery(store: Store) {
-    private val entrepreneursRepository = store.entrepreneursRepository
+class ListEntrepreneursPerPageQuery(private val entrepreneursRepository: EntrepreneursRepository) {
 
     companion object {
         const val PAGE_SIZE = 3
