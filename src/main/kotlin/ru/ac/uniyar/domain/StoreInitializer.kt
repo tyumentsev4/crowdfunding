@@ -9,12 +9,14 @@ import ru.ac.uniyar.domain.queries.FetchInvestmentQuery
 import ru.ac.uniyar.domain.queries.FetchPermissionsViaIdQuery
 import ru.ac.uniyar.domain.queries.FetchProjectQuery
 import ru.ac.uniyar.domain.queries.FetchProjectViaIdQuery
+import ru.ac.uniyar.domain.queries.FetchUserQuery
 import ru.ac.uniyar.domain.queries.FetchUserViaUserId
 import ru.ac.uniyar.domain.queries.ListEntrepreneursPerPageQuery
 import ru.ac.uniyar.domain.queries.ListEntrepreneursQuery
 import ru.ac.uniyar.domain.queries.ListInvestmentsPerPageQuery
 import ru.ac.uniyar.domain.queries.ListOpenProjectsQuery
 import ru.ac.uniyar.domain.queries.ListProjectsPerPageQuery
+import ru.ac.uniyar.domain.queries.ListUserProjectsPerPageQuery
 import ru.ac.uniyar.domain.storage.Settings
 import ru.ac.uniyar.domain.storage.Store
 import java.nio.file.Path
@@ -42,4 +44,6 @@ class StoreInitializer(
     val fetchUserViaUserId = FetchUserViaUserId(store.usersRepository)
     val authenticateUserViaLoginQuery = AuthenticateUserViaLoginQuery(store.usersRepository, settings)
     val fetchProjectViaIdQuery = FetchProjectViaIdQuery(store.projectsRepository)
+    val fetchUserQuery = FetchUserQuery(store.usersRepository, store.investmentsRepository, store.projectsRepository)
+    val listUserProjectsPerPageQuery = ListUserProjectsPerPageQuery(store.projectsRepository)
 }

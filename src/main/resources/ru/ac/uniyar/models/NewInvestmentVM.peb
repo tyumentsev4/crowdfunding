@@ -1,7 +1,7 @@
 {% extends "./layout.peb" %}
 
 {% block title %}
-Новая инвестиция в проект {{ model.project }}
+Новая инвестиция в проект {{ model.project.name }}
 {% endblock %}
 
 {% block content %}
@@ -18,20 +18,13 @@
 </div>
 {% endif %}
 
-<h2>Новая инвестиция в проект {{ model.project }}</h2>
+<h2>Новая инвестиция в проект {{ model.project.name }}</h2>
 <form method="POST">
-    <label>Проект
-        <select name="projectId">
-            {% for project in model.projects %}
-            <option value="{{ project.id }}">{{ project.name }}</option>
-            {% endfor %}
-        </select>
-    </label>
     <label>Сумма
         <input type="number" min="1" name="amount" value="{{ model.form.fields["amount"] | first }}">
     </label>
     <label>Анонимная инвестиция
-        <input type="checkbox" name="isAnonInvestment">
+        <input type="checkbox" name="isAnonInvestment" value="true">
     </label>
     <input type="submit" value="Добавить" class="button">
 </form>

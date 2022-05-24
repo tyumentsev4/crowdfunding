@@ -32,6 +32,16 @@
     "fundraisingStart" : "2022-04-25T02:13:00",
     "fundraisingEnd" : "2022-05-24T00:03:00",
     "collectedAmount" : 0
+  }, {
+    "id" : "b419ad53-ff08-4ff2-b939-9225b2840690",
+    "addTime" : "2022-05-24T19:39:00",
+    "name" : "Школа №1",
+    "userId" : "561d0d6c-b426-4a63-8a02-c3867db6017b",
+    "description" : "",
+    "fundSize" : 6456,
+    "fundraisingStart" : "2022-05-01T04:04:00",
+    "fundraisingEnd" : "2022-06-30T05:05:00",
+    "collectedAmount" : 446
   } ],
   "users" : [ {
     "id" : "561d0d6c-b426-4a63-8a02-c3867db6017b",
@@ -40,6 +50,27 @@
     "password" : "b19ea3efae07d000fdc47a1f7b29e40acf2889faa089e1aa1a468b1a15021ee35fe78ce0358b19d65372157631ccd6fada09e9cc6077b65bcf6e877f3241319b",
     "contactInfo" : "fasf@a",
     "addTime" : "2022-05-24T15:47:00"
+  }, {
+    "id" : "d6199d92-eb84-429d-abcb-76d2ad000920",
+    "roleId" : "1a1515e8-dac3-11ec-9d64-0242ac120002",
+    "name" : "B",
+    "password" : "f9bcf9e9668df354e5c90f352be7a7bd1e87de0a132ec4721e393377a6995865d42c4551deffdf63840d736bcfd70f093e988bf69d96c9bab9855b3b11018b7d",
+    "contactInfo" : "ww@a",
+    "addTime" : "2022-05-24T21:25:00"
   } ],
-  "investments" : [ ]
+  "investments" : [ {
+    "id" : "d449f3b2-a36e-4cd8-9868-ae306bd6d406",
+    "addTime" : "2022-05-24T19:44:00",
+    "projectId" : "b419ad53-ff08-4ff2-b939-9225b2840690",
+    "investorName" : "Иван",
+    "contactInfo" : "fasf@a",
+    "amount" : 223
+  }, {
+    "id" : "e2b74ba0-23de-4a74-8d99-71fe8b90db1c",
+    "addTime" : "2022-05-24T19:44:00",
+    "projectId" : "b419ad53-ff08-4ff2-b939-9225b2840690",
+    "investorName" : "",
+    "contactInfo" : "",
+    "amount" : 223
+  } ]
 }

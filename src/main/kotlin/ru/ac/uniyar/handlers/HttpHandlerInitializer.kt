@@ -86,4 +86,14 @@ class HttpHandlerInitializer (
     val showStartPageHandler = ShowStartPageHandler(
         htmlView
     )
+    val showUserHandler = ShowUserHandler(
+        htmlView,
+        currentUserLens,
+        storeInitializer.fetchUserQuery
+    )
+    val showUserProjectsListHandler = ShowUserProjectsListHandler(
+        htmlView,
+        storeInitializer.listUserProjectsPerPageQuery,
+        currentUserLens
+    )
 }

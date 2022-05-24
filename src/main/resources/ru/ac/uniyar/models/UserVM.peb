@@ -1,0 +1,24 @@
+{% extends "./layout.peb" %}
+
+        {% block title %}
+        Пользователь {{ model.user.name }}
+        {% endblock %}
+
+    {% block content %}
+    <h2>Пользователь</h2>
+    <table>
+        <tr>
+            <th>ФИО</th>
+            <td>{{ model.user.name }}</td>
+        </tr>
+        <tr>
+            <th>Контактная информация</th>
+            <td>{{ model.user.contactInfo }}</td>
+        </tr>
+        <tr>
+            <th>Дата и время регистрации</th>
+            <td>{{ model.user.addTime | date("dd.MM.yyyy HH:mm") }}</td>
+        </tr>
+    </table>
+    <a href="/users/{{ model.user.id }}/projects">Мои проекты</a>
+{% endblock %}

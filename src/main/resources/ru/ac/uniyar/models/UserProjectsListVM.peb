@@ -1,0 +1,35 @@
+{% extends "./layout.peb" %}
+
+{% import "./paginator_utils.peb" %}
+
+{% block title %}
+Список проектов
+{% endblock %}
+
+{% block content %}
+<h2>Список проектов</h2>
+<div class="grid-x grid-padding-x">
+    {% if model.projects.size == 0 %}
+    <div class="medium-12 cell">
+        <p>Записей не найдено</p>
+    </div>
+    {% endif %}
+    {% for project in model.projects %}
+    <div class="medium-12 cell">
+        <div class="callout">
+            <p>
+                {{ project.name }}
+            </p>
+            <p>
+                <a href="/projects/{{ project.id }}">Больше информации</a>
+            </p>
+        </div>
+    </div>
+    {% endfor %}
+    <div class="medium-4 cell">
+        <a href="/projects/new" class="button">Добавить</a>
+    </div>
+    {{ showPagination(model.paginator) }}
+</div>
+
+{% endblock %}

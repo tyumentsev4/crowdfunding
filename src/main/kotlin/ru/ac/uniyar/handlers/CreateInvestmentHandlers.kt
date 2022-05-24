@@ -56,7 +56,7 @@ class AddInvestmentHandler(
     ) : HttpHandler {
     companion object {
         private val projectIdLens = Path.uuid().of("id")
-        private val isAnonInvestmentLens = FormField.boolean().required("isAnonInvestment")
+        private val isAnonInvestmentLens = FormField.boolean().defaulted("isAnonInvestment", false)
         private val amountFormLens = FormField.int().required("amount")
         private val investmentFormLens = Body.webForm(
             Validator.Feedback,

@@ -5,6 +5,7 @@ import org.http4k.core.Method
 import org.http4k.routing.RoutingHttpHandler
 import org.http4k.routing.bind
 import org.http4k.routing.routes
+import ru.ac.uniyar.handlers.ShowUserHandler
 
 @Suppress("LongParameterList")
 class Router(
@@ -24,6 +25,8 @@ class Router(
     private val showLoginFormHandler: HttpHandler,
     private val authenticateUser: HttpHandler,
     private val logOutUser: HttpHandler,
+    private val showUserHandler: HttpHandler,
+    private val showUserProjectsListHandler: HttpHandler
 ) {
     operator fun invoke(): RoutingHttpHandler = routes(
         "/" bind Method.GET to showStartPageHandler,
@@ -42,5 +45,7 @@ class Router(
         "/projects/{id}/new_investment" bind Method.GET to showNewInvestmentFormHandler,
         "/projects/{id}/new_investment" bind Method.POST to addInvestmentHandler,
         "/investments/{id}" bind Method.GET to showInvestmentHandler,
+        "/users/{id}" bind Method.GET to showUserHandler,
+        "/users/{id}/projects" bind Method.GET to showUserProjectsListHandler
     )
 }
