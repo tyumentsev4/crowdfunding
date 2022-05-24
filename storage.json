@@ -1,0 +1,45 @@
+{
+  "rolePermissions" : [ {
+    "id" : "1a1515e8-dac3-11ec-9d64-0242ac120002",
+    "name" : "Авторизованный пользователь",
+    "showStartPage" : true,
+    "showEntrepreneursList" : true,
+    "showEntrepreneur" : true,
+    "showProjectsList" : true,
+    "showProject" : true,
+    "canRegister" : true,
+    "openNewProject" : true,
+    "addInvestment" : true
+  }, {
+    "id" : "3be6ab64-dac3-11ec-9d64-0242ac120002",
+    "name" : "Предприниматель",
+    "showStartPage" : true,
+    "showEntrepreneursList" : true,
+    "showEntrepreneur" : true,
+    "showProjectsList" : true,
+    "showProject" : true,
+    "canRegister" : true,
+    "openNewProject" : true,
+    "addInvestment" : true
+  } ],
+  "projects" : [ {
+    "id" : "5a981ae9-f6d9-403d-8add-da7d93cdfe61",
+    "addTime" : "2022-05-24T17:58:00",
+    "name" : "AAAA",
+    "userId" : "561d0d6c-b426-4a63-8a02-c3867db6017b",
+    "description" : "AAA",
+    "fundSize" : 21312,
+    "fundraisingStart" : "2022-04-25T02:13:00",
+    "fundraisingEnd" : "2022-05-24T00:03:00",
+    "collectedAmount" : 0
+  } ],
+  "users" : [ {
+    "id" : "561d0d6c-b426-4a63-8a02-c3867db6017b",
+    "roleId" : "3be6ab64-dac3-11ec-9d64-0242ac120002",
+    "name" : "Иван",
+    "password" : "b19ea3efae07d000fdc47a1f7b29e40acf2889faa089e1aa1a468b1a15021ee35fe78ce0358b19d65372157631ccd6fada09e9cc6077b65bcf6e877f3241319b",
+    "contactInfo" : "fasf@a",
+    "addTime" : "2022-05-24T15:47:00"
+  } ],
+  "investments" : [ ]
+}
