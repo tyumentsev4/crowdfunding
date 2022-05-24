@@ -14,9 +14,23 @@
                 <ul class="dropdown menu" data-dropdown-menu>
                     <li class="menu-text">Совместное финансирование</li>
                     <li><a href="/">Главная</a>
+                    {% if permissions.showProjectsList %}
                     <li><a href="/projects">Список проектов</a></li>
+                    {% endif %}
+                    {% if permissions.showEntrepreneursList %}
                     <li><a href="/entrepreneurs">Список предпринимателей</a></li>
-                    <li><a href="/investments">Список инвестиций</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="top-bar-right">
+                <ul class="dropdown menu" data-dropdown-menu>
+                    {% if currentUser is not null %}
+                    <li class="menu-text">{{ currentUser.name }}</li>
+                    <li><a href="/logout">Выйти</a></li>
+                    {% else %}
+                    <li><a href="/login">Войти</a></li>
+                    <li><a href="/registration">Зарегистрироваться</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

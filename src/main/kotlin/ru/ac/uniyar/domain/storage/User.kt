@@ -9,6 +9,7 @@ import java.util.*
 
 data class User(
     val id: UUID,
+    val roleId: UUID,
     val name: String,
     val password: String,
     val contactInfo: String,
@@ -19,6 +20,7 @@ data class User(
             val jsonObject = node.asJsonObject()
             return User(
                 UUID.fromString(jsonObject["id"].asText()),
+                UUID.fromString(jsonObject["roleId"].asText()),
                 jsonObject["name"].asText(),
                 jsonObject["password"].asText(),
                 jsonObject["contactInfo"].asText(),
@@ -30,6 +32,7 @@ data class User(
     fun asJsonObject(): JsonNode {
         return listOf(
             "id" to id.toString().asJsonValue(),
+            "roleId" to roleId.toString().asJsonValue(),
             "name" to name.asJsonValue(),
             "password" to password.asJsonValue(),
             "contactInfo" to contactInfo.asJsonValue(),
@@ -39,5 +42,9 @@ data class User(
 
     fun setId(uuid: UUID): User {
         return this.copy(id = uuid)
+    }
+
+    fun setRoleId(uuid: UUID): User {
+        return this.copy(roleId = uuid)
     }
 }

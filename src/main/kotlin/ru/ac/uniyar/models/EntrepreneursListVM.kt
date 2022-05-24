@@ -1,11 +1,11 @@
 package ru.ac.uniyar.models
 
 import org.http4k.template.ViewModel
-import ru.ac.uniyar.domain.storage.Entrepreneur
+import ru.ac.uniyar.domain.storage.User
 import java.time.LocalDateTime
 
-data class EntrepreneursListViewModel(
-    val entrepreneurs: List<Entrepreneur>,
+data class EntrepreneursListVM(
+    val entrepreneurs: List<User>,
     val paginator: Paginator,
     val fromDateTime: LocalDateTime? = null,
     val toDateTime: LocalDateTime? = null,

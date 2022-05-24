@@ -8,37 +8,40 @@ import org.http4k.core.Status
 import org.http4k.core.with
 import org.http4k.lens.FormField
 import org.http4k.lens.Invalid
+import org.http4k.lens.RequestContextLens
 import org.http4k.lens.Validator
 import org.http4k.lens.WebForm
 import org.http4k.lens.dateTime
 import org.http4k.lens.int
 import org.http4k.lens.nonEmptyString
 import org.http4k.lens.string
-import org.http4k.lens.uuid
 import org.http4k.lens.webForm
 import ru.ac.uniyar.domain.queries.AddProjectQuery
-import ru.ac.uniyar.domain.queries.EntrepreneurNotFoundError
 import ru.ac.uniyar.domain.queries.FundSizeShouldBePositiveInt
-import ru.ac.uniyar.domain.queries.ListEntrepreneursQuery
 import ru.ac.uniyar.domain.queries.StartTimeShouldBeLower
-import ru.ac.uniyar.models.NewProjectViewModel
+import ru.ac.uniyar.domain.storage.RolePermissions
+import ru.ac.uniyar.domain.storage.User
+import ru.ac.uniyar.models.NewProjectVM
 import ru.ac.uniyar.models.template.ContextAwareViewRender
 import java.time.LocalDateTime
 import java.util.*
 
 class ShowNewProjectFormHandler(
     private val htmlView: ContextAwareViewRender,
-    private val listEntrepreneursQuery: ListEntrepreneursQuery
-) : HttpHandler {
+    private val permissionsLens: RequestContextLens<RolePermissions>
+    ) : HttpHandler {
     override fun invoke(request: Request): Response {
-        val entrepreneurs = listEntrepreneursQuery.invoke()
-        return Response(Status.OK).with(htmlView(request) of NewProjectViewModel(WebForm(), entrepreneurs))
+        val permissions = permissionsLens(request)
+        if (!permissions.openNewProject)
+            return Response(Status.UNAUTHORIZED)
+
+        return Response(Status.OK).with(htmlView(request) of NewProjectVM(WebForm()))
     }
 }
 
 data class ProjectFromForm(
     val name: String,
-    val entrepreneurId: UUID,
+    val userId: UUID,
     val description: String,
     val fundSize: Int,
     val fundraisingStart: LocalDateTime,
@@ -47,12 +50,12 @@ data class ProjectFromForm(
 
 class AddProjectHandler(
     private val htmlView: ContextAwareViewRender,
-    private val listEntrepreneursQuery: ListEntrepreneursQuery,
-    private val addProjectQuery: AddProjectQuery
-) : HttpHandler {
+    private val addProjectQuery: AddProjectQuery,
+    private val permissionsLens: RequestContextLens<RolePermissions>,
+    private val currentUserLens: RequestContextLens<User?>
+    ) : HttpHandler {
     companion object {
         private val nameFormLens = FormField.nonEmptyString().required("name")
-        private val entrepreneurIdFormLens = FormField.uuid().required("entrepreneur")
         private val descriptionFormLens = FormField.string().required("description")
         private val fundSizeFormLens = FormField.int().required("fundSize")
         private val fundraisingStartFormLens = FormField.dateTime().required("fundraisingStart")
@@ -60,7 +63,6 @@ class AddProjectHandler(
         private val projectFormLens = Body.webForm(
             Validator.Feedback,
             nameFormLens,
-            entrepreneurIdFormLens,
             fundSizeFormLens,
             fundraisingStartFormLens,
             fundraisingEndFormLens,
@@ -68,13 +70,19 @@ class AddProjectHandler(
     }
 
     override fun invoke(request: Request): Response {
+        val permissions = permissionsLens(request)
+        if (!permissions.openNewProject)
+            return Response(Status.UNAUTHORIZED)
+
+        val currentUser = currentUserLens(request) ?: return Response(Status.UNAUTHORIZED)
+
         var webForm = projectFormLens(request)
         if (webForm.errors.isEmpty()) {
             webForm = try {
                 val uuid = addProjectQuery.invoke(
                     ProjectFromForm(
                         nameFormLens(webForm),
-                        entrepreneurIdFormLens(webForm),
+                        currentUser.id,
                         descriptionFormLens(webForm),
                         fundSizeFormLens(webForm),
                         fundraisingStartFormLens(webForm),
@@ -88,12 +96,8 @@ class AddProjectHandler(
             } catch (_: FundSizeShouldBePositiveInt) {
                 val newErrors = webForm.errors + Invalid(fundSizeFormLens.meta)
                 webForm.copy(errors = newErrors)
-            } catch (_: EntrepreneurNotFoundError) {
-                val newErrors = webForm.errors + Invalid(entrepreneurIdFormLens.meta)
-                webForm.copy(errors = newErrors)
             }
         }
-        val entrepreneurs = listEntrepreneursQuery.invoke()
-        return Response(Status.OK).with(htmlView(request) of NewProjectViewModel(webForm, entrepreneurs))
+        return Response(Status.OK).with(htmlView(request) of NewProjectVM(webForm))
     }
 }

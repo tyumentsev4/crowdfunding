@@ -3,7 +3,7 @@ package ru.ac.uniyar.filters
 import org.http4k.core.Filter
 import org.http4k.core.HttpHandler
 import org.http4k.core.with
-import ru.ac.uniyar.models.ShowErrorInfoViewModel
+import ru.ac.uniyar.models.ShowErrorInfoVM
 import ru.ac.uniyar.models.template.ContextAwareViewRender
 
 fun showErrorMessageFilter(htmlView: ContextAwareViewRender): Filter =
@@ -13,7 +13,7 @@ fun showErrorMessageFilter(htmlView: ContextAwareViewRender): Filter =
             if (response.status.successful) {
                 response
             } else {
-                response.with(htmlView(request) of ShowErrorInfoViewModel(request.uri))
+                response.with(htmlView(request) of ShowErrorInfoVM(request.uri))
             }
         }
 }

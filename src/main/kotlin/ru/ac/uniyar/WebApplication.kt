@@ -8,23 +8,27 @@ import org.http4k.filter.ServerFilters
 import org.http4k.lens.RequestContextKey
 import org.http4k.lens.RequestContextLens
 import org.http4k.routing.ResourceLoader
+import org.http4k.routing.routes
 import org.http4k.routing.static
 import org.http4k.server.Undertow
 import org.http4k.server.asServer
-import ru.ac.uniyar.domain.StoreHolder
+import ru.ac.uniyar.domain.StoreInitializer
+import ru.ac.uniyar.domain.storage.RolePermissions
 import ru.ac.uniyar.domain.storage.SettingFileError
 import ru.ac.uniyar.domain.storage.User
 import ru.ac.uniyar.filters.JwtTools
+import ru.ac.uniyar.filters.authenticationFilter
+import ru.ac.uniyar.filters.authorizationFilter
 import ru.ac.uniyar.filters.showErrorMessageFilter
-import ru.ac.uniyar.handlers.HttpHandlerHolder
+import ru.ac.uniyar.handlers.HttpHandlerInitializer
 import ru.ac.uniyar.models.template.ContextAwarePebbleTemplates
 import ru.ac.uniyar.models.template.ContextAwareViewRender
 
 const val SERVER_PORT = 9000
 
 fun main() {
-    val storeHolder = try {
-        StoreHolder(java.nio.file.Path.of("storage.json"), java.nio.file.Path.of("settings.json"))
+    val storeInitializer = try {
+        StoreInitializer(java.nio.file.Path.of("storage.json"), java.nio.file.Path.of("settings.json"))
     } catch (error: SettingFileError) {
         println(error.message)
         return
@@ -35,22 +39,23 @@ fun main() {
 
     val contexts = RequestContexts()
     val currentUserLens: RequestContextLens<User?> = RequestContextKey.optional(contexts, "user")
-    htmlView.associateContextLens("currentUser", currentUserLens)
-
-    val jwtTools = JwtTools(storeHolder.settings.salt, "ru.ac.uniyar.WebApplication")
-
-    val handlerHolder = HttpHandlerHolder(
+    val permissionsLens: RequestContextLens<RolePermissions> =
+        RequestContextKey.required(contexts, name = "permissions")
+    val htmlViewWithContext = htmlView
+        .associateContextLens("currentUser", currentUserLens)
+        .associateContextLens("permissions", permissionsLens)
+    val jwtTools = JwtTools(storeInitializer.settings.salt, "ru.ac.uniyar.WebApplication")
+    val handlerHolder = HttpHandlerInitializer(
         currentUserLens,
+        permissionsLens,
         htmlView,
-        storeHolder,
+        storeInitializer,
         jwtTools
     )
 
-    val routingHttpHandler = static(ResourceLoader.Classpath("/ru/ac/uniyar/public/"))
-
     val router = Router(
-        handlerHolder.showNewEntrepreneurFormHandler,
-        handlerHolder.addEntrepreneurHandler,
+        handlerHolder.showNewUserFormHandler,
+        handlerHolder.addUserHandler,
         handlerHolder.showNewInvestmentFormHandler,
         handlerHolder.addInvestmentHandler,
         handlerHolder.showNewProjectFormHandler,
@@ -62,13 +67,35 @@ fun main() {
         handlerHolder.showProjectHandler,
         handlerHolder.showProjectsListHandler,
         handlerHolder.showStartPageHandler,
-        routingHttpHandler
+        handlerHolder.showLoginFormHandler,
+        handlerHolder.authenticateUser,
+        handlerHolder.logOutUser,
+    )
+
+    val authorizedApp = authenticationFilter(
+        currentUserLens,
+        storeInitializer.fetchUserViaUserId,
+        jwtTools
+    ).then(
+        authorizationFilter(
+            currentUserLens,
+            permissionsLens,
+            storeInitializer.fetchPermissionsViaIdQuery
+        )
+    ).then(
+        router()
+    )
+
+    val staticFilesHandler = static(ResourceLoader.Classpath("/ru/ac/uniyar/public/"))
+    val app = routes(
+        authorizedApp,
+        staticFilesHandler
     )
 
     val printingApp: HttpHandler =
         ServerFilters.InitialiseRequestContext(contexts)
-            .then(showErrorMessageFilter(htmlView))
-            .then(router())
+            .then(showErrorMessageFilter(htmlViewWithContext))
+            .then(app)
     val server = printingApp.asServer(Undertow(SERVER_PORT)).start()
     println("Server started on http://localhost:" + server.port())
 }

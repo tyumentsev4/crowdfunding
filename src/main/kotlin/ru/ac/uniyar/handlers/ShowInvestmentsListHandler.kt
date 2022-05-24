@@ -9,7 +9,7 @@ import org.http4k.lens.Query
 import org.http4k.lens.dateTime
 import org.http4k.lens.int
 import ru.ac.uniyar.domain.queries.ListInvestmentsPerPageQuery
-import ru.ac.uniyar.models.InvestmentsListViewModel
+import ru.ac.uniyar.models.InvestmentsListVM
 import ru.ac.uniyar.models.Paginator
 import ru.ac.uniyar.models.template.ContextAwareViewRender
 
@@ -34,7 +34,7 @@ class ShowInvestmentsListHandler(
         val pagedResult = listInvestmentsPerPageQuery.invoke(pageNumber, fromDateTime, toDateTime, fromAmount, toAmount)
         val paginator = Paginator(pagedResult.pageCount, pageNumber, request.uri)
         val model =
-            InvestmentsListViewModel(pagedResult.values, paginator, fromDateTime, toDateTime, fromAmount, toAmount)
+            InvestmentsListVM(pagedResult.values, paginator, fromDateTime, toDateTime, fromAmount, toAmount)
 
         return Response(Status.OK).with(htmlView(request) of model)
     }

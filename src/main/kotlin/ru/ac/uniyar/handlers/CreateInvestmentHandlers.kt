@@ -8,68 +8,95 @@ import org.http4k.core.Status
 import org.http4k.core.with
 import org.http4k.lens.FormField
 import org.http4k.lens.Invalid
+import org.http4k.lens.Path
+import org.http4k.lens.RequestContextLens
 import org.http4k.lens.Validator
 import org.http4k.lens.WebForm
+import org.http4k.lens.boolean
 import org.http4k.lens.int
-import org.http4k.lens.string
 import org.http4k.lens.uuid
 import org.http4k.lens.webForm
 import ru.ac.uniyar.domain.queries.AddInvestmentQuery
 import ru.ac.uniyar.domain.queries.AmountShouldBePositiveInt
+import ru.ac.uniyar.domain.queries.FetchProjectViaIdQuery
 import ru.ac.uniyar.domain.queries.ListOpenProjectsQuery
-import ru.ac.uniyar.domain.queries.ProjectNotFound
-import ru.ac.uniyar.models.NewInvestmentViewModel
+import ru.ac.uniyar.domain.storage.RolePermissions
+import ru.ac.uniyar.domain.storage.User
+import ru.ac.uniyar.models.NewInvestmentVM
 import ru.ac.uniyar.models.template.ContextAwareViewRender
 
 class ShowNewInvestmentFormHandler(
     private val htmlView: ContextAwareViewRender,
-    private val listOpenProjectsQuery: ListOpenProjectsQuery
-) : HttpHandler {
+    private val listOpenProjectsQuery: ListOpenProjectsQuery,
+    private val fetchProjectViaIdQuery: FetchProjectViaIdQuery,
+    private val permissionsLens: RequestContextLens<RolePermissions>,
+    ) : HttpHandler {
+    companion object {
+        private val projectIdLens = Path.uuid().of("id")
+    }
     override fun invoke(request: Request): Response {
-        val projects = listOpenProjectsQuery.invoke()
-        return Response(Status.OK).with(htmlView(request) of NewInvestmentViewModel(WebForm(), projects))
+        val permissions = permissionsLens(request)
+        if (!permissions.addInvestment)
+            return Response(Status.UNAUTHORIZED)
+        val openProjects = listOpenProjectsQuery.invoke()
+        val projectId = lensOrNull(projectIdLens, request) ?: return Response(Status.BAD_REQUEST)
+        val project = fetchProjectViaIdQuery.invoke(projectId) ?: return Response(Status.BAD_REQUEST)
+        if (!openProjects.contains(project)) return Response(Status.BAD_REQUEST)
+        return Response(Status.OK).with(htmlView(request) of NewInvestmentVM(WebForm(), project))
     }
 }
 
 class AddInvestmentHandler(
     private val htmlView: ContextAwareViewRender,
     private val listOpenProjectsQuery: ListOpenProjectsQuery,
-    private val addInvestmentQuery: AddInvestmentQuery
-) : HttpHandler {
+    private val addInvestmentQuery: AddInvestmentQuery,
+    private val fetchProjectViaIdQuery: FetchProjectViaIdQuery,
+    private val currentUserLens: RequestContextLens<User?>,
+    private val permissionsLens: RequestContextLens<RolePermissions>
+    ) : HttpHandler {
     companion object {
-        private val projectIdFormLens = FormField.uuid().required("projectId")
-        private val investorFormLens = FormField.string().required("investorName")
-        private val contactFormLens = FormField.string().required("contactInfo")
+        private val projectIdLens = Path.uuid().of("id")
+        private val isAnonInvestmentLens = FormField.boolean().required("isAnonInvestment")
         private val amountFormLens = FormField.int().required("amount")
         private val investmentFormLens = Body.webForm(
             Validator.Feedback,
-            projectIdFormLens,
-            investorFormLens,
-            contactFormLens,
             amountFormLens
         ).toLens()
     }
 
     override fun invoke(request: Request): Response {
+        val permissions = permissionsLens(request)
+        if (!permissions.addInvestment)
+            return Response(Status.UNAUTHORIZED)
+
+        val projectId = lensOrNull(projectIdLens, request) ?: return Response(Status.BAD_REQUEST)
+        val openProjects = listOpenProjectsQuery.invoke()
+        val project = fetchProjectViaIdQuery.invoke(projectId) ?: return Response(Status.BAD_REQUEST)
+        if (!openProjects.contains(project)) return Response(Status.BAD_REQUEST)
+
         var webForm = investmentFormLens(request)
         if (webForm.errors.isEmpty()) {
+            var investorName = ""
+            var investorContactInfo = ""
+            val currentUser = currentUserLens(request)!!
+            if (!isAnonInvestmentLens(webForm)) {
+                investorName = currentUser.name
+                investorContactInfo = currentUser.contactInfo
+            }
             webForm = try {
                 val uuid = addInvestmentQuery.invoke(
-                    projectIdFormLens(webForm),
-                    investorFormLens(webForm),
-                    contactFormLens(webForm),
+                    projectId,
+                    investorName,
+                    investorContactInfo,
                     amountFormLens(webForm)
                 )
                 return Response(Status.FOUND).header("Location", "/investments/$uuid")
-            } catch (_: ProjectNotFound) {
-                val newErrors = webForm.errors + Invalid(projectIdFormLens.meta)
-                webForm.copy(errors = newErrors)
             } catch (_: AmountShouldBePositiveInt) {
                 val newErrors = webForm.errors + Invalid(amountFormLens.meta)
                 webForm.copy(errors = newErrors)
             }
         }
         val projects = listOpenProjectsQuery.invoke()
-        return Response(Status.OK).with(htmlView(request) of NewInvestmentViewModel(webForm, projects))
+        return Response(Status.OK).with(htmlView(request) of NewInvestmentVM(webForm, project))
     }
 }

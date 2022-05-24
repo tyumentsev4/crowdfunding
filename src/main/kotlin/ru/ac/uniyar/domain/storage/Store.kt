@@ -9,8 +9,9 @@ import kotlin.concurrent.thread
 import kotlin.io.path.isReadable
 
 class Store(private val documentStoragePath: Path) {
+    val rolePermissionsRepository: RolePermissionsRepository
     val projectsRepository: ProjectsRepository
-    val entrepreneursRepository: EntrepreneursRepository
+    val usersRepository: UsersRepository
     val investmentsRepository: InvestmentsRepository
 
     private val storeThread = thread(start = false) {
@@ -31,10 +32,10 @@ class Store(private val documentStoragePath: Path) {
             ProjectsRepository()
         }
 
-        entrepreneursRepository = if (node != null && node.has("entrepreneurs")) {
-            EntrepreneursRepository.fromJson(node["entrepreneurs"])
+        usersRepository = if (node != null && node.has("users")) {
+            UsersRepository.fromJson(node["users"])
         } else {
-            EntrepreneursRepository()
+            UsersRepository()
         }
 
         investmentsRepository = if (node != null && node.has("investments")) {
@@ -42,13 +43,20 @@ class Store(private val documentStoragePath: Path) {
         } else {
             InvestmentsRepository()
         }
+
+        rolePermissionsRepository = if (node != null && node.has("rolePermissions")) {
+            RolePermissionsRepository.fromJson(node["rolePermissions"])
+        } else {
+            RolePermissionsRepository()
+        }
     }
 
     fun save() {
         val document: JsonNode =
             listOf(
+                "rolePermissions" to rolePermissionsRepository.asJsonObject(),
                 "projects" to projectsRepository.asJsonObject(),
-                "entrepreneurs" to entrepreneursRepository.asJsonObject(),
+                "users" to usersRepository.asJsonObject(),
                 "investments" to investmentsRepository.asJsonObject()
             ).asJsonObject()
         val documentString = document.asPrettyJsonString()

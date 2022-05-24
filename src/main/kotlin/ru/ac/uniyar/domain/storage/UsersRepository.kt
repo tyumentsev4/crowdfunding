@@ -34,4 +34,8 @@ class UsersRepository(entrepreneurs: Iterable<User> = emptyList()) {
     }
 
     fun list() = usersMap.values.toList()
+
+    fun update(user: User) {
+        usersMap[user.id] = user
+    }
 }

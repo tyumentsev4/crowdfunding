@@ -15,8 +15,9 @@ class ContextAwareViewRender(
     private val baseBodyLensSpec = Body.string(contentType)
     private val contexts = mutableMapOf<String, RequestContextLens<*>>()
 
-    fun associateContextLens(key: String, lens: RequestContextLens<*>) {
+    fun associateContextLens(key: String, lens: RequestContextLens<*>): ContextAwareViewRender {
         contexts[key] = lens
+        return this
     }
 
     private fun extractContext(request: Request): Map<String, Any?> = contexts.mapValues {

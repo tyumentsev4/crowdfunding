@@ -1,10 +1,11 @@
 package ru.ac.uniyar.domain.queries
 
-import ru.ac.uniyar.domain.storage.Entrepreneur
-import ru.ac.uniyar.domain.storage.EntrepreneursRepository
+import ru.ac.uniyar.domain.storage.ENTREPRENEUR_ROLE_ID
+import ru.ac.uniyar.domain.storage.User
+import ru.ac.uniyar.domain.storage.UsersRepository
 import java.time.LocalDateTime
 
-class ListEntrepreneursPerPageQuery(private val entrepreneursRepository: EntrepreneursRepository) {
+class ListEntrepreneursPerPageQuery(private val usersRepository: UsersRepository) {
 
     companion object {
         const val PAGE_SIZE = 3
@@ -14,13 +15,13 @@ class ListEntrepreneursPerPageQuery(private val entrepreneursRepository: Entrepr
         page: Int,
         fromDateTime: LocalDateTime?,
         toDateTime: LocalDateTime?,
-        nameSearch: String?
-    ): PagedResult<Entrepreneur> {
+        nameSearch: String?,
+    ): PagedResult<User> {
         val baseFrom = fromDateTime ?: LocalDateTime.MIN
         val baseTo = toDateTime ?: LocalDateTime.MAX
-        var list = entrepreneursRepository.list().filter {
-            it.addTime in baseFrom..baseTo
-        }
+        var list = usersRepository.list()
+            .filter { it.roleId == ENTREPRENEUR_ROLE_ID }
+            .filter { it.addTime in baseFrom..baseTo }
         if (nameSearch != null) {
             list = list.filter { it.name.contains(nameSearch, ignoreCase = true) }
         }

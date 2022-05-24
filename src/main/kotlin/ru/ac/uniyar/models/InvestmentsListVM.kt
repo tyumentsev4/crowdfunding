@@ -4,7 +4,7 @@ import org.http4k.template.ViewModel
 import ru.ac.uniyar.domain.storage.Investment
 import java.time.LocalDateTime
 
-data class InvestmentsListViewModel(
+data class InvestmentsListVM(
     val investments: Iterable<Investment>,
     val paginator: Paginator,
     val fromDateTime: LocalDateTime? = null,
