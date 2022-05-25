@@ -4,6 +4,7 @@ import ru.ac.uniyar.domain.queries.AddUserQuery
 import ru.ac.uniyar.domain.queries.AddInvestmentQuery
 import ru.ac.uniyar.domain.queries.AddProjectQuery
 import ru.ac.uniyar.domain.queries.AuthenticateUserViaLoginQuery
+import ru.ac.uniyar.domain.queries.EditProjectQuery
 import ru.ac.uniyar.domain.queries.FetchEntrepreneurQuery
 import ru.ac.uniyar.domain.queries.FetchInvestmentQuery
 import ru.ac.uniyar.domain.queries.FetchPermissionsViaIdQuery
@@ -46,4 +47,5 @@ class StoreInitializer(
     val fetchProjectViaIdQuery = FetchProjectViaIdQuery(store.projectsRepository)
     val fetchUserQuery = FetchUserQuery(store.usersRepository, store.investmentsRepository, store.projectsRepository)
     val listUserProjectsPerPageQuery = ListUserProjectsPerPageQuery(store.projectsRepository)
+    val editProjectQuery = EditProjectQuery(store.projectsRepository)
 }

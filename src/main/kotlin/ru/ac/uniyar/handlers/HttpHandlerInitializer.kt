@@ -96,4 +96,15 @@ class HttpHandlerInitializer (
         storeInitializer.listUserProjectsPerPageQuery,
         currentUserLens
     )
+    val showEditProjectHandler = ShowEditProjectFormHandler(
+        htmlView,
+        currentUserLens,
+        storeInitializer.fetchProjectViaIdQuery
+    )
+    val editProjectHandler = EditProjectHandler(
+        htmlView,
+        storeInitializer.editProjectQuery,
+        currentUserLens,
+        storeInitializer.fetchProjectViaIdQuery
+    )
 }

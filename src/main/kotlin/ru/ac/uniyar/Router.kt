@@ -26,7 +26,9 @@ class Router(
     private val authenticateUser: HttpHandler,
     private val logOutUser: HttpHandler,
     private val showUserHandler: HttpHandler,
-    private val showUserProjectsListHandler: HttpHandler
+    private val showUserProjectsListHandler: HttpHandler,
+    private val showEditProjectHandler: HttpHandler,
+    private val editProjectHandler: HttpHandler,
 ) {
     operator fun invoke(): RoutingHttpHandler = routes(
         "/" bind Method.GET to showStartPageHandler,
@@ -46,6 +48,8 @@ class Router(
         "/projects/{id}/new_investment" bind Method.POST to addInvestmentHandler,
         "/investments/{id}" bind Method.GET to showInvestmentHandler,
         "/users/{id}" bind Method.GET to showUserHandler,
-        "/users/{id}/projects" bind Method.GET to showUserProjectsListHandler
+        "/users/{id}/projects" bind Method.GET to showUserProjectsListHandler,
+        "/projects/{id}/edit" bind Method.GET to showEditProjectHandler,
+        "/projects/{id}/edit" bind Method.POST to editProjectHandler,
     )
 }

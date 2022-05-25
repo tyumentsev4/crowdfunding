@@ -25,10 +25,10 @@
   "projects" : [ {
     "id" : "5a981ae9-f6d9-403d-8add-da7d93cdfe61",
     "addTime" : "2022-05-24T17:58:00",
-    "name" : "AAAA",
+    "name" : "ggg",
     "userId" : "561d0d6c-b426-4a63-8a02-c3867db6017b",
-    "description" : "AAA",
-    "fundSize" : 21312,
+    "description" : "ggg",
+    "fundSize" : 444,
     "fundraisingStart" : "2022-04-25T02:13:00",
     "fundraisingEnd" : "2022-05-24T00:03:00",
     "collectedAmount" : 0
@@ -38,10 +38,10 @@
     "name" : "Школа №1",
     "userId" : "561d0d6c-b426-4a63-8a02-c3867db6017b",
     "description" : "",
-    "fundSize" : 6456,
+    "fundSize" : 6455,
     "fundraisingStart" : "2022-05-01T04:04:00",
     "fundraisingEnd" : "2022-06-30T05:05:00",
-    "collectedAmount" : 446
+    "collectedAmount" : 0
   } ],
   "users" : [ {
     "id" : "561d0d6c-b426-4a63-8a02-c3867db6017b",
