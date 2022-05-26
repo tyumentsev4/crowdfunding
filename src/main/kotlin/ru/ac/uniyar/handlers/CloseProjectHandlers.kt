@@ -8,19 +8,19 @@ import org.http4k.core.with
 import org.http4k.lens.Path
 import org.http4k.lens.RequestContextLens
 import org.http4k.lens.uuid
+import ru.ac.uniyar.domain.queries.CloseProjectQuery
 import ru.ac.uniyar.domain.queries.DeleteProjectQuery
 import ru.ac.uniyar.domain.queries.FetchProjectViaIdQuery
-import ru.ac.uniyar.domain.queries.ListInvestmentsQuery
-import ru.ac.uniyar.domain.queries.hasProjectInvestments
+import ru.ac.uniyar.domain.queries.InvestmentsByProjectQuery
 import ru.ac.uniyar.domain.storage.User
+import ru.ac.uniyar.models.CloseProjectVM
 import ru.ac.uniyar.models.DeleteProjectVM
 import ru.ac.uniyar.models.template.ContextAwareViewRender
 
-class ShowDeleteProjectFormHandler(
+class ShowCloseProjectFormHandler(
     private val htmlView: ContextAwareViewRender,
     private val currentUserLens: RequestContextLens<User?>,
     private val fetchProjectViaIdQuery: FetchProjectViaIdQuery,
-    private val listInvestmentsQuery: ListInvestmentsQuery
 ) : HttpHandler {
     companion object {
         private val projectIdLens = Path.uuid().of("id")
@@ -28,21 +28,18 @@ class ShowDeleteProjectFormHandler(
     override fun invoke(request: Request): Response {
         val project = fetchProjectViaIdQuery.invoke(projectIdLens(request))
         val user = currentUserLens(request)
-        if (project == null)
+        if (project == null || !project.isOpen())
             return Response(Status.BAD_REQUEST)
         if (project.entrepreneurId != user?.id)
             return Response(Status.UNAUTHORIZED)
-        if (hasProjectInvestments(project, listInvestmentsQuery()))
-            return Response(Status.BAD_REQUEST)
-        return Response(Status.OK).with(htmlView(request) of DeleteProjectVM(project))
+        return Response(Status.OK).with(htmlView(request) of CloseProjectVM(project))
     }
 }
 
-class DeleteProjectHandler(
+class CloseProjectHandler(
     private val currentUserLens: RequestContextLens<User?>,
     private val fetchProjectViaIdQuery: FetchProjectViaIdQuery,
-    private val deleteProjectQuery: DeleteProjectQuery,
-    private val listInvestmentsQuery: ListInvestmentsQuery
+    private val closeProjectQuery: CloseProjectQuery,
 ) : HttpHandler {
     companion object {
         private val projectIdLens = Path.uuid().of("id")
@@ -52,16 +49,13 @@ class DeleteProjectHandler(
         val projectId = projectIdLens(request)
         val project = fetchProjectViaIdQuery.invoke(projectId)
         val currentUser = currentUserLens(request)
-        if (project == null)
+        if (project == null || !project.isOpen())
             return Response(Status.BAD_REQUEST)
         if (project.entrepreneurId != currentUser?.id)
             return Response(Status.UNAUTHORIZED)
 
-        if (hasProjectInvestments(project, listInvestmentsQuery()))
-            return Response(Status.BAD_REQUEST)
-        else {
-            deleteProjectQuery.invoke(project)
-        }
+        closeProjectQuery(project)
+
         return Response(Status.FOUND).header("Location", "/projects/")
     }
 }

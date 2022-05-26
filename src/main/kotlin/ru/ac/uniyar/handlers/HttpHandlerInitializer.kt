@@ -111,12 +111,22 @@ class HttpHandlerInitializer (
         htmlView,
         currentUserLens,
         storeInitializer.fetchProjectViaIdQuery,
-        storeInitializer.investmentsByProjectQuery
+        storeInitializer.listInvestmentsQuery
     )
     val deleteProjectHandler = DeleteProjectHandler(
         currentUserLens,
         storeInitializer.fetchProjectViaIdQuery,
         storeInitializer.deleteProjectQuery,
-        storeInitializer.investmentsByProjectQuery
+        storeInitializer.listInvestmentsQuery
+    )
+    val showCloseProjectFormHandler = ShowCloseProjectFormHandler(
+        htmlView,
+        currentUserLens,
+        storeInitializer.fetchProjectViaIdQuery
+    )
+    val closeProjectHandler = CloseProjectHandler(
+        currentUserLens,
+        storeInitializer.fetchProjectViaIdQuery,
+        storeInitializer.closeProjectQuery
     )
 }

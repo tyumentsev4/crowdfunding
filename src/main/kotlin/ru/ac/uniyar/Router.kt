@@ -30,7 +30,9 @@ class Router(
     private val showEditProjectHandler: HttpHandler,
     private val editProjectHandler: HttpHandler,
     private val showDeleteProjectFormHandler: HttpHandler,
-    private val deleteProjectHandler: HttpHandler
+    private val deleteProjectHandler: HttpHandler,
+    private val showCloseProjectFormHandler: HttpHandler,
+    private val closeProjectHandler: HttpHandler
 ) {
     operator fun invoke(): RoutingHttpHandler = routes(
         "/" bind Method.GET to showStartPageHandler,
@@ -55,5 +57,7 @@ class Router(
         "/projects/{id}/edit" bind Method.POST to editProjectHandler,
         "/projects/{id}/delete" bind Method.GET to showDeleteProjectFormHandler,
         "/projects/{id}/delete" bind Method.POST to deleteProjectHandler,
+        "/projects/{id}/close" bind Method.GET to showCloseProjectFormHandler,
+        "/projects/{id}/close" bind Method.POST to closeProjectHandler,
     )
 }

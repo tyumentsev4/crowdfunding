@@ -14,17 +14,23 @@
         <p>Записей не найдено</p>
     </div>
     {% endif %}
-    {% for project in model.projects %}
+    {% for info in model.projects %}
     <div class="medium-12 cell">
         <div class="callout">
             <p>
-                {{ project.name }}
+                {{ info.project.name }}
             </p>
             <p>
-                <a href="/projects/{{ project.id }}">Больше информации</a>
+                <a href="/projects/{{ info.project.id }}">Больше информации</a>
             </p>
             <div class="button-group">
-                <a class="button success" href="/projects/{{ project.id }}/edit">Редактировать</a>
+                <a class="button success" href="/projects/{{ info.project.id }}/edit">Редактировать</a>
+                {% if info.project.isOpen() %}
+                <a class="button warning" href="/projects/{{ info.project.id }}/close">Закрыть</a>
+                {% endif %}
+                {% if not info.hasInvestments %}
+                <a class="button alert" href="/projects/{{ info.project.id }}/delete">Удалить</a>
+                {% endif %}
             </div>
         </div>
     </div>
