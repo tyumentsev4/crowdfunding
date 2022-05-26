@@ -39,4 +39,8 @@ class ProjectsRepository(projects: Iterable<Project> = emptyList()) {
     fun update(project: Project) {
         projectsMap[project.id] = project
     }
+
+    fun delete(project: Project) {
+        projectsMap.remove(project.id)
+    }
 }

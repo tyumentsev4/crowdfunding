@@ -107,4 +107,16 @@ class HttpHandlerInitializer (
         currentUserLens,
         storeInitializer.fetchProjectViaIdQuery
     )
+    val showDeleteProjectFormHandler = ShowDeleteProjectFormHandler(
+        htmlView,
+        currentUserLens,
+        storeInitializer.fetchProjectViaIdQuery,
+        storeInitializer.investmentsByProjectQuery
+    )
+    val deleteProjectHandler = DeleteProjectHandler(
+        currentUserLens,
+        storeInitializer.fetchProjectViaIdQuery,
+        storeInitializer.deleteProjectQuery,
+        storeInitializer.investmentsByProjectQuery
+    )
 }

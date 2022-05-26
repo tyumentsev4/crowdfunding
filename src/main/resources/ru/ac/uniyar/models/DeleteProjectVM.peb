@@ -1,0 +1,15 @@
+    {% extends "./layout.peb" %}
+
+    {% block content %}
+
+    <div class="grid-x grid-padding-x">
+        <div class="medium-12 cell">
+            <p>Вы действительно хотите удалить проект {{ modle.project.name }}</p>
+            <form method="post">
+                <input type="submit" value="Да" class="button">
+                <a href="/projects">Нет, назад</a>
+            </form>
+        </div>
+    </div>
+
+    {% endblock %}

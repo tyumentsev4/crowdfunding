@@ -73,7 +73,9 @@ fun main() {
         handlerHolder.showUserHandler,
         handlerHolder.showUserProjectsListHandler,
         handlerHolder.showEditProjectHandler,
-        handlerHolder.editProjectHandler
+        handlerHolder.editProjectHandler,
+        handlerHolder.showDeleteProjectFormHandler,
+        handlerHolder.deleteProjectHandler
     )
 
     val authorizedApp = authenticationFilter(

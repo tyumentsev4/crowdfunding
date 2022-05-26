@@ -4,6 +4,7 @@ import ru.ac.uniyar.domain.queries.AddUserQuery
 import ru.ac.uniyar.domain.queries.AddInvestmentQuery
 import ru.ac.uniyar.domain.queries.AddProjectQuery
 import ru.ac.uniyar.domain.queries.AuthenticateUserViaLoginQuery
+import ru.ac.uniyar.domain.queries.DeleteProjectQuery
 import ru.ac.uniyar.domain.queries.EditProjectQuery
 import ru.ac.uniyar.domain.queries.FetchEntrepreneurQuery
 import ru.ac.uniyar.domain.queries.FetchInvestmentQuery
@@ -12,6 +13,7 @@ import ru.ac.uniyar.domain.queries.FetchProjectQuery
 import ru.ac.uniyar.domain.queries.FetchProjectViaIdQuery
 import ru.ac.uniyar.domain.queries.FetchUserQuery
 import ru.ac.uniyar.domain.queries.FetchUserViaUserId
+import ru.ac.uniyar.domain.queries.InvestmentsByProjectQuery
 import ru.ac.uniyar.domain.queries.ListEntrepreneursPerPageQuery
 import ru.ac.uniyar.domain.queries.ListEntrepreneursQuery
 import ru.ac.uniyar.domain.queries.ListInvestmentsPerPageQuery
@@ -26,7 +28,7 @@ class StoreInitializer(
     documentStorePath: Path,
     settingsPath: Path
 ) {
-    val store = Store(documentStorePath)
+    private val store = Store(documentStorePath)
     val settings = Settings(settingsPath)
 
     val listProjectsPerPageQuery = ListProjectsPerPageQuery(store.projectsRepository)
@@ -48,4 +50,6 @@ class StoreInitializer(
     val fetchUserQuery = FetchUserQuery(store.usersRepository, store.investmentsRepository, store.projectsRepository)
     val listUserProjectsPerPageQuery = ListUserProjectsPerPageQuery(store.projectsRepository)
     val editProjectQuery = EditProjectQuery(store.projectsRepository)
+    val investmentsByProjectQuery = InvestmentsByProjectQuery(store.investmentsRepository, store.projectsRepository)
+    val deleteProjectQuery = DeleteProjectQuery(store.projectsRepository)
 }
