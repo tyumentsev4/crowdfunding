@@ -10,12 +10,9 @@ import java.util.*
 class FetchUserQuery(
     private val usersRepository: UsersRepository,
     private val investmentsRepository: InvestmentsRepository,
-    private val projectsRepository: ProjectsRepository
 ) {
     operator fun invoke(id: UUID): UserInfo {
         val user = usersRepository.fetch(id) ?: throw UserFetchError("Not found")
-        val investments = investmentsRepository.list().filter { it.investorName == user.name }
-        val investmentsByProject = investments.associateBy { it.projectId }.toMutableMap()
         return UserInfo(user)
     }
 }

@@ -2,6 +2,7 @@ package ru.ac.uniyar.handlers
 
 import org.http4k.lens.RequestContextLens
 import ru.ac.uniyar.domain.StoreInitializer
+import ru.ac.uniyar.domain.queries.FetchUserProjectsInvestorsQuery
 import ru.ac.uniyar.domain.storage.RolePermissions
 import ru.ac.uniyar.domain.storage.User
 import ru.ac.uniyar.filters.JwtTools
@@ -128,5 +129,10 @@ class HttpHandlerInitializer (
         currentUserLens,
         storeInitializer.fetchProjectViaIdQuery,
         storeInitializer.closeProjectQuery
+    )
+    val showInvestorsListHandler = ShowInvestorsListHandler(
+        htmlView,
+        storeInitializer.fetchUserProjectsInvestorsQuery,
+        currentUserLens
     )
 }

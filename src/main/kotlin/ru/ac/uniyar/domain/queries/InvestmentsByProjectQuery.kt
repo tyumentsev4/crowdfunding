@@ -1,6 +1,5 @@
 package ru.ac.uniyar.domain.queries
 
-import ru.ac.uniyar.domain.storage.Investment
 import ru.ac.uniyar.domain.storage.InvestmentsRepository
 import ru.ac.uniyar.domain.storage.Project
 import ru.ac.uniyar.domain.storage.ProjectsRepository
@@ -10,16 +9,15 @@ class InvestmentsByProjectQuery(
     private val projectsRepository: ProjectsRepository
 ) {
 
-    operator fun invoke() : Map<Project, List<Investment>> {
+    operator fun invoke() : List<ProjectInvestments> {
         val investments = investmentRepository.list()
         val projects = projectsRepository.list()
+        val projectsInvestments = mutableListOf<ProjectInvestments>()
 
-        val investmentsByProjectMap = mutableMapOf<Project, MutableList<Investment>>()
         projects.forEach { project: Project ->
-            investmentsByProjectMap[project] = mutableListOf()
-            val i = investments.filter { it.projectId == project.id }
-            i.groupByTo(investmentsByProjectMap, { project }, { it })
+            val projectInvestments = investments.filter { it.projectId == project.id }
+            projectsInvestments.add(ProjectInvestments(project, projectInvestments))
         }
-        return investmentsByProjectMap
+        return projectsInvestments
     }
 }

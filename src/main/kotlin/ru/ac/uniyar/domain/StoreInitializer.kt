@@ -12,6 +12,7 @@ import ru.ac.uniyar.domain.queries.FetchInvestmentQuery
 import ru.ac.uniyar.domain.queries.FetchPermissionsViaIdQuery
 import ru.ac.uniyar.domain.queries.FetchProjectQuery
 import ru.ac.uniyar.domain.queries.FetchProjectViaIdQuery
+import ru.ac.uniyar.domain.queries.FetchUserProjectsInvestorsQuery
 import ru.ac.uniyar.domain.queries.FetchUserQuery
 import ru.ac.uniyar.domain.queries.FetchUserViaUserId
 import ru.ac.uniyar.domain.queries.InvestmentsByProjectQuery
@@ -28,7 +29,7 @@ import java.nio.file.Path
 
 class StoreInitializer(
     documentStorePath: Path,
-    settingsPath: Path
+    settingsPath: Path,
 ) {
     private val store = Store(documentStorePath)
     val settings = Settings(settingsPath)
@@ -49,11 +50,14 @@ class StoreInitializer(
     val fetchUserViaUserId = FetchUserViaUserId(store.usersRepository)
     val authenticateUserViaLoginQuery = AuthenticateUserViaLoginQuery(store.usersRepository, settings)
     val fetchProjectViaIdQuery = FetchProjectViaIdQuery(store.projectsRepository)
-    val fetchUserQuery = FetchUserQuery(store.usersRepository, store.investmentsRepository, store.projectsRepository)
-    val listUserProjectsPerPageQuery = ListUserProjectsPerPageQuery(store.projectsRepository, store.investmentsRepository)
+    val fetchUserQuery = FetchUserQuery(store.usersRepository, store.investmentsRepository)
+    val listUserProjectsPerPageQuery =
+        ListUserProjectsPerPageQuery(store.projectsRepository, store.investmentsRepository)
     val editProjectQuery = EditProjectQuery(store.projectsRepository)
     val investmentsByProjectQuery = InvestmentsByProjectQuery(store.investmentsRepository, store.projectsRepository)
     val deleteProjectQuery = DeleteProjectQuery(store.projectsRepository)
     val listInvestmentsQuery = ListInvestmentsQuery(store.investmentsRepository)
     val closeProjectQuery = CloseProjectQuery(store.projectsRepository)
+    val fetchUserProjectsInvestorsQuery =
+        FetchUserProjectsInvestorsQuery(store.investmentsRepository, store.projectsRepository)
 }

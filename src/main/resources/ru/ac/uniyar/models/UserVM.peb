@@ -21,4 +21,5 @@
         </tr>
     </table>
     <a href="/users/{{ model.user.id }}/projects">Мои проекты</a>
+    <a href="/users/{{ model.user.id }}/investors">Мои инвесторы</a>
 {% endblock %}
