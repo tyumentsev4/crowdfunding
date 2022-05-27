@@ -2,6 +2,7 @@ package ru.ac.uniyar.domain.queries
 
 import ru.ac.uniyar.domain.queries.computations.hashPassword
 import ru.ac.uniyar.domain.storage.EMPTY_UUID
+import ru.ac.uniyar.domain.storage.ProjectSortSettings
 import ru.ac.uniyar.domain.storage.REGISTERED_USER_ROLE_ID
 import ru.ac.uniyar.domain.storage.Settings
 import ru.ac.uniyar.domain.storage.User
@@ -28,7 +29,8 @@ class AddUserQuery(
                 name,
                 hashedPassword,
                 contactInfo,
-                LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES)
+                LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
+                ProjectSortSettings.Normal
             )
         )
     }

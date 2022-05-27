@@ -7,13 +7,22 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
+enum class ProjectSortSettings {
+    Normal,
+    OpenFirst,
+    CloseFirst,
+    DateEndInc,
+    DateEndDec
+}
+
 data class User(
     val id: UUID,
     val roleId: UUID,
     val name: String,
     val password: String,
     val contactInfo: String,
-    val addTime: LocalDateTime
+    val addTime: LocalDateTime,
+    val sortSettings: ProjectSortSettings
 ) {
     companion object {
         fun fromJson(node: JsonNode): User {
@@ -24,7 +33,8 @@ data class User(
                 jsonObject["name"].asText(),
                 jsonObject["password"].asText(),
                 jsonObject["contactInfo"].asText(),
-                LocalDateTime.parse(jsonObject["addTime"].asText(), DateTimeFormatter.ISO_DATE_TIME)
+                LocalDateTime.parse(jsonObject["addTime"].asText(), DateTimeFormatter.ISO_DATE_TIME),
+                ProjectSortSettings.valueOf(jsonObject["sortSettings"].asText())
             )
         }
     }
@@ -36,7 +46,8 @@ data class User(
             "name" to name.asJsonValue(),
             "password" to password.asJsonValue(),
             "contactInfo" to contactInfo.asJsonValue(),
-            "addTime" to addTime.format(DateTimeFormatter.ISO_DATE_TIME).asJsonValue()
+            "addTime" to addTime.format(DateTimeFormatter.ISO_DATE_TIME).asJsonValue(),
+            "sortSettings" to sortSettings.asJsonObject()
         ).asJsonObject()
     }
 

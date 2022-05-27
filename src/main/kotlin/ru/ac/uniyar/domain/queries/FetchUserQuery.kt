@@ -17,12 +17,13 @@ class FetchUserQuery(
         val projectsInvestments = mutableListOf<ProjectInvestments>()
         projects.forEach { project ->
             val projectInvestments = investments.filter { it.projectId == project.id }
-            projectsInvestments.add(
-                ProjectInvestments(
-                    project,
-                    projectInvestments
+            if (projectInvestments.isNotEmpty())
+                projectsInvestments.add(
+                    ProjectInvestments(
+                        project,
+                        projectInvestments
+                    )
                 )
-            )
         }
         return UserInfo(user, projectsInvestments)
     }

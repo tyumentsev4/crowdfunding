@@ -25,6 +25,7 @@
         <a class="button" href="/users/{{ model.user.id }}/projects">Мои проекты</a>
         <a class="button" href="/users/{{ model.user.id }}/investors">Мои инвесторы</a>
     </div>
+    {% endif %}
     <h2>Список моих инвестиций</h2>
     <div class="grid-x grid-padding-x">
         {% if model.projectsInvestments.size == 0 %}
@@ -52,5 +53,4 @@
             </div>
         {% endfor %}
     </div>
-    {% endif %}
 {% endblock %}
