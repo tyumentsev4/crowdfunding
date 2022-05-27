@@ -30,7 +30,7 @@ class ShowUserHandler(
             return Response(Status.UNAUTHORIZED)
         val userInfo = fetchUserQuery.invoke(userId)
         return Response(Status.OK).with(
-            htmlView(request) of UserVM(userInfo.user, user.roleId == ENTREPRENEUR_ROLE_ID)
+            htmlView(request) of UserVM(userInfo.user, userInfo.projectsInvestments, user.roleId == ENTREPRENEUR_ROLE_ID)
         )
     }
 }

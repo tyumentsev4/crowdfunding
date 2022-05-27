@@ -14,6 +14,7 @@ class AddInvestmentQuery(
 ) {
     operator fun invoke(
         projectId: UUID,
+        investorId: UUID,
         investorName: String,
         contactInfo: String,
         amount: Int
@@ -26,6 +27,7 @@ class AddInvestmentQuery(
             EMPTY_UUID,
             LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
             projectId,
+            investorId,
             investorName,
             contactInfo,
             amount

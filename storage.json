@@ -62,6 +62,7 @@
     "id" : "d449f3b2-a36e-4cd8-9868-ae306bd6d406",
     "addTime" : "2022-05-24T19:44:00",
     "projectId" : "b419ad53-ff08-4ff2-b939-9225b2840690",
+    "investorId" : "561d0d6c-b426-4a63-8a02-c3867db6017b",
     "investorName" : "Иван",
     "contactInfo" : "fasf@a",
     "amount" : 223
@@ -69,6 +70,7 @@
     "id" : "e2b74ba0-23de-4a74-8d99-71fe8b90db1c",
     "addTime" : "2022-05-24T19:44:00",
     "projectId" : "b419ad53-ff08-4ff2-b939-9225b2840690",
+    "investorId" : "561d0d6c-b426-4a63-8a02-c3867db6017b",
     "investorName" : "",
     "contactInfo" : "",
     "amount" : 223

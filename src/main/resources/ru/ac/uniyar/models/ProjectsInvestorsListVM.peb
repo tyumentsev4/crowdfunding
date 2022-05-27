@@ -18,7 +18,7 @@
         <div class="medium-12 cell">
             <div class="callout">
                 <p>
-                    {{ projectInvestors.project.name }}
+                    Проект - {{ projectInvestors.project.name }}
                 </p>
                 {% if projectInvestors.investors.size == 0 %}
                     <div class="medium-12 cell">

@@ -50,7 +50,7 @@ class StoreInitializer(
     val fetchUserViaToken = FetchUserViaToken(store.usersRepository)
     val authenticateUserViaLoginQuery = AuthenticateUserViaLoginQuery(store.usersRepository, settings)
     val fetchProjectViaIdQuery = FetchProjectViaIdQuery(store.projectsRepository)
-    val fetchUserQuery = FetchUserQuery(store.usersRepository, store.investmentsRepository)
+    val fetchUserQuery = FetchUserQuery(store.usersRepository, store.projectsRepository, store.investmentsRepository)
     val listUserProjectsPerPageQuery =
         ListUserProjectsPerPageQuery(store.projectsRepository, store.investmentsRepository)
     val editProjectQuery = EditProjectQuery(store.projectsRepository)

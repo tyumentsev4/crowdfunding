@@ -25,5 +25,32 @@
         <a class="button" href="/users/{{ model.user.id }}/projects">Мои проекты</a>
         <a class="button" href="/users/{{ model.user.id }}/investors">Мои инвесторы</a>
     </div>
+    <h2>Список моих инвестиций</h2>
+    <div class="grid-x grid-padding-x">
+        {% if model.projectsInvestments.size == 0 %}
+            <div class="medium-12 cell">
+                <p>Проектов не найдено</p>
+            </div>
+        {% endif %}
+        {% for projectInvestments in model.projectsInvestments %}
+            <div class="medium-12 cell">
+                <div class="callout">
+                    <p>
+                        Проект - {{ projectInvestments.project.name }}
+                    </p>
+                    {% if projectInvestments.investments.size == 0 %}
+                        <div class="medium-12 cell">
+                            <p>Инвестиций не найдено</p>
+                        </div>
+                    {% endif %}
+                    <ol>
+                            {% for investment in projectInvestments.investments %}
+                            <li><a href="/investments/{{ investment.id }}">{{ investment.amount }}₽</a></li>
+                            {% endfor %}
+                    </ol>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
     {% endif %}
 {% endblock %}

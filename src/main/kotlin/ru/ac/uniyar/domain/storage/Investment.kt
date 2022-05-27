@@ -11,6 +11,7 @@ data class Investment(
     val id: UUID,
     val addTime: LocalDateTime,
     val projectId: UUID,
+    val investorId: UUID,
     val investorName: String,
     val contactInfo: String,
     val amount: Int
@@ -22,6 +23,7 @@ data class Investment(
                 UUID.fromString(jsonObject["id"].asText()),
                 LocalDateTime.parse(jsonObject["addTime"].asText(), DateTimeFormatter.ISO_DATE_TIME),
                 UUID.fromString(jsonObject["projectId"].asText()),
+                UUID.fromString(jsonObject["investorId"].asText()),
                 jsonObject["investorName"].asText(),
                 jsonObject["contactInfo"].asText(),
                 jsonObject["amount"].asInt()
@@ -34,6 +36,7 @@ data class Investment(
             "id" to id.toString().asJsonValue(),
             "addTime" to addTime.format(DateTimeFormatter.ISO_DATE_TIME).asJsonValue(),
             "projectId" to projectId.toString().asJsonValue(),
+            "investorId" to investorId.toString().asJsonValue(),
             "investorName" to investorName.asJsonValue(),
             "contactInfo" to contactInfo.asJsonValue(),
             "amount" to amount.asJsonValue(),

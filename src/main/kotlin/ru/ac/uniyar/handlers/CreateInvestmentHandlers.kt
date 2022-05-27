@@ -86,6 +86,7 @@ class AddInvestmentHandler(
             webForm = try {
                 val uuid = addInvestmentQuery.invoke(
                     projectId,
+                    currentUser.id,
                     investorName,
                     investorContactInfo,
                     amountFormLens(webForm)
