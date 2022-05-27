@@ -7,9 +7,6 @@ import org.http4k.core.then
 import org.http4k.filter.ServerFilters
 import org.http4k.lens.RequestContextKey
 import org.http4k.lens.RequestContextLens
-import org.http4k.routing.ResourceLoader
-import org.http4k.routing.routes
-import org.http4k.routing.static
 import org.http4k.server.Undertow
 import org.http4k.server.asServer
 import ru.ac.uniyar.domain.StoreInitializer
@@ -48,7 +45,7 @@ fun main() {
     val handlerHolder = HttpHandlerInitializer(
         currentUserLens,
         permissionsLens,
-        htmlView,
+        htmlViewWithContext,
         storeInitializer,
         jwtTools
     )
@@ -78,33 +75,27 @@ fun main() {
         handlerHolder.deleteProjectHandler,
         handlerHolder.showCloseProjectFormHandler,
         handlerHolder.closeProjectHandler,
-        handlerHolder.showInvestorsListHandler
-    )
-
-    val authorizedApp = authenticationFilter(
-        currentUserLens,
-        storeInitializer.fetchUserViaUserId,
-        jwtTools
-    ).then(
-        authorizationFilter(
-            currentUserLens,
-            permissionsLens,
-            storeInitializer.fetchPermissionsViaIdQuery
-        )
-    ).then(
-        router()
-    )
-
-    val staticFilesHandler = static(ResourceLoader.Classpath("/ru/ac/uniyar/public/"))
-    val app = routes(
-        authorizedApp,
-        staticFilesHandler
+        handlerHolder.showInvestorsListHandler,
     )
 
     val printingApp: HttpHandler =
         ServerFilters.InitialiseRequestContext(contexts)
-            .then(showErrorMessageFilter(htmlViewWithContext))
-            .then(app)
+            .then(
+                authenticationFilter(
+                    currentUserLens,
+                    storeInitializer.fetchUserViaToken,
+                    jwtTools
+                ).then(
+                    authorizationFilter(
+                        currentUserLens,
+                        permissionsLens,
+                        storeInitializer.fetchPermissionsViaIdQuery
+                    )
+                ).then(
+                    showErrorMessageFilter(htmlViewWithContext)
+                ).then(router())
+            )
+
     val server = printingApp.asServer(Undertow(SERVER_PORT)).start()
     println("Server started on http://localhost:" + server.port())
 }

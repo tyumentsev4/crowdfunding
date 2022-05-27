@@ -29,7 +29,7 @@ import java.util.*
 class ShowNewProjectFormHandler(
     private val htmlView: ContextAwareViewRender,
     private val permissionsLens: RequestContextLens<RolePermissions>
-    ) : HttpHandler {
+) : HttpHandler {
     override fun invoke(request: Request): Response {
         val permissions = permissionsLens(request)
         if (!permissions.openNewProject)
@@ -53,7 +53,7 @@ class AddProjectHandler(
     private val addProjectQuery: AddProjectQuery,
     private val permissionsLens: RequestContextLens<RolePermissions>,
     private val currentUserLens: RequestContextLens<User?>
-    ) : HttpHandler {
+) : HttpHandler {
     companion object {
         private val nameFormLens = FormField.nonEmptyString().required("name")
         private val descriptionFormLens = FormField.string().required("description")

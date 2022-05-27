@@ -16,4 +16,4 @@ fun showErrorMessageFilter(htmlView: ContextAwareViewRender): Filter =
                 response.with(htmlView(request) of ShowErrorInfoVM(request.uri))
             }
         }
-}
+    }

@@ -9,7 +9,7 @@ class InvestmentsByProjectQuery(
     private val projectsRepository: ProjectsRepository
 ) {
 
-    operator fun invoke() : List<ProjectInvestments> {
+    operator fun invoke(): List<ProjectInvestments> {
         val investments = investmentRepository.list()
         val projects = projectsRepository.list()
         val projectsInvestments = mutableListOf<ProjectInvestments>()
