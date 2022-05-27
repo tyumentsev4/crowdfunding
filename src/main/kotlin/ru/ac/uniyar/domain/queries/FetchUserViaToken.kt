@@ -4,7 +4,7 @@ import ru.ac.uniyar.domain.storage.User
 import ru.ac.uniyar.domain.storage.UsersRepository
 import java.util.*
 
-class FetchUserViaUserId(
+class FetchUserViaToken(
     private val workerRepository: UsersRepository
 ) {
     operator fun invoke(token: String): User? {

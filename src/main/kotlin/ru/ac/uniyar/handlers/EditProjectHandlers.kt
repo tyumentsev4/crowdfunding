@@ -18,7 +18,6 @@ import org.http4k.lens.nonEmptyString
 import org.http4k.lens.string
 import org.http4k.lens.uuid
 import org.http4k.lens.webForm
-import ru.ac.uniyar.domain.queries.AddProjectQuery
 import ru.ac.uniyar.domain.queries.EditProjectQuery
 import ru.ac.uniyar.domain.queries.FetchProjectViaIdQuery
 import ru.ac.uniyar.domain.queries.FundSizeShouldBePositiveInt

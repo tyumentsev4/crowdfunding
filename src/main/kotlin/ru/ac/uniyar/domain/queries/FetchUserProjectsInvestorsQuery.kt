@@ -18,7 +18,8 @@ class FetchUserProjectsInvestorsQuery(
             projectsInvestors.add(
                 ProjectInvestors(
                     project,
-                    investments.map { InvestorInfo(it.investorName, it.contactInfo) })
+                    investments.map { InvestorInfo(it.investorName, it.contactInfo) }
+                )
             )
         }
         return projectsInvestors

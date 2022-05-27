@@ -20,6 +20,10 @@
             <td>{{ model.user.addTime | date("dd.MM.yyyy HH:mm") }}</td>
         </tr>
     </table>
-    <a href="/users/{{ model.user.id }}/projects">Мои проекты</a>
-    <a href="/users/{{ model.user.id }}/investors">Мои инвесторы</a>
+    {% if model.isEntrepreneur %}
+    <div class="button-group">
+        <a class="button" href="/users/{{ model.user.id }}/projects">Мои проекты</a>
+        <a class="button" href="/users/{{ model.user.id }}/investors">Мои инвесторы</a>
+    </div>
+    {% endif %}
 {% endblock %}

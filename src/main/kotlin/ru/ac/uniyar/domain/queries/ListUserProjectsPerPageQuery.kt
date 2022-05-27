@@ -23,7 +23,7 @@ class ListUserProjectsPerPageQuery(
             it.entrepreneurId == userId
         }
         val subList = list.subListOrEmpty((pageNumber - 1) * PAGE_SIZE, pageNumber * PAGE_SIZE)
-        val infoList = subList.map {project: Project ->
+        val infoList = subList.map { project: Project ->
             UserProjectInfo(
                 project,
                 hasProjectInvestments(project, investments)

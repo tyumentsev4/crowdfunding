@@ -1,8 +1,8 @@
 package ru.ac.uniyar.domain
 
-import ru.ac.uniyar.domain.queries.AddUserQuery
 import ru.ac.uniyar.domain.queries.AddInvestmentQuery
 import ru.ac.uniyar.domain.queries.AddProjectQuery
+import ru.ac.uniyar.domain.queries.AddUserQuery
 import ru.ac.uniyar.domain.queries.AuthenticateUserViaLoginQuery
 import ru.ac.uniyar.domain.queries.CloseProjectQuery
 import ru.ac.uniyar.domain.queries.DeleteProjectQuery
@@ -14,7 +14,7 @@ import ru.ac.uniyar.domain.queries.FetchProjectQuery
 import ru.ac.uniyar.domain.queries.FetchProjectViaIdQuery
 import ru.ac.uniyar.domain.queries.FetchUserProjectsInvestorsQuery
 import ru.ac.uniyar.domain.queries.FetchUserQuery
-import ru.ac.uniyar.domain.queries.FetchUserViaUserId
+import ru.ac.uniyar.domain.queries.FetchUserViaToken
 import ru.ac.uniyar.domain.queries.InvestmentsByProjectQuery
 import ru.ac.uniyar.domain.queries.ListEntrepreneursPerPageQuery
 import ru.ac.uniyar.domain.queries.ListEntrepreneursQuery
@@ -47,7 +47,7 @@ class StoreInitializer(
     val addInvestmentQuery = AddInvestmentQuery(store.investmentsRepository, store.projectsRepository)
     val fetchInvestmentQuery = FetchInvestmentQuery(store.investmentsRepository, store.projectsRepository)
     val fetchPermissionsViaIdQuery = FetchPermissionsViaIdQuery(store.rolePermissionsRepository)
-    val fetchUserViaUserId = FetchUserViaUserId(store.usersRepository)
+    val fetchUserViaToken = FetchUserViaToken(store.usersRepository)
     val authenticateUserViaLoginQuery = AuthenticateUserViaLoginQuery(store.usersRepository, settings)
     val fetchProjectViaIdQuery = FetchProjectViaIdQuery(store.projectsRepository)
     val fetchUserQuery = FetchUserQuery(store.usersRepository, store.investmentsRepository)

@@ -9,12 +9,9 @@ import org.http4k.lens.Path
 import org.http4k.lens.RequestContextLens
 import org.http4k.lens.uuid
 import ru.ac.uniyar.domain.queries.CloseProjectQuery
-import ru.ac.uniyar.domain.queries.DeleteProjectQuery
 import ru.ac.uniyar.domain.queries.FetchProjectViaIdQuery
-import ru.ac.uniyar.domain.queries.InvestmentsByProjectQuery
 import ru.ac.uniyar.domain.storage.User
 import ru.ac.uniyar.models.CloseProjectVM
-import ru.ac.uniyar.models.DeleteProjectVM
 import ru.ac.uniyar.models.template.ContextAwareViewRender
 
 class ShowCloseProjectFormHandler(

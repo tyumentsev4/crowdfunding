@@ -5,4 +5,4 @@ import ru.ac.uniyar.domain.queries.ProjectInvestors
 
 data class ProjectsInvestorsListVM(
     val projectsInvestors: List<ProjectInvestors>
-): ViewModel
+) : ViewModel

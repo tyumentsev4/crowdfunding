@@ -1,11 +1,7 @@
 package ru.ac.uniyar.domain.queries
 
-import ru.ac.uniyar.domain.storage.EMPTY_UUID
-import ru.ac.uniyar.domain.storage.Project
 import ru.ac.uniyar.domain.storage.ProjectsRepository
 import ru.ac.uniyar.handlers.ProjectFromForm
-import java.time.LocalDateTime
-import java.time.temporal.ChronoUnit
 import java.util.*
 
 class EditProjectQuery(

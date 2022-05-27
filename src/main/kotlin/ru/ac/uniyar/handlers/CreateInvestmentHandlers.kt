@@ -30,7 +30,7 @@ class ShowNewInvestmentFormHandler(
     private val listOpenProjectsQuery: ListOpenProjectsQuery,
     private val fetchProjectViaIdQuery: FetchProjectViaIdQuery,
     private val permissionsLens: RequestContextLens<RolePermissions>,
-    ) : HttpHandler {
+) : HttpHandler {
     companion object {
         private val projectIdLens = Path.uuid().of("id")
     }
@@ -53,7 +53,7 @@ class AddInvestmentHandler(
     private val fetchProjectViaIdQuery: FetchProjectViaIdQuery,
     private val currentUserLens: RequestContextLens<User?>,
     private val permissionsLens: RequestContextLens<RolePermissions>
-    ) : HttpHandler {
+) : HttpHandler {
     companion object {
         private val projectIdLens = Path.uuid().of("id")
         private val isAnonInvestmentLens = FormField.boolean().defaulted("isAnonInvestment", false)
@@ -96,7 +96,6 @@ class AddInvestmentHandler(
                 webForm.copy(errors = newErrors)
             }
         }
-        val projects = listOpenProjectsQuery.invoke()
         return Response(Status.OK).with(htmlView(request) of NewInvestmentVM(webForm, project))
     }
 }

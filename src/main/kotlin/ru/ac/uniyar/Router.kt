@@ -2,10 +2,11 @@ package ru.ac.uniyar
 
 import org.http4k.core.HttpHandler
 import org.http4k.core.Method
+import org.http4k.routing.ResourceLoader
 import org.http4k.routing.RoutingHttpHandler
 import org.http4k.routing.bind
 import org.http4k.routing.routes
-import ru.ac.uniyar.handlers.ShowUserHandler
+import org.http4k.routing.static
 
 @Suppress("LongParameterList")
 class Router(
@@ -34,8 +35,7 @@ class Router(
     private val showCloseProjectFormHandler: HttpHandler,
     private val closeProjectHandler: HttpHandler,
     private val showInvestorsListHandler: HttpHandler
-)
-{
+) {
     operator fun invoke(): RoutingHttpHandler = routes(
         "/" bind Method.GET to showStartPageHandler,
         "/login" bind Method.GET to showLoginFormHandler,
@@ -62,5 +62,6 @@ class Router(
         "/projects/{id}/delete" bind Method.POST to deleteProjectHandler,
         "/projects/{id}/close" bind Method.GET to showCloseProjectFormHandler,
         "/projects/{id}/close" bind Method.POST to closeProjectHandler,
+        static(ResourceLoader.Classpath("/ru/ac/uniyar/public/"))
     )
 }

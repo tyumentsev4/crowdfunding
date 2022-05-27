@@ -2,13 +2,12 @@ package ru.ac.uniyar.handlers
 
 import org.http4k.lens.RequestContextLens
 import ru.ac.uniyar.domain.StoreInitializer
-import ru.ac.uniyar.domain.queries.FetchUserProjectsInvestorsQuery
 import ru.ac.uniyar.domain.storage.RolePermissions
 import ru.ac.uniyar.domain.storage.User
 import ru.ac.uniyar.filters.JwtTools
 import ru.ac.uniyar.models.template.ContextAwareViewRender
 
-class HttpHandlerInitializer (
+class HttpHandlerInitializer(
     currentUserLens: RequestContextLens<User?>,
     permissionsLens: RequestContextLens<RolePermissions>,
     htmlView: ContextAwareViewRender,

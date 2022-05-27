@@ -9,9 +9,8 @@ import org.http4k.lens.Path
 import org.http4k.lens.RequestContextLens
 import org.http4k.lens.uuid
 import ru.ac.uniyar.domain.queries.FetchUserQuery
-import ru.ac.uniyar.domain.storage.RolePermissions
+import ru.ac.uniyar.domain.storage.ENTREPRENEUR_ROLE_ID
 import ru.ac.uniyar.domain.storage.User
-import ru.ac.uniyar.models.ProjectVM
 import ru.ac.uniyar.models.UserVM
 import ru.ac.uniyar.models.template.ContextAwareViewRender
 
@@ -26,11 +25,12 @@ class ShowUserHandler(
 
     override fun invoke(request: Request): Response {
         val userId = lensOrNull(userIdLens, request) ?: return Response(Status.BAD_REQUEST)
-        if (userId != currentUserLens(request)?.id)
+        val user = currentUserLens(request)
+        if ((user == null) || (userId != user.id))
             return Response(Status.UNAUTHORIZED)
         val userInfo = fetchUserQuery.invoke(userId)
         return Response(Status.OK).with(
-            htmlView(request) of UserVM(userInfo.user)
+            htmlView(request) of UserVM(userInfo.user, user.roleId == ENTREPRENEUR_ROLE_ID)
         )
     }
 }

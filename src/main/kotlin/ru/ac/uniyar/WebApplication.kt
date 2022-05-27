@@ -48,7 +48,7 @@ fun main() {
     val handlerHolder = HttpHandlerInitializer(
         currentUserLens,
         permissionsLens,
-        htmlView,
+        htmlViewWithContext,
         storeInitializer,
         jwtTools
     )
@@ -78,33 +78,27 @@ fun main() {
         handlerHolder.deleteProjectHandler,
         handlerHolder.showCloseProjectFormHandler,
         handlerHolder.closeProjectHandler,
-        handlerHolder.showInvestorsListHandler
-    )
-
-    val authorizedApp = authenticationFilter(
-        currentUserLens,
-        storeInitializer.fetchUserViaUserId,
-        jwtTools
-    ).then(
-        authorizationFilter(
-            currentUserLens,
-            permissionsLens,
-            storeInitializer.fetchPermissionsViaIdQuery
-        )
-    ).then(
-        router()
-    )
-
-    val staticFilesHandler = static(ResourceLoader.Classpath("/ru/ac/uniyar/public/"))
-    val app = routes(
-        authorizedApp,
-        staticFilesHandler
+        handlerHolder.showInvestorsListHandler,
     )
 
     val printingApp: HttpHandler =
         ServerFilters.InitialiseRequestContext(contexts)
-            .then(showErrorMessageFilter(htmlViewWithContext))
-            .then(app)
+            .then(
+                authenticationFilter(
+                    currentUserLens,
+                    storeInitializer.fetchUserViaToken,
+                    jwtTools
+                ).then(
+                    authorizationFilter(
+                        currentUserLens,
+                        permissionsLens,
+                        storeInitializer.fetchPermissionsViaIdQuery
+                    )
+                ).then(
+                    showErrorMessageFilter(htmlViewWithContext)
+                ).then(router())
+            )
+
     val server = printingApp.asServer(Undertow(SERVER_PORT)).start()
     println("Server started on http://localhost:" + server.port())
 }

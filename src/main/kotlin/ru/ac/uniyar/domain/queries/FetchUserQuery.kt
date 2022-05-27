@@ -1,9 +1,6 @@
 package ru.ac.uniyar.domain.queries
 
-import ru.ac.uniyar.domain.storage.Investment
 import ru.ac.uniyar.domain.storage.InvestmentsRepository
-import ru.ac.uniyar.domain.storage.Project
-import ru.ac.uniyar.domain.storage.ProjectsRepository
 import ru.ac.uniyar.domain.storage.UsersRepository
 import java.util.*
 
