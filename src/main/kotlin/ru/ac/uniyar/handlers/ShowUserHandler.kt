@@ -9,7 +9,6 @@ import org.http4k.lens.Path
 import org.http4k.lens.Query
 import org.http4k.lens.RequestContextLens
 import org.http4k.lens.enum
-import org.http4k.lens.string
 import org.http4k.lens.uuid
 import ru.ac.uniyar.domain.queries.ChangeUserProjectSortQuery
 import ru.ac.uniyar.domain.queries.FetchUserQuery
@@ -39,8 +38,7 @@ class ShowUserHandler(
             return Response(Status.UNAUTHORIZED)
         if (sortSettings == null) {
             sortSettings = user.sortSettings
-        }
-        else changeUserProjectSortQuery(user, sortSettings)
+        } else changeUserProjectSortQuery(user, sortSettings)
         val userInfo = fetchUserQuery.invoke(userId, sortSettings)
         return Response(Status.OK).with(
             htmlView(request) of UserVM(

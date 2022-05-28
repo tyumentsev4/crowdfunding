@@ -67,7 +67,6 @@ class HttpHandlerInitializer(
     val showInvestmentHandler = ShowInvestmentHandler(
         htmlView,
         storeInitializer.fetchInvestmentQuery,
-        permissionsLens
     )
     val showProjectHandler = ShowProjectHandler(
         htmlView,

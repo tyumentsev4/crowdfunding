@@ -18,14 +18,12 @@ import ru.ac.uniyar.models.template.ContextAwareViewRender
 class ShowInvestmentHandler(
     private val htmlView: ContextAwareViewRender,
     private val fetchInvestmentQuery: FetchInvestmentQuery,
-    private val permissionsLens: RequestContextLens<RolePermissions>
 ) : HttpHandler {
     companion object {
         private val idLens = Path.uuid().of("id")
     }
 
     override fun invoke(request: Request): Response {
-        val permissions = permissionsLens(request)
         val id = lensOrNull(idLens, request) ?: return Response(Status.BAD_REQUEST)
         return try {
             val investmentInfo = fetchInvestmentQuery.invoke(id)

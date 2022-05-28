@@ -15,7 +15,7 @@ class FetchUserQuery(
         val user = usersRepository.fetch(id) ?: throw UserFetchError("Not found")
         val investments = investmentsRepository.list().filter { it.investorId == id }
         val projects = projectsRepository.list()
-        val projectsSorted = when(sortSettings) {
+        val projectsSorted = when (sortSettings) {
             ProjectSortSettings.OpenFirst -> projects.sortedByDescending { it.isOpen() }
             ProjectSortSettings.CloseFirst -> projects.sortedBy { it.isOpen() }
             ProjectSortSettings.DateEndInc -> projects.sortedBy { it.fundraisingEnd }

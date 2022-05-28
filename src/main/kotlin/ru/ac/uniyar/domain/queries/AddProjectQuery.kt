@@ -15,7 +15,6 @@ class AddProjectQuery(
     private val projectsRepository: ProjectsRepository,
     private val usersRepository: UsersRepository
 ) {
-    @Suppress("ThrowsCount")
     operator fun invoke(projectFromForm: ProjectFromForm): UUID {
         val user = usersRepository.fetch(projectFromForm.userId)!!
         if (user.roleId == REGISTERED_USER_ROLE_ID)

@@ -35,6 +35,6 @@
         <label>Срок окончания сбора средств
             <input type="datetime-local" name="fundraisingEnd" value="{{ model.form.fields["fundraisingEnd"] | first }}">
         </label>
-        <input type="submit" value="Добавить" class="button">
+        <input type="submit" value="Редактировать" class="button">
     </form>
     {% endblock %}

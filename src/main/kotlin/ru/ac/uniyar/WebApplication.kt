@@ -31,7 +31,7 @@ fun main() {
         return
     }
 
-    val renderer = ContextAwarePebbleTemplates().HotReload("src/main/resources")
+    val renderer = ContextAwarePebbleTemplates().hotReload("src/main/resources")
     val htmlView = ContextAwareViewRender(renderer, ContentType.TEXT_HTML)
 
     val contexts = RequestContexts()
@@ -50,7 +50,32 @@ fun main() {
         jwtTools
     )
 
-    val router = Router(
+    val router = createRouter(handlerHolder)
+
+    val printingApp: HttpHandler =
+        ServerFilters.InitialiseRequestContext(contexts)
+            .then(
+                authenticationFilter(
+                    currentUserLens,
+                    storeInitializer.fetchUserViaToken,
+                    jwtTools
+                ).then(
+                    authorizationFilter(
+                        currentUserLens,
+                        permissionsLens,
+                        storeInitializer.fetchPermissionsViaIdQuery
+                    )
+                ).then(
+                    showErrorMessageFilter(htmlViewWithContext)
+                ).then(router())
+            )
+
+    val server = printingApp.asServer(Undertow(SERVER_PORT)).start()
+    println("Server started on http://localhost:" + server.port())
+}
+
+fun createRouter(handlerHolder: HttpHandlerInitializer): Router {
+    return Router(
         handlerHolder.showNewUserFormHandler,
         handlerHolder.addUserHandler,
         handlerHolder.showNewInvestmentFormHandler,
@@ -76,25 +101,4 @@ fun main() {
         handlerHolder.closeProjectHandler,
         handlerHolder.showInvestorsListHandler,
     )
-
-    val printingApp: HttpHandler =
-        ServerFilters.InitialiseRequestContext(contexts)
-            .then(
-                authenticationFilter(
-                    currentUserLens,
-                    storeInitializer.fetchUserViaToken,
-                    jwtTools
-                ).then(
-                    authorizationFilter(
-                        currentUserLens,
-                        permissionsLens,
-                        storeInitializer.fetchPermissionsViaIdQuery
-                    )
-                ).then(
-                    showErrorMessageFilter(htmlViewWithContext)
-                ).then(router())
-            )
-
-    val server = printingApp.asServer(Undertow(SERVER_PORT)).start()
-    println("Server started on http://localhost:" + server.port())
 }
