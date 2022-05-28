@@ -69,10 +69,6 @@ class HttpHandlerInitializer(
         storeInitializer.fetchInvestmentQuery,
         permissionsLens
     )
-    val showInvestmentsListHandler = ShowInvestmentsListHandler(
-        htmlView,
-        storeInitializer.listInvestmentsPerPageQuery
-    )
     val showProjectHandler = ShowProjectHandler(
         htmlView,
         storeInitializer.fetchProjectQuery,
@@ -89,7 +85,8 @@ class HttpHandlerInitializer(
     val showUserHandler = ShowUserHandler(
         htmlView,
         currentUserLens,
-        storeInitializer.fetchUserQuery
+        storeInitializer.fetchUserQuery,
+        storeInitializer.changeUserProjectSortQuery
     )
     val showUserProjectsListHandler = ShowUserProjectsListHandler(
         htmlView,

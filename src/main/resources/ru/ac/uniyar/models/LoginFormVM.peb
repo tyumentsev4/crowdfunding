@@ -31,7 +31,7 @@
             </div>
             <div class="medium-12 cell text-center">
                 <input type="submit" value="Войти" class="button">
-                <a href="/">На главную страницу</a>
+                <a class="button" href="/">Отмена</a>
             </div>
         </div>
     </form>

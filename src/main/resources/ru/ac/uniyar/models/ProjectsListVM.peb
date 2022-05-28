@@ -53,9 +53,11 @@
         </div>
     </div>
     {% endfor %}
+    {% if permissions.openNewProject %}
     <div class="medium-4 cell">
-        <a href="/projects/new" class="button">Добавить</a>
+        <a href="/projects/new" class="button">Создать новый проект</a>
     </div>
+    {% endif %}
     {{ showPagination(model.paginator) }}
 </div>
 

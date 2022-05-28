@@ -60,7 +60,6 @@ fun main() {
         handlerHolder.showEntrepreneurHandler,
         handlerHolder.showEntrepreneursListHandler,
         handlerHolder.showInvestmentHandler,
-        handlerHolder.showInvestmentsListHandler,
         handlerHolder.showProjectHandler,
         handlerHolder.showProjectsListHandler,
         handlerHolder.showStartPageHandler,
