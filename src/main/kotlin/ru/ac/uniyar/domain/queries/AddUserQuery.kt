@@ -22,6 +22,8 @@ class AddUserQuery(
         contactInfo: String
     ): UUID {
         val hashedPassword = hashPassword(password, settings.salt)
+        if (usersRepository.list().find { it.name == name } != null)
+            throw UserExist("Такой пользователь существует")
         return usersRepository.add(
             User(
                 EMPTY_UUID,

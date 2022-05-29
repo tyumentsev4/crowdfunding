@@ -1,5 +1,7 @@
     {% extends "./layout.peb" %}
-
+        {% block title %}
+        Войти
+        {% endblock %}
     {% block content %}
 
         {% if model.form.errors is not empty %}

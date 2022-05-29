@@ -15,3 +15,5 @@ class InvestmentFetchError(message: String) : RuntimeException(message)
 class ProjectFetchError(message: String) : RuntimeException(message)
 
 class UserFetchError(message: String) : RuntimeException(message)
+
+class UserExist(message: String): RuntimeException(message)

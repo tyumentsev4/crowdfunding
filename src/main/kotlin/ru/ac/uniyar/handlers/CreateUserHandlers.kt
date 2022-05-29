@@ -13,6 +13,7 @@ import org.http4k.lens.WebForm
 import org.http4k.lens.nonEmptyString
 import org.http4k.lens.webForm
 import ru.ac.uniyar.domain.queries.AddUserQuery
+import ru.ac.uniyar.domain.queries.UserExist
 import ru.ac.uniyar.models.NewUserVM
 import ru.ac.uniyar.models.template.ContextAwareViewRender
 
@@ -51,7 +52,11 @@ class AddUserHandler(
         }
 
         if (webForm.errors.isEmpty()) {
-            addUserQuery.invoke(nameFormLens(webForm), firstPassword!!, contactInfoLens(webForm))
+            try {
+                addUserQuery.invoke(nameFormLens(webForm), firstPassword!!, contactInfoLens(webForm))
+            } catch (_: UserExist) {
+                return Response(Status.BAD_REQUEST)
+            }
             return Response(Status.FOUND).header("Location", "/login")
         }
         return Response(Status.OK).with(htmlView(request) of NewUserVM(webForm))
