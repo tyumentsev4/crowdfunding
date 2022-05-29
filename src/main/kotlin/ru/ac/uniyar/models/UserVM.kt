@@ -9,5 +9,6 @@ data class UserVM(
     val user: User,
     val projectsInvestments: List<ProjectInvestments>,
     val isEntrepreneur: Boolean,
-    val sortSettings: ProjectSortSettings
+    val projectSortSettings: List<ProjectSortSettings>,
+    val sortSetupSelected: ProjectSortSettings
 ) : ViewModel

@@ -7,12 +7,12 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-enum class ProjectSortSettings {
-    Normal,
-    OpenFirst,
-    CloseFirst,
-    DateEndInc,
-    DateEndDec
+enum class ProjectSortSettings(val description: String) {
+    Normal(""),
+    OpenFirst("Сначала открытые"),
+    CloseFirst("Сначала закрытые"),
+    DateEndInc("По возрастанию даты закрытия"),
+    DateEndDec("По убыванию даты закрытия")
 }
 
 data class User(

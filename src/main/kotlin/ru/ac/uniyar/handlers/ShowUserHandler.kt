@@ -45,6 +45,7 @@ class ShowUserHandler(
                 userInfo.user,
                 userInfo.projectsInvestments,
                 user.roleId == ENTREPRENEUR_ROLE_ID,
+                ProjectSortSettings.values().toList(),
                 sortSettings
             )
         )

@@ -60,7 +60,7 @@
     "password" : "b19ea3efae07d000fdc47a1f7b29e40acf2889faa089e1aa1a468b1a15021ee35fe78ce0358b19d65372157631ccd6fada09e9cc6077b65bcf6e877f3241319b",
     "contactInfo" : "ivan@ivan.ru",
     "addTime" : "2022-05-28T14:57:00",
-    "sortSettings" : "Normal"
+    "sortSettings" : "CloseFirst"
   }, {
     "id" : "7a44e973-158c-48d7-b013-7d79171f5b11",
     "roleId" : "1a1515e8-dac3-11ec-9d64-0242ac120002",

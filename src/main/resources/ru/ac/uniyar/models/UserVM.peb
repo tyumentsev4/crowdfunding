@@ -32,19 +32,11 @@
         <div class="medium-4 cell">
             <label>Отсортировать проекты
                 <select name="sortSettings">
-                    <option value="Normal" {% if model.sortSettings == "Normal" %}selected{% endif %}></option>
-                    <option value="OpenFirst" {% if model.sortSettings == "OpenFirst" %}selected{% endif %}>
-                        Сначала открытые
-                    </option>
-                    <option value="CloseFirst" {% if model.sortSettings == "CloseFirst" %}selected{% endif %}>
-                        Сначала закрытые
-                    </option>
-                    <option value="DateEndInc" {% if model.sortSettings == "DateEndInc" %}selected{% endif %}>
-                        По возрастанию даты закрытия
-                    </option>
-                    <option value="DateEndDec" {% if model.sortSettings == "DateEndDec" %}selected{% endif %}>
-                        По убыванию даты закрытия
-                    </option>
+                    {% for sortSetup in model.projectSortSettings %}
+                        <option value="{{ sortSetup.name }}" {% if model.sortSetupSelected == sortSetup.name %}selected{% endif %}>
+                            {{ sortSetup.description }}
+                        </option>
+                    {% endfor %}
                 </select>
             </label>
         </div>
