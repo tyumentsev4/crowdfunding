@@ -6,12 +6,10 @@ import org.http4k.core.Response
 import org.http4k.core.Status
 import org.http4k.core.with
 import org.http4k.lens.Path
-import org.http4k.lens.RequestContextLens
 import org.http4k.lens.uuid
 import ru.ac.uniyar.domain.queries.FetchInvestmentQuery
 import ru.ac.uniyar.domain.queries.InvestmentFetchError
 import ru.ac.uniyar.domain.queries.ProjectFetchError
-import ru.ac.uniyar.domain.storage.RolePermissions
 import ru.ac.uniyar.models.InvestmentVM
 import ru.ac.uniyar.models.template.ContextAwareViewRender
 

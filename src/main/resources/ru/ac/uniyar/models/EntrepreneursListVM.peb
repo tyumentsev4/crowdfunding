@@ -45,7 +45,9 @@
                 {{ entrepreneur.name }}
             </p>
             <p>
+                {% if permissions.seeEntrepreneurInfo %}
                 <a href="/entrepreneurs/{{ entrepreneur.id }}">Больше информации</a>
+                {% endif %}
             </p>
         </div>
     </div>

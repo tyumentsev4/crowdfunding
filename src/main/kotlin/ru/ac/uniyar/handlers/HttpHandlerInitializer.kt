@@ -90,44 +90,52 @@ class HttpHandlerInitializer(
     val showUserProjectsListHandler = ShowUserProjectsListHandler(
         htmlView,
         storeInitializer.listUserProjectsPerPageQuery,
-        currentUserLens
+        currentUserLens,
+        permissionsLens
     )
     val showEditProjectHandler = ShowEditProjectFormHandler(
         htmlView,
         currentUserLens,
-        storeInitializer.fetchProjectViaIdQuery
+        storeInitializer.fetchProjectViaIdQuery,
+        permissionsLens
     )
     val editProjectHandler = EditProjectHandler(
         htmlView,
         storeInitializer.editProjectQuery,
         currentUserLens,
-        storeInitializer.fetchProjectViaIdQuery
+        storeInitializer.fetchProjectViaIdQuery,
+        permissionsLens
     )
     val showDeleteProjectFormHandler = ShowDeleteProjectFormHandler(
         htmlView,
         currentUserLens,
         storeInitializer.fetchProjectViaIdQuery,
-        storeInitializer.listInvestmentsQuery
+        storeInitializer.listInvestmentsQuery,
+        permissionsLens
     )
     val deleteProjectHandler = DeleteProjectHandler(
         currentUserLens,
         storeInitializer.fetchProjectViaIdQuery,
         storeInitializer.deleteProjectQuery,
-        storeInitializer.listInvestmentsQuery
+        storeInitializer.listInvestmentsQuery,
+        permissionsLens
     )
     val showCloseProjectFormHandler = ShowCloseProjectFormHandler(
         htmlView,
         currentUserLens,
-        storeInitializer.fetchProjectViaIdQuery
+        storeInitializer.fetchProjectViaIdQuery,
+        permissionsLens
     )
     val closeProjectHandler = CloseProjectHandler(
         currentUserLens,
         storeInitializer.fetchProjectViaIdQuery,
-        storeInitializer.closeProjectQuery
+        storeInitializer.closeProjectQuery,
+        permissionsLens
     )
     val showInvestorsListHandler = ShowInvestorsListHandler(
         htmlView,
         storeInitializer.fetchUserProjectsInvestorsQuery,
-        currentUserLens
+        currentUserLens,
+        permissionsLens
     )
 }

@@ -12,7 +12,6 @@ import org.http4k.lens.enum
 import org.http4k.lens.uuid
 import ru.ac.uniyar.domain.queries.ChangeUserProjectSortQuery
 import ru.ac.uniyar.domain.queries.FetchUserQuery
-import ru.ac.uniyar.domain.storage.ENTREPRENEUR_ROLE_ID
 import ru.ac.uniyar.domain.storage.ProjectSortSettings
 import ru.ac.uniyar.domain.storage.User
 import ru.ac.uniyar.models.UserVM
@@ -34,7 +33,7 @@ class ShowUserHandler(
         val userId = lensOrNull(userIdLens, request) ?: return Response(Status.BAD_REQUEST)
         val user = currentUserLens(request)
         var sortSettings = lensOrNull(sortSettingsLens, request)
-        if ((user == null) || (userId != user.id))
+        if (user == null || userId != user.id)
             return Response(Status.UNAUTHORIZED)
         if (sortSettings == null) {
             sortSettings = user.sortSettings
@@ -44,7 +43,6 @@ class ShowUserHandler(
             htmlView(request) of UserVM(
                 userInfo.user,
                 userInfo.projectsInvestments,
-                user.roleId == ENTREPRENEUR_ROLE_ID,
                 ProjectSortSettings.values().toList(),
                 sortSettings
             )

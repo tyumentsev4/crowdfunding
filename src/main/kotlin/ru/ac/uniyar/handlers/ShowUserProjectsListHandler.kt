@@ -11,7 +11,7 @@ import org.http4k.lens.RequestContextLens
 import org.http4k.lens.int
 import org.http4k.lens.uuid
 import ru.ac.uniyar.domain.queries.ListUserProjectsPerPageQuery
-import ru.ac.uniyar.domain.storage.ENTREPRENEUR_ROLE_ID
+import ru.ac.uniyar.domain.storage.RolePermissions
 import ru.ac.uniyar.domain.storage.User
 import ru.ac.uniyar.models.Paginator
 import ru.ac.uniyar.models.UserProjectsListVM
@@ -21,6 +21,7 @@ class ShowUserProjectsListHandler(
     private val htmlView: ContextAwareViewRender,
     private val listUserProjectsPerPageQuery: ListUserProjectsPerPageQuery,
     private val currentUserLens: RequestContextLens<User?>,
+    private val permissionsLens: RequestContextLens<RolePermissions>
 ) : HttpHandler {
     companion object {
         private val pageLens = Query.int().defaulted("page", 1)
@@ -30,7 +31,7 @@ class ShowUserProjectsListHandler(
     override fun invoke(request: Request): Response {
         val userId = lensOrNull(userIdLens, request) ?: return Response(Status.BAD_REQUEST)
         val user = currentUserLens(request)
-        if ((user == null) || (userId != user.id) || (user.roleId != ENTREPRENEUR_ROLE_ID))
+        if (user == null || userId != user.id || !permissionsLens(request).seeUserProjectsList)
             return Response(Status.UNAUTHORIZED)
 
         val pageNumber = lensOrDefault(pageLens, request, 1)

@@ -97,7 +97,7 @@
             <td>{{ model.projectInfo.entrepreneur.addTime | date("dd.MM.yyyy HH:mm")}}</td>
         </tr>
     </table>
-    {% if permissions.addInvestment and model.projectInfo.project.isOpen() %}
+    {% if permissions.addInvestment and model.projectInfo.isProjectOpen %}
     <a class="button" href="/projects/{{ model.projectInfo.project.id }}/new_investment">Проинвестировать</a>
     {% endif %}
 {% endblock %}

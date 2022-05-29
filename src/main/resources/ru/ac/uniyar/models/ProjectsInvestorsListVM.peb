@@ -18,7 +18,7 @@
         <div class="medium-12 cell">
             <div class="callout">
                 <p>
-                    Проект - {{ projectInvestors.project.name }}
+                    Проект - <a href="/projects/{{ projectInvestors.project.id }}">{{ projectInvestors.project.name }}</a>
                 </p>
                 {% if projectInvestors.investors.size == 0 %}
                     <div class="medium-12 cell">

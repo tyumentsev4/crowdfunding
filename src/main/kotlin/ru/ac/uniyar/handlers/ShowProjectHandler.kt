@@ -26,7 +26,7 @@ class ShowProjectHandler(
 
     override fun invoke(request: Request): Response {
         val permissions = permissionsLens(request)
-        if (!permissions.showProject)
+        if (!permissions.seeProjectInfo)
             return Response(Status.UNAUTHORIZED)
         val id = lensOrNull(idLens, request) ?: return Response(Status.BAD_REQUEST)
         return try {

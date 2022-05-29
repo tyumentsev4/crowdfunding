@@ -24,11 +24,13 @@
                 <a href="/projects/{{ info.project.id }}">Больше информации</a>
             </p>
             <div class="button-group">
+                {% if permissions.editProject %}
                 <a class="button success" href="/projects/{{ info.project.id }}/edit">Редактировать</a>
-                {% if info.project.isOpen() %}
+                {% endif %}
+                {% if info.project.isOpen() and permissions.closeProject %}
                 <a class="button warning" href="/projects/{{ info.project.id }}/close">Закрыть</a>
                 {% endif %}
-                {% if not info.hasInvestments %}
+                {% if not info.hasInvestments and permissions.deleteProject %}
                 <a class="button alert" href="/projects/{{ info.project.id }}/delete">Удалить</a>
                 {% endif %}
             </div>

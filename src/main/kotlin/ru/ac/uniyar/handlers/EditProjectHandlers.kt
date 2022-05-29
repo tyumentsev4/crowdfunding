@@ -22,6 +22,7 @@ import ru.ac.uniyar.domain.queries.EditProjectQuery
 import ru.ac.uniyar.domain.queries.FetchProjectViaIdQuery
 import ru.ac.uniyar.domain.queries.FundSizeShouldBePositiveInt
 import ru.ac.uniyar.domain.queries.StartTimeShouldBeLower
+import ru.ac.uniyar.domain.storage.RolePermissions
 import ru.ac.uniyar.domain.storage.User
 import ru.ac.uniyar.models.EditProjectVM
 import ru.ac.uniyar.models.template.ContextAwareViewRender
@@ -29,7 +30,8 @@ import ru.ac.uniyar.models.template.ContextAwareViewRender
 class ShowEditProjectFormHandler(
     private val htmlView: ContextAwareViewRender,
     private val currentUserLens: RequestContextLens<User?>,
-    private val fetchProjectViaIdQuery: FetchProjectViaIdQuery
+    private val fetchProjectViaIdQuery: FetchProjectViaIdQuery,
+    private val permissionsLens: RequestContextLens<RolePermissions>
 ) : HttpHandler {
     companion object {
         private val projectIdLens = Path.uuid().of("id")
@@ -39,7 +41,7 @@ class ShowEditProjectFormHandler(
         val user = currentUserLens(request)
         if (project == null)
             return Response(Status.BAD_REQUEST)
-        if (project.entrepreneurId != user?.id)
+        if (!permissionsLens(request).editProject || project.entrepreneurId != user?.id)
             return Response(Status.UNAUTHORIZED)
         val fields = mutableMapOf<String, List<String>>()
         fields["name"] = listOf(project.name)
@@ -55,7 +57,8 @@ class EditProjectHandler(
     private val htmlView: ContextAwareViewRender,
     private val editProjectQuery: EditProjectQuery,
     private val currentUserLens: RequestContextLens<User?>,
-    private val fetchProjectViaIdQuery: FetchProjectViaIdQuery
+    private val fetchProjectViaIdQuery: FetchProjectViaIdQuery,
+    private val permissionsLens: RequestContextLens<RolePermissions>
 ) : HttpHandler {
     companion object {
         private val projectIdLens = Path.uuid().of("id")
@@ -79,7 +82,7 @@ class EditProjectHandler(
         val currentUser = currentUserLens(request)
         if (project == null)
             return Response(Status.BAD_REQUEST)
-        if (project.entrepreneurId != currentUser?.id)
+        if (project.entrepreneurId != currentUser?.id || !permissionsLens(request).editProject)
             return Response(Status.UNAUTHORIZED)
 
         var webForm = projectFormLens(request)
@@ -96,7 +99,7 @@ class EditProjectHandler(
                         fundraisingEndFormLens(webForm)
                     )
                 )
-                return Response(Status.FOUND).header("Location", "/projects/$projectId")
+                return Response(Status.FOUND).header("Location", "/users/${currentUser.id}/projects")
             } catch (_: StartTimeShouldBeLower) {
                 val newErrors = webForm.errors + Invalid(fundraisingStartFormLens.meta)
                 webForm.copy(errors = newErrors)

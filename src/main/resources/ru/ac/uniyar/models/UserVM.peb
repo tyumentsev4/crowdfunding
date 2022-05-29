@@ -20,12 +20,14 @@
             <td>{{ model.user.addTime | date("dd.MM.yyyy HH:mm") }}</td>
         </tr>
     </table>
-    {% if model.isEntrepreneur %}
     <div class="button-group">
+        {% if permissions.seeUserProjectsList %}
         <a class="button" href="/users/{{ model.user.id }}/projects">Мои проекты</a>
+        {% endif %}
+        {% if permissions.seeUserInvestorsList %}
         <a class="button" href="/users/{{ model.user.id }}/investors">Мои инвесторы</a>
+        {% endif %}
     </div>
-    {% endif %}
     <h2>Список моих инвестиций</h2>
     <form method="GET">
     <div class="grid-x grid-padding-x align-bottom">

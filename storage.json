@@ -2,25 +2,31 @@
   "rolePermissions" : [ {
     "id" : "1a1515e8-dac3-11ec-9d64-0242ac120002",
     "name" : "Авторизованный пользователь",
-    "showStartPage" : true,
-    "showEntrepreneursList" : true,
-    "showEntrepreneur" : true,
-    "showProjectsList" : true,
-    "showProject" : true,
-    "canRegister" : true,
+    "seeEntrepreneursList" : true,
+    "seeEntrepreneurInfo" : true,
+    "seeProjectsList" : true,
+    "seeProjectInfo" : true,
     "openNewProject" : true,
-    "addInvestment" : true
+    "addInvestment" : true,
+    "seeUserProjectsList" : false,
+    "editProject" : false,
+    "closeProject" : false,
+    "deleteProject" : false,
+    "seeUserInvestorsList" : false
   }, {
     "id" : "3be6ab64-dac3-11ec-9d64-0242ac120002",
     "name" : "Предприниматель",
-    "showStartPage" : true,
-    "showEntrepreneursList" : true,
-    "showEntrepreneur" : true,
-    "showProjectsList" : true,
-    "showProject" : true,
-    "canRegister" : true,
+    "seeEntrepreneursList" : true,
+    "seeEntrepreneurInfo" : true,
+    "seeProjectsList" : true,
+    "seeProjectInfo" : true,
     "openNewProject" : true,
-    "addInvestment" : true
+    "addInvestment" : true,
+    "seeUserProjectsList" : true,
+    "editProject" : true,
+    "closeProject" : true,
+    "deleteProject" : true,
+    "seeUserInvestorsList" : true
   } ],
   "projects" : [ {
     "id" : "707f65da-fad5-43f6-ac2f-001704c2bb66",
@@ -28,30 +34,30 @@
     "name" : "Школа 1",
     "userId" : "8a703101-8d22-4638-85e1-9433e7fd3a2c",
     "description" : "",
-    "fundSize" : 10000000,
+    "fundSize" : 10000001,
     "fundraisingStart" : "2022-05-01T04:02:00",
     "fundraisingEnd" : "2022-05-28T15:12:00",
     "collectedAmount" : 100
   }, {
-    "id" : "8e9e0896-d456-4f6c-aebd-e8bf401681e1",
-    "addTime" : "2022-05-28T15:02:00",
-    "name" : "School 2 close",
-    "userId" : "8a703101-8d22-4638-85e1-9433e7fd3a2c",
-    "description" : "School 2 School 2 School 2\r\nSchool 2 School 2 School 2",
-    "fundSize" : 60000,
-    "fundraisingStart" : "2022-05-30T06:06:00",
-    "fundraisingEnd" : "2022-06-30T05:03:00",
-    "collectedAmount" : 0
-  }, {
     "id" : "3af94d9a-3ddd-4467-a53a-5497850e45f8",
     "addTime" : "2022-05-28T15:03:00",
-    "name" : "Big house",
+    "name" : "rdydy",
     "userId" : "8a703101-8d22-4638-85e1-9433e7fd3a2c",
-    "description" : "",
-    "fundSize" : 45545,
-    "fundraisingStart" : "2022-05-02T07:06:00",
-    "fundraisingEnd" : "2022-12-05T05:06:00",
-    "collectedAmount" : 666
+    "description" : "hdfhd",
+    "fundSize" : 3434,
+    "fundraisingStart" : "2022-05-09T07:06:00",
+    "fundraisingEnd" : "2022-05-29T14:04:00",
+    "collectedAmount" : 1119
+  }, {
+    "id" : "c1972178-ba77-45f3-a9f2-b58edad7a3b0",
+    "addTime" : "2022-05-29T13:59:00",
+    "name" : "hgj",
+    "userId" : "8a703101-8d22-4638-85e1-9433e7fd3a2c",
+    "description" : "ghjg",
+    "fundSize" : 54564456,
+    "fundraisingStart" : "2022-05-02T02:31:00",
+    "fundraisingEnd" : "2022-05-20T04:12:00",
+    "collectedAmount" : 0
   } ],
   "users" : [ {
     "id" : "8a703101-8d22-4638-85e1-9433e7fd3a2c",
@@ -68,7 +74,7 @@
     "password" : "f9bcf9e9668df354e5c90f352be7a7bd1e87de0a132ec4721e393377a6995865d42c4551deffdf63840d736bcfd70f093e988bf69d96c9bab9855b3b11018b7d",
     "contactInfo" : "petya@a.ru",
     "addTime" : "2022-05-28T15:08:00",
-    "sortSettings" : "Normal"
+    "sortSettings" : "DateEndDec"
   } ],
   "investments" : [ {
     "id" : "0473d1f9-4a02-4775-a9f6-7c1f9676de12",
@@ -86,5 +92,13 @@
     "investorName" : "",
     "contactInfo" : "",
     "amount" : 666
+  }, {
+    "id" : "c62e61a2-33c0-4e6b-b2d8-b286f460be5e",
+    "addTime" : "2022-05-29T13:54:00",
+    "projectId" : "3af94d9a-3ddd-4467-a53a-5497850e45f8",
+    "investorId" : "8a703101-8d22-4638-85e1-9433e7fd3a2c",
+    "investorName" : "",
+    "contactInfo" : "",
+    "amount" : 453
   } ]
 }

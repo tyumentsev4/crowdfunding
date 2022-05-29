@@ -52,7 +52,7 @@ class AddUserHandler(
 
         if (webForm.errors.isEmpty()) {
             addUserQuery.invoke(nameFormLens(webForm), firstPassword!!, contactInfoLens(webForm))
-            return Response(Status.FOUND).header("Location", "/")
+            return Response(Status.FOUND).header("Location", "/login")
         }
         return Response(Status.OK).with(htmlView(request) of NewUserVM(webForm))
     }
