@@ -9,27 +9,33 @@ import java.nio.file.Path
 val REGISTERED_USER_ROLE = RolePermissions(
     id = REGISTERED_USER_ROLE_ID,
     name = "Авторизованный пользователь",
-    showStartPage = true,
-    showEntrepreneursList = true,
-    showEntrepreneur = true,
-    showProjectsList = true,
-    showProject = true,
-    canRegister = true,
+    seeEntrepreneursList = true,
+    seeEntrepreneurInfo = true,
+    seeProjectsList = true,
+    seeProjectInfo = true,
     openNewProject = true,
-    addInvestment = true
+    addInvestment = true,
+    seeUserProjectsList = false,
+    editProject = false,
+    closeProject = false,
+    deleteProject = false,
+    seeUserInvestorsList = false
 )
 
 val ENTREPRENEUR_ROLE = RolePermissions(
     id = ENTREPRENEUR_ROLE_ID,
     name = "Предприниматель",
-    showStartPage = true,
-    showEntrepreneursList = true,
-    showEntrepreneur = true,
-    showProjectsList = true,
-    showProject = true,
-    canRegister = true,
+    seeEntrepreneursList = true,
+    seeEntrepreneurInfo = true,
+    seeProjectsList = true,
+    seeProjectInfo = true,
     openNewProject = true,
-    addInvestment = true
+    addInvestment = true,
+    seeUserProjectsList = true,
+    editProject = true,
+    closeProject = true,
+    deleteProject = true,
+    seeUserInvestorsList = true
 )
 
 fun main() {

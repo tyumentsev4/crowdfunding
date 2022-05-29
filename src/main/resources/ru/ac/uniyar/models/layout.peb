@@ -14,10 +14,10 @@
                 <ul class="dropdown menu" data-dropdown-menu>
                     <li class="menu-text">Совместное финансирование</li>
                     <li><a href="/">Главная</a>
-                    {% if permissions.showProjectsList %}
+                    {% if permissions.seeProjectsList %}
                     <li><a href="/projects">Список проектов</a></li>
                     {% endif %}
-                    {% if permissions.showEntrepreneursList %}
+                    {% if permissions.seeEntrepreneursList %}
                     <li><a href="/entrepreneurs">Список предпринимателей</a></li>
                     {% endif %}
                 </ul>

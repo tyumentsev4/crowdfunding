@@ -12,14 +12,17 @@ val ENTREPRENEUR_ROLE_ID: UUID = UUID.fromString("3be6ab64-dac3-11ec-9d64-0242ac
 data class RolePermissions(
     val id: UUID,
     val name: String,
-    val showStartPage: Boolean,
-    val showEntrepreneursList: Boolean,
-    val showEntrepreneur: Boolean,
-    val showProjectsList: Boolean,
-    val showProject: Boolean,
-    val canRegister: Boolean,
+    val seeEntrepreneursList: Boolean,
+    val seeEntrepreneurInfo: Boolean,
+    val seeProjectsList: Boolean,
+    val seeProjectInfo: Boolean,
     val openNewProject: Boolean,
     val addInvestment: Boolean,
+    val seeUserProjectsList: Boolean,
+    val editProject: Boolean,
+    val closeProject: Boolean,
+    val deleteProject: Boolean,
+    val seeUserInvestorsList: Boolean
 ) {
     companion object {
         fun fromJson(jsonNode: JsonNode): RolePermissions {
@@ -27,41 +30,50 @@ data class RolePermissions(
             return RolePermissions(
                 UUID.fromString(jsonObject["id"].asText()),
                 jsonObject["name"].asText(),
-                jsonObject["showStartPage"].asBoolean(),
-                jsonObject["showEntrepreneursList"].asBoolean(),
-                jsonObject["showEntrepreneur"].asBoolean(),
-                jsonObject["showProjectsList"].asBoolean(),
-                jsonObject["showProject"].asBoolean(),
-                jsonObject["canRegister"].asBoolean(),
+                jsonObject["seeEntrepreneursList"].asBoolean(),
+                jsonObject["seeEntrepreneurInfo"].asBoolean(),
+                jsonObject["seeProjectsList"].asBoolean(),
+                jsonObject["seeProjectInfo"].asBoolean(),
                 jsonObject["openNewProject"].asBoolean(),
                 jsonObject["addInvestment"].asBoolean(),
+                jsonObject["seeUserProjectsList"].asBoolean(),
+                jsonObject["editProject"].asBoolean(),
+                jsonObject["closeProject"].asBoolean(),
+                jsonObject["deleteProject"].asBoolean(),
+                jsonObject["seeUserInvestorsList"].asBoolean(),
             )
         }
 
         val GUEST_ROLE = RolePermissions(
             id = GUEST_ROLE_ID,
             name = "Гость",
-            showStartPage = true,
-            showEntrepreneursList = true,
-            showEntrepreneur = true,
-            showProjectsList = true,
-            showProject = true,
-            canRegister = true,
+            seeEntrepreneursList = true,
+            seeEntrepreneurInfo = true,
+            seeProjectsList = true,
+            seeProjectInfo = true,
             openNewProject = false,
-            addInvestment = false
+            addInvestment = false,
+            seeUserProjectsList = false,
+            editProject = false,
+            closeProject = false,
+            deleteProject = false,
+            seeUserInvestorsList = false
         )
     }
 
     fun asJsonObject(): JsonNode = listOf(
         "id" to id.toString().asJsonValue(),
         "name" to name.asJsonValue(),
-        "showStartPage" to showStartPage.asJsonValue(),
-        "showEntrepreneursList" to showEntrepreneursList.asJsonValue(),
-        "showEntrepreneur" to showEntrepreneur.asJsonValue(),
-        "showProjectsList" to showProjectsList.asJsonValue(),
-        "showProject" to showProject.asJsonValue(),
-        "canRegister" to canRegister.asJsonValue(),
+        "seeEntrepreneursList" to seeEntrepreneursList.asJsonValue(),
+        "seeEntrepreneurInfo" to seeEntrepreneurInfo.asJsonValue(),
+        "seeProjectsList" to seeProjectsList.asJsonValue(),
+        "seeProjectInfo" to seeProjectInfo.asJsonValue(),
         "openNewProject" to openNewProject.asJsonValue(),
         "addInvestment" to addInvestment.asJsonValue(),
+        "seeUserProjectsList" to seeUserProjectsList.asJsonValue(),
+        "editProject" to editProject.asJsonValue(),
+        "closeProject" to closeProject.asJsonValue(),
+        "deleteProject" to deleteProject.asJsonValue(),
+        "seeUserInvestorsList" to seeUserInvestorsList.asJsonValue(),
     ).asJsonObject()
 }

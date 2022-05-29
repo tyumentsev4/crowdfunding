@@ -29,7 +29,7 @@ class ShowProjectsListHandler(
 
     override fun invoke(request: Request): Response {
         val permissions = permissionsLens(request)
-        if (!permissions.showProjectsList)
+        if (!permissions.seeProjectsList)
             return Response(Status.UNAUTHORIZED)
 
         val pageNumber = lensOrDefault(pageLens, request, 1)

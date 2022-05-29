@@ -48,7 +48,9 @@
                 {{ project.name }}
             </p>
             <p>
+                {% if permissions.seeProjectInfo %}
                 <a href="/projects/{{ project.id }}">Больше информации</a>
+                {% endif %}
             </p>
         </div>
     </div>

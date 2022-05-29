@@ -8,7 +8,6 @@ import ru.ac.uniyar.domain.storage.User
 data class UserVM(
     val user: User,
     val projectsInvestments: List<ProjectInvestments>,
-    val isEntrepreneur: Boolean,
     val projectSortSettings: List<ProjectSortSettings>,
     val sortSetupSelected: ProjectSortSettings
 ) : ViewModel
