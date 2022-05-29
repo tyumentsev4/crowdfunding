@@ -8,10 +8,12 @@ class StartTimeShouldBeLower : RuntimeException("Start date should be lower")
 
 class FundSizeShouldBePositiveInt : RuntimeException("Fund size should be positive int")
 
-class EntrepreneurNotFoundError : RuntimeException("Entrepreneur not found")
-
 class EntrepreneurFetchError(message: String) : RuntimeException(message)
 
 class InvestmentFetchError(message: String) : RuntimeException(message)
 
 class ProjectFetchError(message: String) : RuntimeException(message)
+
+class UserFetchError(message: String) : RuntimeException(message)
+
+class UserExist(message: String) : RuntimeException(message)

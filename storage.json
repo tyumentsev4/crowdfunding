@@ -1,116 +1,194 @@
 {
+  "rolePermissions" : [ {
+    "id" : "1a1515e8-dac3-11ec-9d64-0242ac120002",
+    "name" : "Авторизованный пользователь",
+    "seeEntrepreneursList" : true,
+    "seeEntrepreneurInfo" : true,
+    "seeProjectsList" : true,
+    "seeProjectInfo" : true,
+    "openNewProject" : true,
+    "addInvestment" : true,
+    "seeUserProjectsList" : false,
+    "editProject" : false,
+    "closeProject" : false,
+    "deleteProject" : false,
+    "seeUserInvestorsList" : false
+  }, {
+    "id" : "3be6ab64-dac3-11ec-9d64-0242ac120002",
+    "name" : "Предприниматель",
+    "seeEntrepreneursList" : true,
+    "seeEntrepreneurInfo" : true,
+    "seeProjectsList" : true,
+    "seeProjectInfo" : true,
+    "openNewProject" : true,
+    "addInvestment" : true,
+    "seeUserProjectsList" : true,
+    "editProject" : true,
+    "closeProject" : true,
+    "deleteProject" : true,
+    "seeUserInvestorsList" : true
+  } ],
   "projects" : [ {
-    "id" : "424eb4c5-791f-4938-8e71-5856ab3ad91d",
-    "addTime" : "2022-04-23T14:12:00",
+    "id" : "060d0863-1acb-40f6-a472-252b992fa855",
+    "addTime" : "2022-05-29T15:05:00",
     "name" : "Школа 1",
-    "entrepreneurId" : "2ff1ab66-a760-479d-8251-138ad0750228",
+    "userId" : "127040de-2959-444b-b4b0-f9e7c73daaaf",
     "description" : "",
     "fundSize" : 1000000,
-    "fundraisingStart" : "2022-04-01T12:00:00",
-    "fundraisingEnd" : "2022-08-31T00:00:00",
-    "collectedAmount" : 49640
+    "fundraisingStart" : "2022-05-01T02:03:00",
+    "fundraisingEnd" : "2022-06-13T03:24:00",
+    "collectedAmount" : 33546
   }, {
-    "id" : "4cf8e25c-3670-4758-8da0-e2bd3820925c",
-    "addTime" : "2022-04-23T14:46:00",
+    "id" : "2f356319-c279-4cdd-ac61-103a77e2e085",
+    "addTime" : "2022-05-29T15:05:00",
     "name" : "Ремонт дома 2",
-    "entrepreneurId" : "2ff1ab66-a760-479d-8251-138ad0750228",
+    "userId" : "127040de-2959-444b-b4b0-f9e7c73daaaf",
     "description" : "",
     "fundSize" : 200000,
-    "fundraisingStart" : "2022-04-01T14:45:00",
-    "fundraisingEnd" : "2022-04-30T14:45:00",
-    "collectedAmount" : 200500
+    "fundraisingStart" : "2022-05-12T03:21:00",
+    "fundraisingEnd" : "2022-12-08T04:23:00",
+    "collectedAmount" : 13111
   }, {
-    "id" : "e88bba9c-ded0-402c-a94a-005c2b52abab",
-    "addTime" : "2022-04-23T14:53:00",
+    "id" : "cfaf11c2-18e3-4777-b46e-07b706d41341",
+    "addTime" : "2022-05-29T15:06:00",
     "name" : "Школа 2",
-    "entrepreneurId" : "2ff1ab66-a760-479d-8251-138ad0750228",
+    "userId" : "127040de-2959-444b-b4b0-f9e7c73daaaf",
     "description" : "",
     "fundSize" : 10000000,
-    "fundraisingStart" : "2022-05-01T14:53:00",
-    "fundraisingEnd" : "2022-12-31T14:53:00",
-    "collectedAmount" : 123
+    "fundraisingStart" : "2022-05-03T02:31:00",
+    "fundraisingEnd" : "2023-07-05T02:31:00",
+    "collectedAmount" : 30388
   }, {
-    "id" : "74fbee55-484e-4eb3-b13b-d05239ae1158",
-    "addTime" : "2022-05-17T18:32:00",
+    "id" : "92e238ad-4702-4171-bb83-8619ba4f8efb",
+    "addTime" : "2022-05-29T15:07:00",
     "name" : "Магазин у дома",
-    "entrepreneurId" : "2099193a-49ca-45b4-ae8d-31b8b7416373",
+    "userId" : "6e893993-2535-4999-a3a4-d5e8e894a3b7",
     "description" : "",
-    "fundSize" : 21312,
-    "fundraisingStart" : "2022-05-03T00:03:00",
-    "fundraisingEnd" : "2022-05-09T03:21:00",
+    "fundSize" : 31432,
+    "fundraisingStart" : "2022-05-03T03:12:00",
+    "fundraisingEnd" : "2022-05-18T03:24:00",
     "collectedAmount" : 0
   } ],
-  "entrepreneurs" : [ {
-    "id" : "2ff1ab66-a760-479d-8251-138ad0750228",
-    "name" : "Иванов Иван Иванович",
-    "addTime" : "2022-04-23T14:09:00"
+  "users" : [ {
+    "id" : "c633e620-cbe7-4e7c-9a8b-ad1cec73fe09",
+    "roleId" : "1a1515e8-dac3-11ec-9d64-0242ac120002",
+    "name" : "Карпов Алексей Викторович",
+    "password" : "b19ea3efae07d000fdc47a1f7b29e40acf2889faa089e1aa1a468b1a15021ee35fe78ce0358b19d65372157631ccd6fada09e9cc6077b65bcf6e877f3241319b",
+    "contactInfo" : "karpov@mail.ru",
+    "addTime" : "2022-05-29T14:47:00",
+    "sortSettings" : "Normal"
   }, {
-    "id" : "2099193a-49ca-45b4-ae8d-31b8b7416373",
+    "id" : "eaf02005-df08-4d8d-81cc-c0eba4270b1c",
+    "roleId" : "1a1515e8-dac3-11ec-9d64-0242ac120002",
+    "name" : "Смирнов Сергей Иванович",
+    "password" : "b19ea3efae07d000fdc47a1f7b29e40acf2889faa089e1aa1a468b1a15021ee35fe78ce0358b19d65372157631ccd6fada09e9cc6077b65bcf6e877f3241319b",
+    "contactInfo" : "s@s.ru",
+    "addTime" : "2022-05-29T14:48:00",
+    "sortSettings" : "DateEndDec"
+  }, {
+    "id" : "34a9a559-3a58-41c5-83ec-11782060ef49",
+    "roleId" : "1a1515e8-dac3-11ec-9d64-0242ac120002",
+    "name" : "Павлов Анатолий Сергеевич",
+    "password" : "b19ea3efae07d000fdc47a1f7b29e40acf2889faa089e1aa1a468b1a15021ee35fe78ce0358b19d65372157631ccd6fada09e9cc6077b65bcf6e877f3241319b",
+    "contactInfo" : "pav@r.r",
+    "addTime" : "2022-05-29T15:00:00",
+    "sortSettings" : "Normal"
+  }, {
+    "id" : "5ab66d10-6d10-41c7-bbfc-8d435df1f110",
+    "roleId" : "1a1515e8-dac3-11ec-9d64-0242ac120002",
+    "name" : "Петров Иван Сергеевич",
+    "password" : "b19ea3efae07d000fdc47a1f7b29e40acf2889faa089e1aa1a468b1a15021ee35fe78ce0358b19d65372157631ccd6fada09e9cc6077b65bcf6e877f3241319b",
+    "contactInfo" : "petr@sa.ru",
+    "addTime" : "2022-05-29T15:01:00",
+    "sortSettings" : "Normal"
+  }, {
+    "id" : "127040de-2959-444b-b4b0-f9e7c73daaaf",
+    "roleId" : "3be6ab64-dac3-11ec-9d64-0242ac120002",
+    "name" : "Иванов Иван Иванович",
+    "password" : "b19ea3efae07d000fdc47a1f7b29e40acf2889faa089e1aa1a468b1a15021ee35fe78ce0358b19d65372157631ccd6fada09e9cc6077b65bcf6e877f3241319b",
+    "contactInfo" : "ivanoff@s.w",
+    "addTime" : "2022-05-29T15:02:00",
+    "sortSettings" : "CloseFirst"
+  }, {
+    "id" : "6e893993-2535-4999-a3a4-d5e8e894a3b7",
+    "roleId" : "3be6ab64-dac3-11ec-9d64-0242ac120002",
     "name" : "Сидоров Сергей Евгеньевич",
-    "addTime" : "2022-05-17T18:31:00"
+    "password" : "b19ea3efae07d000fdc47a1f7b29e40acf2889faa089e1aa1a468b1a15021ee35fe78ce0358b19d65372157631ccd6fada09e9cc6077b65bcf6e877f3241319b",
+    "contactInfo" : "sidor22@sc.ru",
+    "addTime" : "2022-05-29T15:02:00",
+    "sortSettings" : "Normal"
   } ],
   "investments" : [ {
-    "id" : "12f5217f-49b0-4a45-981f-d663f66ff8da",
-    "addTime" : "2022-04-23T14:13:00",
-    "projectId" : "424eb4c5-791f-4938-8e71-5856ab3ad91d",
+    "id" : "dde8c8d7-bd58-4c8d-94e5-e5fc66e471c2",
+    "addTime" : "2022-05-29T15:08:00",
+    "projectId" : "060d0863-1acb-40f6-a472-252b992fa855",
+    "investorId" : "c633e620-cbe7-4e7c-9a8b-ad1cec73fe09",
     "investorName" : "Карпов Алексей Викторович",
     "contactInfo" : "karpov@mail.ru",
     "amount" : 10000
   }, {
-    "id" : "f576c12c-cbdb-4b66-9c43-96da5313b786",
-    "addTime" : "2022-04-23T14:18:00",
-    "projectId" : "424eb4c5-791f-4938-8e71-5856ab3ad91d",
-    "investorName" : "Смирнов Сергей Иванович",
-    "contactInfo" : "",
-    "amount" : 5000
-  }, {
-    "id" : "19e1a1ae-b1eb-4ad3-8318-5334f777df99",
-    "addTime" : "2022-04-23T14:46:00",
-    "projectId" : "4cf8e25c-3670-4758-8da0-e2bd3820925c",
+    "id" : "418a2eff-9948-475f-93c6-3035f37c73e5",
+    "addTime" : "2022-05-29T15:09:00",
+    "projectId" : "2f356319-c279-4cdd-ac61-103a77e2e085",
+    "investorId" : "c633e620-cbe7-4e7c-9a8b-ad1cec73fe09",
     "investorName" : "Карпов Алексей Викторович",
     "contactInfo" : "karpov@mail.ru",
-    "amount" : 200000
+    "amount" : 2000
   }, {
-    "id" : "ad79f911-2a8f-4e5c-ac8c-1c3d60804c3a",
-    "addTime" : "2022-04-23T15:22:00",
-    "projectId" : "4cf8e25c-3670-4758-8da0-e2bd3820925c",
+    "id" : "180c8d11-42b9-4fd3-9553-c57e9103ebe9",
+    "addTime" : "2022-05-29T15:10:00",
+    "projectId" : "cfaf11c2-18e3-4777-b46e-07b706d41341",
+    "investorId" : "c633e620-cbe7-4e7c-9a8b-ad1cec73fe09",
+    "investorName" : "",
+    "contactInfo" : "",
+    "amount" : 6688
+  }, {
+    "id" : "493dfd3c-1365-4ec5-8604-bb48c6fcb985",
+    "addTime" : "2022-05-29T15:10:00",
+    "projectId" : "060d0863-1acb-40f6-a472-252b992fa855",
+    "investorId" : "eaf02005-df08-4d8d-81cc-c0eba4270b1c",
+    "investorName" : "Смирнов Сергей Иванович",
+    "contactInfo" : "s@s.ru",
+    "amount" : 1233
+  }, {
+    "id" : "90e93684-a85b-4c14-85ae-eeed95379d2b",
+    "addTime" : "2022-05-29T15:11:00",
+    "projectId" : "060d0863-1acb-40f6-a472-252b992fa855",
+    "investorId" : "eaf02005-df08-4d8d-81cc-c0eba4270b1c",
+    "investorName" : "",
+    "contactInfo" : "",
+    "amount" : 1000
+  }, {
+    "id" : "c24c9ce5-e311-4fc0-817c-edbc9efeb3b7",
+    "addTime" : "2022-05-29T15:11:00",
+    "projectId" : "cfaf11c2-18e3-4777-b46e-07b706d41341",
+    "investorId" : "eaf02005-df08-4d8d-81cc-c0eba4270b1c",
+    "investorName" : "",
+    "contactInfo" : "",
+    "amount" : 22345
+  }, {
+    "id" : "66754f39-c462-4ee4-b901-2b6dd0baa653",
+    "addTime" : "2022-05-29T15:12:00",
+    "projectId" : "060d0863-1acb-40f6-a472-252b992fa855",
+    "investorId" : "34a9a559-3a58-41c5-83ec-11782060ef49",
     "investorName" : "Павлов Анатолий Сергеевич",
-    "contactInfo" : "",
-    "amount" : 500
+    "contactInfo" : "pav@r.r",
+    "amount" : 21313
   }, {
-    "id" : "1796a572-74c6-47e5-ac62-87a232efefaf",
-    "addTime" : "2022-04-29T18:05:00",
-    "projectId" : "424eb4c5-791f-4938-8e71-5856ab3ad91d",
+    "id" : "ac94750f-80cc-4640-a375-b9c80a292b11",
+    "addTime" : "2022-05-29T15:12:00",
+    "projectId" : "cfaf11c2-18e3-4777-b46e-07b706d41341",
+    "investorId" : "34a9a559-3a58-41c5-83ec-11782060ef49",
+    "investorName" : "Павлов Анатолий Сергеевич",
+    "contactInfo" : "pav@r.r",
+    "amount" : 1355
+  }, {
+    "id" : "0623950c-00b6-4949-b5bb-263f77be8769",
+    "addTime" : "2022-05-29T15:12:00",
+    "projectId" : "2f356319-c279-4cdd-ac61-103a77e2e085",
+    "investorId" : "34a9a559-3a58-41c5-83ec-11782060ef49",
     "investorName" : "",
     "contactInfo" : "",
-    "amount" : 12
-  }, {
-    "id" : "83dcac3c-b803-44ad-bc80-8815d2c9b053",
-    "addTime" : "2022-04-29T18:49:00",
-    "projectId" : "424eb4c5-791f-4938-8e71-5856ab3ad91d",
-    "investorName" : "",
-    "contactInfo" : "",
-    "amount" : 1213
-  }, {
-    "id" : "bf7989e5-1b17-49a2-b86e-a024e5625f93",
-    "addTime" : "2022-04-29T18:49:00",
-    "projectId" : "424eb4c5-791f-4938-8e71-5856ab3ad91d",
-    "investorName" : "",
-    "contactInfo" : "",
-    "amount" : 13415
-  }, {
-    "id" : "80a8b33d-54f2-4883-bb41-c255ebc0f4aa",
-    "addTime" : "2022-05-17T18:17:00",
-    "projectId" : "424eb4c5-791f-4938-8e71-5856ab3ad91d",
-    "investorName" : "Петров Иван Сергеевич",
-    "contactInfo" : "",
-    "amount" : 20000
-  }, {
-    "id" : "3aee8158-8a38-494b-9b03-221eab453c2f",
-    "addTime" : "2022-05-17T18:33:00",
-    "projectId" : "e88bba9c-ded0-402c-a94a-005c2b52abab",
-    "investorName" : "Сергей",
-    "contactInfo" : "",
-    "amount" : 123
+    "amount" : 11111
   } ]
 }

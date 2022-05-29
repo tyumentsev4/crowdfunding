@@ -2,17 +2,19 @@ package ru.ac.uniyar.domain.queries
 
 import ru.ac.uniyar.domain.storage.EMPTY_UUID
 import ru.ac.uniyar.domain.storage.Investment
-import ru.ac.uniyar.domain.storage.Store
+import ru.ac.uniyar.domain.storage.InvestmentsRepository
+import ru.ac.uniyar.domain.storage.ProjectsRepository
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
-import java.util.UUID
+import java.util.*
 
-class AddInvestmentQuery(store: Store) {
-    private val investmentsRepository = store.investmentsRepository
-    private val projectsRepository = store.projectsRepository
-
+class AddInvestmentQuery(
+    private val investmentsRepository: InvestmentsRepository,
+    private val projectsRepository: ProjectsRepository,
+) {
     operator fun invoke(
         projectId: UUID,
+        investorId: UUID,
         investorName: String,
         contactInfo: String,
         amount: Int
@@ -25,6 +27,7 @@ class AddInvestmentQuery(store: Store) {
             EMPTY_UUID,
             LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
             projectId,
+            investorId,
             investorName,
             contactInfo,
             amount

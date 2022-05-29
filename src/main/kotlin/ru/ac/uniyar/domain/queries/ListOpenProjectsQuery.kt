@@ -1,9 +1,7 @@
 package ru.ac.uniyar.domain.queries
 
-import ru.ac.uniyar.domain.storage.Store
+import ru.ac.uniyar.domain.storage.ProjectsRepository
 
-class ListOpenProjectsQuery(store: Store) {
-    private val projectsRepository = store.projectsRepository
-
+class ListOpenProjectsQuery(private val projectsRepository: ProjectsRepository) {
     operator fun invoke() = projectsRepository.list().filter { it.isOpen() }
 }

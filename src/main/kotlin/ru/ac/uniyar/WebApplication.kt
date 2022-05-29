@@ -1,68 +1,104 @@
 package ru.ac.uniyar
 
-import org.http4k.core.Body
 import org.http4k.core.ContentType
-import org.http4k.core.Filter
 import org.http4k.core.HttpHandler
-import org.http4k.core.NoOp
+import org.http4k.core.RequestContexts
 import org.http4k.core.then
+import org.http4k.filter.ServerFilters
+import org.http4k.lens.RequestContextKey
+import org.http4k.lens.RequestContextLens
 import org.http4k.server.Undertow
 import org.http4k.server.asServer
-import org.http4k.template.PebbleTemplates
-import org.http4k.template.viewModel
-import ru.ac.uniyar.domain.queries.AddEntrepreneurQuery
-import ru.ac.uniyar.domain.queries.AddInvestmentQuery
-import ru.ac.uniyar.domain.queries.AddProjectQuery
-import ru.ac.uniyar.domain.queries.FetchEntrepreneurQuery
-import ru.ac.uniyar.domain.queries.FetchInvestmentQuery
-import ru.ac.uniyar.domain.queries.FetchProjectQuery
-import ru.ac.uniyar.domain.queries.ListEntrepreneursPerPageQuery
-import ru.ac.uniyar.domain.queries.ListEntrepreneursQuery
-import ru.ac.uniyar.domain.queries.ListInvestmentsPerPageQuery
-import ru.ac.uniyar.domain.queries.ListOpenProjectsQuery
-import ru.ac.uniyar.domain.queries.ListProjectsPerPageQuery
-import ru.ac.uniyar.domain.storage.Store
+import ru.ac.uniyar.domain.StoreInitializer
+import ru.ac.uniyar.domain.storage.RolePermissions
+import ru.ac.uniyar.domain.storage.SettingFileError
+import ru.ac.uniyar.domain.storage.User
+import ru.ac.uniyar.filters.JwtTools
+import ru.ac.uniyar.filters.authenticationFilter
+import ru.ac.uniyar.filters.authorizationFilter
 import ru.ac.uniyar.filters.showErrorMessageFilter
-import kotlin.io.path.Path
+import ru.ac.uniyar.handlers.HttpHandlerInitializer
+import ru.ac.uniyar.models.template.ContextAwarePebbleTemplates
+import ru.ac.uniyar.models.template.ContextAwareViewRender
 
 const val SERVER_PORT = 9000
 
 fun main() {
-    val store = Store(Path("storage.json"))
-    val renderer = PebbleTemplates().HotReload("src/main/resources")
-    val htmlView = Body.viewModel(renderer, ContentType.TEXT_HTML).toLens()
+    val storeInitializer = try {
+        StoreInitializer(java.nio.file.Path.of("storage.json"), java.nio.file.Path.of("settings.json"))
+    } catch (error: SettingFileError) {
+        println(error.message)
+        return
+    }
 
-    val listProjectsPerPageQuery = ListProjectsPerPageQuery(store)
-    val listEntrepreneursPerPageQuery = ListEntrepreneursPerPageQuery(store)
-    val fetchEntrepreneurQuery = FetchEntrepreneurQuery(store)
-    val addEntrepreneurQuery = AddEntrepreneurQuery(store)
-    val fetchProjectQuery = FetchProjectQuery(store)
-    val listEntrepreneursQuery = ListEntrepreneursQuery(store)
-    val addProjectQuery = AddProjectQuery(store)
-    val listInvestmentsPerPageQuery = ListInvestmentsPerPageQuery(store)
-    val listProjectQuery = ListOpenProjectsQuery(store)
-    val addInvestmentQuery = AddInvestmentQuery(store)
-    val fetchInvestmentQuery = FetchInvestmentQuery(store)
+    val renderer = ContextAwarePebbleTemplates().hotReload("src/main/resources")
+    val htmlView = ContextAwareViewRender(renderer, ContentType.TEXT_HTML)
 
-    val router = Router(
-        htmlView,
-        listProjectsPerPageQuery,
-        listEntrepreneursPerPageQuery,
-        fetchEntrepreneurQuery,
-        addEntrepreneurQuery,
-        fetchProjectQuery,
-        listEntrepreneursQuery,
-        addProjectQuery,
-        listInvestmentsPerPageQuery,
-        listProjectQuery,
-        addInvestmentQuery,
-        fetchInvestmentQuery
+    val contexts = RequestContexts()
+    val currentUserLens: RequestContextLens<User?> = RequestContextKey.optional(contexts, "user")
+    val permissionsLens: RequestContextLens<RolePermissions> =
+        RequestContextKey.required(contexts, name = "permissions")
+    val htmlViewWithContext = htmlView
+        .associateContextLens("currentUser", currentUserLens)
+        .associateContextLens("permissions", permissionsLens)
+    val jwtTools = JwtTools(storeInitializer.settings.salt, "ru.ac.uniyar.WebApplication")
+    val handlerHolder = HttpHandlerInitializer(
+        currentUserLens,
+        permissionsLens,
+        htmlViewWithContext,
+        storeInitializer,
+        jwtTools
     )
 
+    val router = createRouter(handlerHolder)
+
     val printingApp: HttpHandler =
-        Filter.NoOp
-            .then(showErrorMessageFilter(renderer))
-            .then(router())
+        ServerFilters.InitialiseRequestContext(contexts)
+            .then(
+                authenticationFilter(
+                    currentUserLens,
+                    storeInitializer.fetchUserViaToken,
+                    jwtTools
+                ).then(
+                    authorizationFilter(
+                        currentUserLens,
+                        permissionsLens,
+                        storeInitializer.fetchPermissionsViaIdQuery
+                    )
+                ).then(
+                    showErrorMessageFilter(htmlViewWithContext)
+                ).then(router())
+            )
+
     val server = printingApp.asServer(Undertow(SERVER_PORT)).start()
     println("Server started on http://localhost:" + server.port())
+}
+
+fun createRouter(handlerHolder: HttpHandlerInitializer): Router {
+    return Router(
+        handlerHolder.showNewUserFormHandler,
+        handlerHolder.addUserHandler,
+        handlerHolder.showNewInvestmentFormHandler,
+        handlerHolder.addInvestmentHandler,
+        handlerHolder.showNewProjectFormHandler,
+        handlerHolder.addProjectHandler,
+        handlerHolder.showEntrepreneurHandler,
+        handlerHolder.showEntrepreneursListHandler,
+        handlerHolder.showInvestmentHandler,
+        handlerHolder.showProjectHandler,
+        handlerHolder.showProjectsListHandler,
+        handlerHolder.showStartPageHandler,
+        handlerHolder.showLoginFormHandler,
+        handlerHolder.authenticateUser,
+        handlerHolder.logOutUser,
+        handlerHolder.showUserHandler,
+        handlerHolder.showUserProjectsListHandler,
+        handlerHolder.showEditProjectHandler,
+        handlerHolder.editProjectHandler,
+        handlerHolder.showDeleteProjectFormHandler,
+        handlerHolder.deleteProjectHandler,
+        handlerHolder.showCloseProjectFormHandler,
+        handlerHolder.closeProjectHandler,
+        handlerHolder.showInvestorsListHandler,
+    )
 }

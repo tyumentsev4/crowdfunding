@@ -6,7 +6,7 @@ import org.http4k.format.Jackson.asJsonValue
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
-import java.util.UUID
+import java.util.*
 
 data class Project(
     val id: UUID,
@@ -26,7 +26,7 @@ data class Project(
                 UUID.fromString(jsonObject["id"].asText()),
                 LocalDateTime.parse(jsonObject["addTime"].asText(), DateTimeFormatter.ISO_DATE_TIME),
                 jsonObject["name"].asText(),
-                UUID.fromString(jsonObject["entrepreneurId"].asText()),
+                UUID.fromString(jsonObject["userId"].asText()),
                 jsonObject["description"].asText(),
                 jsonObject["fundSize"].asInt(),
                 LocalDateTime.parse(jsonObject["fundraisingStart"].asText(), DateTimeFormatter.ISO_DATE_TIME),
@@ -41,7 +41,7 @@ data class Project(
             "id" to id.toString().asJsonValue(),
             "addTime" to addTime.format(DateTimeFormatter.ISO_DATE_TIME).asJsonValue(),
             "name" to name.asJsonValue(),
-            "entrepreneurId" to entrepreneurId.toString().asJsonValue(),
+            "userId" to entrepreneurId.toString().asJsonValue(),
             "description" to description.asJsonValue(),
             "fundSize" to fundSize.asJsonObject(),
             "fundraisingStart" to fundraisingStart.format(DateTimeFormatter.ISO_DATE_TIME).asJsonValue(),
