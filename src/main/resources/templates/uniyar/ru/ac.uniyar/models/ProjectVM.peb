@@ -1,0 +1,103 @@
+    {% extends "./layout.peb" %}
+
+        {% block title %}
+    Проект {{ model.project.name }}
+        {% endblock %}
+
+    {% block content %}
+    <h2>Проект</h2>
+    <table>
+        <tr>
+            <th>Название</th>
+            <td>{{ model.projectInfo.project.name }}</td>
+        </tr>
+        <tr>
+            <th>Предприниматель</th>
+            <td><a href="/entrepreneurs/{{model.projectInfo.entrepreneur.id}}">{{ model.projectInfo.entrepreneur.name }}</a></td>
+        </tr>
+        <tr>
+            <th>Описание</th>
+            <td><pre class="h6">{{ model.projectInfo.project.description }}</pre></td>
+        </tr>
+        <tr>
+            <th>Целевой размер фонда</th>
+            <td>{{ model.projectInfo.project.fundSize }}₽</td>
+        </tr>
+        <tr>
+            <th>Последние пять инвестиций</th>
+            <td>
+                <ul>
+                {% for investment in model.projectInfo.lastInvestments %}
+                    <li><a href="/investments/{{ investment.id }}">{{ investment.investorName }} - {{ investment.amount }}₽</a></li>
+                {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <th>Дата начала сбора средств</th>
+            <td>{{ model.projectInfo.project.fundraisingStart | date("dd.MM.yyyy HH:mm") }}</td>
+        </tr>
+
+        {% if model.projectInfo.isProjectOpen %}
+            <tr>
+                <th>Срок окончания сбора средств</th>
+                <td>
+                    {{ model.projectInfo.project.fundraisingEnd | date("dd.MM.yyyy HH:mm") }}
+                </td>
+            </tr>
+            <tr>
+                <th>Дней до окончания сбора средств</th>
+                <td>{{ model.projectInfo.daysUntilTheEndOfProject }}</td>
+            </tr>
+
+            <tr>
+                <th>Собранная на настоящий момент сумма</th>
+                <td>{{ model.projectInfo.project.collectedAmount }}₽</td>
+            </tr>
+
+            <tr>
+                <th>Количество инвестиций</th>
+                <td>{{ model.projectInfo.investmentsSize }}</td>
+            </tr>
+
+            <tr>
+                <th>Количество инвестиций, ожидающих обратную связь (не анонимных)</th>
+                <td>{{ model.projectInfo.nonAnonymousInvestmentsNumber }}</td>
+            </tr>
+            <tr>
+                <th>Объем необходимых инвестиций</th>
+                <td> {{ model.projectInfo.necessaryInvestmentsToProject }}₽</td>
+            </tr>
+            <tr>
+                <th>Прогноз успешности сбора</th>
+                <td>
+                    {% if model.projectInfo.isProjectSuccessForecast %}
+                        Должен быть успешен
+                    {% else %}
+                        Не должен быть успешен
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <th>Статус проекта</th>
+                <td>
+                    {% if model.projectInfo.isSuccessfulProject == true %}
+                        Успешен
+                    {% elseif model.projectInfo.isSuccessfulProject == false %}
+                        Не успешен
+                    {% else %}
+                        Не начат
+                    {% endif %}
+                </td>
+            </tr>
+        {% endif %}
+        <tr>
+            <th>Дата и время добавления</th>
+            <td>{{ model.projectInfo.entrepreneur.addTime | date("dd.MM.yyyy HH:mm")}}</td>
+        </tr>
+    </table>
+    {% if permissions.addInvestment and model.projectInfo.isProjectOpen %}
+    <a class="button" href="/projects/{{ model.projectInfo.project.id }}/new_investment">Проинвестировать</a>
+    {% endif %}
+{% endblock %}

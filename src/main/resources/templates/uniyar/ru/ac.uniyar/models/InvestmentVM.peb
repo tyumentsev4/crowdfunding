@@ -1,0 +1,31 @@
+{% extends "./layout.peb" %}
+
+{% block title %}
+    Инвестиция в {{ model.project.name }}
+{% endblock %}
+
+{% block content %}
+    <h2>Инвестиция в проект</h2>
+    <table>
+        <tr>
+            <th>Проект</th>
+            <td><a href="/projects/{{ model.project.id }}">{{ model.project.name }}</a></td>
+        </tr>
+        <tr>
+            <th>ФИО инвестора</th>
+            <td>{{ model.investment.investorName }}</td>
+        </tr>
+        <tr>
+            <th>Контактная информация</th>
+            <td>{{ model.investment.contactInfo }}</td>
+        </tr>
+        <tr>
+            <th>Сумма</th>
+            <td>{{ model.investment.amount }}₽</td>
+        </tr>
+        <tr>
+            <th>Дата и время добавления</th>
+            <td>{{ model.investment.addTime | date("dd.MM.yyyy HH:mm") }}</td>
+        </tr>
+    </table>
+{% endblock %}

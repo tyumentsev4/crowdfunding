@@ -1,0 +1,66 @@
+{% extends "./layout.peb" %}
+
+{% import "./paginator_utils.peb" %}
+
+{% block title %}
+Список проектов
+{% endblock %}
+
+{% block content %}
+<h2>Список проектов</h2>
+<form method="GET">
+    <div class="grid-x grid-padding-x align-bottom">
+        <div class="medium-4 cell">
+            Размер фонда
+            <label>От:
+                <input type="text" name="fromFoundSize" value="{{ model.fromFoundSize }}">
+            </label>
+        </div>
+        <div class="medium-4 cell">
+            <label>До:
+                <input type="text" name="toFoundSize" value="{{ model.toFoundSize }}">
+            </label>
+        </div>
+        <div class="medium-4 cell">
+            <label>Открыт
+                <input type="radio" name="isOpen" value="true" {% if model.isOpen %}checked{% endif %}>
+            </label>
+            <label>Закрыт
+                <input type="radio" name="isOpen" value="false" {% if model.isOpen == false %}checked{% endif %}>
+            </label>
+        </div>
+        <div class="medium-4 cell">
+            <input type="submit" value="Фильтровать" class="button">
+            <a href="/projects" class="button">Сбросить</a>
+        </div>
+    </div>
+</form>
+<div class="grid-x grid-padding-x">
+    {% if model.projects.size == 0 %}
+    <div class="medium-12 cell">
+        <p>Записей не найдено</p>
+    </div>
+    {% endif %}
+    {% for project in model.projects %}
+    <div class="medium-12 cell">
+        <div class="callout">
+            <p>
+                {{ project.name }}
+            </p>
+            <p>
+                {% if permissions.seeProjectInfo %}
+                <a href="/projects/{{ project.id }}">Больше информации</a>
+                {% endif %}
+            </p>
+        </div>
+    </div>
+    {% endfor %}
+    {% if permissions.openNewProject %}
+    <div class="medium-4 cell">
+        <a href="/projects/new" class="button">Создать новый проект</a>
+    </div>
+    {% endif %}
+    {{ showPagination(model.paginator) }}
+</div>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "./layout.peb" %}
+
+{% block title %}
+Новая инвестиция в проект {{ model.project.name }}
+{% endblock %}
+
+{% block content %}
+
+{% if model.form.errors is not empty %}
+<div class="grid-x grid-padding-x">
+    <div class="medium-12 cell warning">
+        <ul>
+            {% for error in model.form.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endif %}
+
+<h2>Новая инвестиция в проект {{ model.project.name }}</h2>
+<form method="POST">
+    <label>Сумма
+        <input type="number" min="1" name="amount" value="{{ model.form.fields["amount"] | first }}">
+    </label>
+    <label>Анонимная инвестиция
+        <input type="checkbox" name="isAnonInvestment" value="true">
+    </label>
+    <input type="submit" value="Добавить" class="button">
+</form>
+{% endblock %}

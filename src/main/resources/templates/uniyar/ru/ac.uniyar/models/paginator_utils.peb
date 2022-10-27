@@ -1,0 +1,31 @@
+{% macro showPagination(paginator) %}
+{% if paginator.canNavigate() %}
+
+<nav class="text-center cell" aria-label="Pagination">
+    <ul class="pagination">
+        {% if paginator.canGoBackward() %}
+        <li class="pagination-previous"><a href="{{ paginator.previousPageLink() }}"></a></li>
+        {% else %}
+        <li class="pagination-previous disabled"></li>
+        {% endif %}
+
+        {% for prevPageLink in paginator.previousPageLinks() %}
+        <li><a href="{{ prevPageLink.uri }}">{{ prevPageLink.number }}</a></li>
+        {% endfor %}
+
+        <li class="current">{{ paginator.currentPage }}</li>
+
+        {% for nextPageLink in paginator.nextPageLinks() %}
+        <li><a href="{{ nextPageLink.uri }}">{{ nextPageLink.number }}</a></li>
+        {% endfor %}
+
+        {% if paginator.canGoFroward() %}
+        {% set nextPageLink = paginator.nextPageLink() %}
+        <li class="pagination-next"><a href="{{paginator.nextPageLink()}}"></a></li>
+        {% else %}
+        <li class="pagination-next disabled"></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endmacro %}

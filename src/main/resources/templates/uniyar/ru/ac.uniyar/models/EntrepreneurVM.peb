@@ -1,0 +1,36 @@
+{% extends "./layout.peb" %}
+
+{% block title %}
+    Предприниматель {{ model.project.name }}
+{% endblock %}
+
+{% block content %}
+    <h2>Предприниматель</h2>
+    <table>
+        <tr>
+            <th>ФИО</th>
+            <td>{{ model.entrepreneur.name }}</td>
+        </tr>
+        <tr>
+            <th>Список проектов</th>
+            <td>
+                <ul>
+                {% for project in model.projects %}
+                    <li>
+                        <a href="/projects/{{ project.id }}">{{ project.name }}</a>
+                        {% if project.isSuccessful() == true %}
+                            - успешен
+                        {% elseif project.isSuccessful() == false %}
+                            - провален
+                        {% endif %}
+                    </li>
+                {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <th>Дата и время добавления</th>
+            <td>{{ model.entrepreneur.addTime | date("dd.MM.yyyy HH:mm") }}</td>
+        </tr>
+    </table>
+{% endblock %}
