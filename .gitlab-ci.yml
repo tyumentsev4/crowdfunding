@@ -51,7 +51,7 @@ deploy:
     - ssh -o StrictHostKeyChecking=no $SERVER_SSH_USER@$SERVER_HOST "
       cd Crowdfunding && 
       jo -p salt=$(openssl rand -hex 128) > settings.json &&
-      ./bin/Crowdfunding &"
+      ./bin/Crowdfunding &> /dev/null &"
 
   environment: 
     name: development
