@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode
 import org.http4k.contract.openapi.OpenAPIJackson.asJsonObject
 import org.http4k.contract.openapi.OpenAPIJackson.asPrettyJsonString
 import org.http4k.contract.openapi.OpenAPIJackson.parse
+import ru.ac.uniyar.domain.ENTREPRENEUR_ROLE
+import ru.ac.uniyar.domain.REGISTERED_USER_ROLE
 import java.nio.file.Path
 import kotlin.concurrent.thread
 import kotlin.io.path.isReadable
@@ -48,6 +50,11 @@ class Store(private val documentStoragePath: Path) {
             RolePermissionsRepository.fromJson(node["rolePermissions"])
         } else {
             RolePermissionsRepository()
+        }
+
+        if (node == null) {
+            rolePermissionsRepository.add(REGISTERED_USER_ROLE)
+            rolePermissionsRepository.add(ENTREPRENEUR_ROLE)
         }
     }
 

@@ -1,6 +1,5 @@
 buildscript {
     repositories {
-        gradlePluginPortal()
         mavenCentral()
         maven {
             url "https://plugins.gradle.org/m2/"
@@ -12,19 +11,12 @@ buildscript {
 }
 
 plugins {
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'java'
+    id 'application'
+    id 'distribution'
 }
 
-apply plugin: 'application'
 mainClassName = "ru.ac.uniyar.WebApplicationKt"
-
-shadowJar {
-    archiveBaseName.set(project.name)
-    archiveClassifier.set(null)
-    archiveVersion.set(null)
-    mergeServiceFiles()
-}
 
 repositories {
     mavenCentral()
@@ -62,4 +54,12 @@ dependencies {
     testImplementation "org.http4k:http4k-testing-kotest:${http4kVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+}
+
+distributions {
+    main {
+        contents {
+            from 'src/main/resources/'
+        }
+    }
 }

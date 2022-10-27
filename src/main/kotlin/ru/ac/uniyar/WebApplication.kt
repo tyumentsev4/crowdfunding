@@ -30,8 +30,8 @@ fun main() {
         println(error.message)
         return
     }
-
-    val renderer = ContextAwarePebbleTemplates().hotReload("src/main/resources")
+    var templatesPath: String = System.getenv("TEMPLATES_DIR") ?: "./templates" // "src/main/resources/templates"
+    val renderer = ContextAwarePebbleTemplates().hotReload(templatesPath)
     val htmlView = ContextAwareViewRender(renderer, ContentType.TEXT_HTML)
 
     val contexts = RequestContexts()

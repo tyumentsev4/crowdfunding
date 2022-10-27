@@ -25,7 +25,7 @@ class ContextAwarePebbleTemplates(
         }
     }
 
-    fun hotReload(baseTemplateDir: String): ContextAwareTemplateRenderer {
+    fun hotReload(baseTemplateDir: String = "."): ContextAwareTemplateRenderer {
         val loader = FileLoader()
         loader.prefix = baseTemplateDir
         return ContextAwarePebbleTemplateRenderer(

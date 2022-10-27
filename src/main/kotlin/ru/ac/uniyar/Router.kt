@@ -59,6 +59,6 @@ class Router(
         "/projects/{id}/delete" bind Method.POST to deleteProjectHandler,
         "/projects/{id}/close" bind Method.GET to showCloseProjectFormHandler,
         "/projects/{id}/close" bind Method.POST to closeProjectHandler,
-        static(ResourceLoader.Classpath("/ru/ac/uniyar/public/"))
+        static(ResourceLoader.Classpath("/templates/ru/ac/uniyar/public/"))
     )
 }
