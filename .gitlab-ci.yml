@@ -8,6 +8,8 @@ before_script:
   - export GRADLE_USER_HOME
 
 build:
+  tags:
+    - docker
   stage: build
   script: gradle --build-cache assemble
   cache:
@@ -18,6 +20,8 @@ build:
       - .gradle
 
 test:
+  tags:
+    - docker
   stage: test
   script: gradle check
   cache:
@@ -28,6 +32,8 @@ test:
       - .gradle
 
 deploy:
+  tags:
+    - docker
   stage: deploy
   script: echo "Define your deployment script!"
   environment: production
