@@ -39,5 +39,7 @@ deploy:
   tags:
     - docker
   stage: deploy
-  script: echo "Define your deployment script!"
+  dependencies:
+    - build
+  script: ls
   environment: production
