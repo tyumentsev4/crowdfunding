@@ -30,7 +30,7 @@ fun main() {
         println(error.message)
         return
     }
-    var templatesPath: String = System.getenv("TEMPLATES_DIR") ?: "./templates" // "src/main/resources/templates"
+    val templatesPath: String = System.getenv("TEMPLATES_DIR") ?: "./templates" // "src/main/resources/templates"
     val renderer = ContextAwarePebbleTemplates().hotReload(templatesPath)
     val htmlView = ContextAwareViewRender(renderer, ContentType.TEXT_HTML)
 

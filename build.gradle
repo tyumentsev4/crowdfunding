@@ -6,7 +6,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20"
     }
 }
 
@@ -16,7 +16,7 @@ plugins {
     id 'distribution'
 }
 
-mainClassName = "ru.ac.uniyar.WebApplicationKt"
+mainClassName = "ru.ac.uniyar.CrowdfundingKt"
 
 repositories {
     mavenCentral()
@@ -43,17 +43,19 @@ test {
 }
 
 dependencies {
-    implementation "com.auth0:java-jwt:${auth0Version}"
-    implementation "org.http4k:http4k-client-okhttp:${http4kVersion}"
-    implementation "org.http4k:http4k-contract:${http4kVersion}"
-    implementation "org.http4k:http4k-core:${http4kVersion}"
-    implementation "org.http4k:http4k-format-jackson:${http4kVersion}"
-    implementation "org.http4k:http4k-server-undertow:${http4kVersion}"
-    implementation "org.http4k:http4k-template-pebble:${http4kVersion}"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}"
-    testImplementation "org.http4k:http4k-testing-kotest:${http4kVersion}"
-    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
-    testImplementation "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    implementation "com.auth0:java-jwt:4.2.1"
+    implementation "org.http4k:http4k-client-okhttp:4.33.1.0"
+    implementation "org.http4k:http4k-contract:4.33.1.0"
+    implementation "org.http4k:http4k-core:4.33.1.0"
+    implementation "org.http4k:http4k-format-jackson:4.33.1.0"
+    implementation "org.http4k:http4k-server-undertow:4.33.1.0"
+    implementation "org.http4k:http4k-template-pebble:4.33.1.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.20"
+    implementation 'org.slf4j:slf4j-api:2.0.3'
+    implementation 'org.slf4j:slf4j-simple:2.0.3'
+    testImplementation "org.http4k:http4k-testing-kotest:4.33.1.0"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
 }
 
 distributions {
