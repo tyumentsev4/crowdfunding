@@ -49,6 +49,6 @@ deploy:
     - scp -r -o StrictHostKeyChecking=no ./Crowdfunding $SERVER_SSH_USER@$SERVER_HOST:~
   script:
     - ssh -o StrictHostKeyChecking=no $SERVER_SSH_USER@$SERVER_HOST "
-      ./Crowdfunding/bin/Crowdfunding &
+      ./Crowdfunding/bin/Crowdfunding &"
 
   environment: production
