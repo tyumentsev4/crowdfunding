@@ -2,9 +2,8 @@ image: gradle:alpine
 
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
-  DEV_SERVER_HOST: 51.250.110.75
-  DEV_SERVER_SSH_USER: tde
-  DEV_APP_PORT: 9000
+  SERVER_HOST: 51.250.110.75
+  SERVER_SSH_USER: tde
   DEV_ENDPOINT: http://$DEV_SERVER_HOST:$DEV_APP_PORT
 
 before_script:
