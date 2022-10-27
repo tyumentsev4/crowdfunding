@@ -46,7 +46,7 @@ deploy:
     - build
   before_script:
     - tar xf build/distributions/Crowdfunding.tar --directory .
-    - scp -o StrictHostKeyChecking=no ./Crowdfunding $SERVER_SSH_USER@$SERVER_HOST:~
+    - scp -r -o StrictHostKeyChecking=no ./Crowdfunding $SERVER_SSH_USER@$SERVER_HOST:~
   script:
     - ssh -o StrictHostKeyChecking=no $SERVER_SSH_USER@$SERVER_HOST "
       ./Crowdfunding/bin/Crowdfunding &
