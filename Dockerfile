@@ -4,8 +4,8 @@ COPY ./Crowdfunding /usr/src/
 
 WORKDIR /usr/src/Crowdfunding
 
-RUN apt-get update && apt-get install -y jo openssl
+RUN /bin/bash 'apt-get update && apt-get install -y jo openssl'
 
-RUN jo -p salt=$(openssl rand -hex 128) > settings.json
+RUN /bin/bash -c 'jo -p salt=$(openssl rand -hex 128) > settings.json'
 
-CMD ["./bin/Crowdfunding"]
+CMD ["/bin/bash", "bin/Crowdfunding"]
