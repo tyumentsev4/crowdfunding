@@ -5,10 +5,18 @@ variables:
   SERVER_HOST: 51.250.110.75
   SERVER_SSH_USER: tde
   DEV_ENDPOINT: http://$DEV_SERVER_HOST:$DEV_APP_PORT
+  IMAGE_NAME: $CI_REGISTRY_IMAGE
 
 before_script:
   - GRADLE_USER_HOME="$(pwd)/.gradle"
   - export GRADLE_USER_HOME
+  - export VERSION=$(cut -d= -f2 gradle.properties)
+
+stages:
+  - build
+  - test
+  - docker
+  - deploy
 
 build:
   tags:
@@ -25,6 +33,8 @@ build:
     name: "$CI_COMMIT_REF_NAME"
     paths:
       - "build/distributions/*.tar"
+    reports:
+      dotenv: build.env
 
 test:
   tags:
@@ -37,6 +47,25 @@ test:
     paths:
       - build
       - .gradle
+
+build_image:
+  stage: docker
+  tags:
+    - shell
+  script:
+    - docker build -t $IMAGE_NAME:$VERSION .
+
+push_image:
+  stage: docker
+  tags:
+    - shell
+  needs:
+    - build_image
+  before_script:
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+  script:
+    - docker push $IMAGE_NAME:$VERSION
+
 
 deploy:
   tags:
