@@ -8,15 +8,17 @@ class Settings(settingsPath: Path) {
     val salt: String
 
     init {
-        if (!settingsPath.isReadable()) throw SettingFileError("Configuration file $settingsPath doesn't exist")
+        salt = if (!settingsPath.isReadable()) {
+            System.getenv("SALT") ?: throw SettingFileError("SALT doesn't exist")
+        } else {
+            val file = settingsPath.toFile()
+            val jsonDocument = file.readText()
+            val node = Jackson.parse(jsonDocument)
 
-        val file = settingsPath.toFile()
-        val jsonDocument = file.readText()
-        val node = Jackson.parse(jsonDocument)
+            if (!node.hasNonNull("salt")) throw SettingFileError("Configuration file doesn't have salt")
 
-        if (!node.hasNonNull("salt")) throw SettingFileError("Configuration file doesn't have salt")
-
-        salt = node["salt"].asText()
+            node["salt"].asText()
+        }
     }
 }
 
