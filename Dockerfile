@@ -1,9 +1,7 @@
 FROM ubuntu
 
-COPY ./Crowdfunding /usr/src/
-
-WORKDIR /usr/src/Crowdfunding
+COPY ./Crowdfunding .
 
 EXPOSE 9000
 
-CMD ["/bin/bash", "./bin/Crowdfunding"]
+CMD ["/bin/bash", "./Crowdfunding/bin/Crowdfunding"]
