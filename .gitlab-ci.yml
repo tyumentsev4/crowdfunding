@@ -55,6 +55,7 @@ build_image:
     - export VERSION=$(cut -d= -f2 gradle.properties)
     - echo "VERSION=$VERSION" > build.env
     - tar xf build/distributions/Crowdfunding-$VERSION.tar --directory .
+    - tree
   script:
     - docker build -t $IMAGE_NAME:$VERSION .
   artifacts:
