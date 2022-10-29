@@ -17,6 +17,7 @@ plugins {
 }
 
 mainClassName = "ru.ac.uniyar.CrowdfundingKt"
+project.version = "${project_version}"
 
 repositories {
     mavenCentral()
