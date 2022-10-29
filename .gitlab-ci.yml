@@ -53,7 +53,7 @@ build_image:
   tags:
     - shell
   before_script:
-    - tar xf build/distributions/Crowdfunding.tar --directory .
+    - tar xf build/distributions/Crowdfunding-${VERSION}.tar --directory .
   script:
     - docker build -t $IMAGE_NAME:$VERSION .
 
