@@ -1,8 +1,8 @@
 FROM ubuntu
 
-COPY ./Crowdfounding /usr/src/
+COPY ./Crowdfunding /usr/src/
 
-WORKDIR /usr/src/Crowdfounding
+WORKDIR /usr/src/Crowdfunding
 
 RUN apt-get update && apt-get install -y jo openssl
 
