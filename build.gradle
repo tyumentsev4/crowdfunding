@@ -16,6 +16,7 @@ plugins {
     id 'distribution'
     id "io.gitlab.arturbosch.detekt" version "1.19.0"
     id "org.jlleitschuh.gradle.ktlint" version "10.2.1"
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 mainClassName = "ru.ac.uniyar.CrowdfundingKt"
@@ -25,7 +26,7 @@ repositories {
     mavenCentral()
 }
 
-
+apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'kotlin'
 
 
@@ -34,7 +35,6 @@ compileKotlin.kotlinOptions.jvmTarget = "11"
 compileTestKotlin.kotlinOptions.jvmTarget = "11"
 
 compileTestKotlin.kotlinOptions.freeCompilerArgs += "-Xjvm-default=all"
-
 
 sourceCompatibility = JavaVersion.VERSION_11
 
@@ -53,15 +53,22 @@ dependencies {
     implementation "org.http4k:http4k-format-jackson:4.33.1.0"
     implementation "org.http4k:http4k-server-undertow:4.33.1.0"
     implementation "org.http4k:http4k-template-pebble:4.33.1.0"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.20"
     implementation 'org.slf4j:slf4j-api:2.0.3'
     implementation 'org.slf4j:slf4j-simple:2.0.3'
     testImplementation "org.http4k:http4k-testing-kotest:4.33.1.0"
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.7.20'
 }
 
 detekt {
     buildUponDefaultConfig = true // preconfigure defaults
-    config.setFrom("$projectDir/detekt.yml") // point to your custom config defining rules to run, overwriting default behavior
+    config.setFrom("$projectDir/detekt.yml")
+    // point to your custom config defining rules to run, overwriting default behavior
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'ru.ac.uniyar.CrowdfundingKt'
+    }
 }
