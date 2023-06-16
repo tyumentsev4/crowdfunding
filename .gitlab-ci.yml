@@ -3,7 +3,7 @@ stages:
 
 kaniko-build-and-push:
   variables:
-    KANIKO_BUILD_CONTEXT: $CI_PROJECT_DIR/src/app
+    KANIKO_BUILD_CONTEXT: $CI_PROJECT_DIR
   stage: build
   image:
     name: gcr.io/kaniko-project/executor:debug
