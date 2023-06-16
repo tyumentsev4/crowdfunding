@@ -1,8 +1,9 @@
+// Rewritten https://github.com/http4k/http4k/blob/master/http4k-template/pebble/src/main/kotlin/org/http4k/template/PebbleTemplates.kt
 package ru.ac.uniyar.models.template
 
 import com.mitchellbosecke.pebble.PebbleEngine
 import com.mitchellbosecke.pebble.error.LoaderException
-import com.mitchellbosecke.pebble.loader.FileLoader
+import com.mitchellbosecke.pebble.loader.ClasspathLoader
 import org.http4k.template.ViewModel
 import org.http4k.template.ViewNotFound
 import java.io.StringWriter
@@ -10,7 +11,8 @@ import java.io.StringWriter
 typealias ContextAwareTemplateRenderer = (Map<String, Any?>, ViewModel) -> String
 
 class ContextAwarePebbleTemplates(
-    private val configure: (PebbleEngine.Builder) -> PebbleEngine.Builder = { it }
+    private val configure: (PebbleEngine.Builder) -> PebbleEngine.Builder = { it },
+    private val classLoader: ClassLoader = ClassLoader.getSystemClassLoader(),
 ) {
     private class ContextAwarePebbleTemplateRenderer(
         private val engine: PebbleEngine,
@@ -25,13 +27,9 @@ class ContextAwarePebbleTemplates(
         }
     }
 
-    fun hotReload(baseTemplateDir: String = "."): ContextAwareTemplateRenderer {
-        val loader = FileLoader()
-        loader.prefix = baseTemplateDir
-        return ContextAwarePebbleTemplateRenderer(
-            configure(
-                PebbleEngine.Builder().cacheActive(false).loader(loader)
-            ).build()
-        )
+    fun cachingClasspath(baseClasspathPackage: String): ContextAwareTemplateRenderer {
+        val loader = ClasspathLoader(classLoader)
+        loader.prefix = if (baseClasspathPackage.isEmpty()) null else baseClasspathPackage.replace('.', '/')
+        return ContextAwarePebbleTemplateRenderer(configure(PebbleEngine.Builder().loader(loader)).build())
     }
 }

@@ -1,7 +1,7 @@
 package ru.ac.uniyar.domain.queries
 
 import ru.ac.uniyar.domain.storage.ProjectsRepository
-import java.util.*
+import java.util.UUID
 
 class FetchProjectViaIdQuery(
     private val projectsRepository: ProjectsRepository

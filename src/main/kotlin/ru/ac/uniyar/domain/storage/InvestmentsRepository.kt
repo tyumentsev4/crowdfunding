@@ -2,10 +2,7 @@ package ru.ac.uniyar.domain.storage
 
 import com.fasterxml.jackson.databind.JsonNode
 import org.http4k.format.Jackson.asJsonArray
-import ru.ac.uniyar.domain.queries.PagedResult
-import ru.ac.uniyar.domain.queries.countPageNumbers
-import ru.ac.uniyar.domain.queries.subListOrEmpty
-import java.util.*
+import java.util.UUID
 
 class InvestmentsRepository(investments: Iterable<Investment> = emptyList()) {
     private val investmentsMap = investments.associateBy { it.id }.toMutableMap()
@@ -37,13 +34,4 @@ class InvestmentsRepository(investments: Iterable<Investment> = emptyList()) {
     }
 
     fun list() = investmentsMap.values.toList()
-
-    fun listInvestments(
-        page: Int = 0
-    ): PagedResult<Investment> {
-        val list = investmentsMap.values.toList()
-        val pagedList = list.subListOrEmpty((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
-
-        return PagedResult(pagedList, countPageNumbers(list.size, PAGE_SIZE))
-    }
 }

@@ -5,7 +5,7 @@ import org.http4k.format.Jackson.asJsonObject
 import org.http4k.format.Jackson.asJsonValue
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
+import java.util.UUID
 
 enum class ProjectSortSettings(val description: String) {
     Normal(""),
@@ -53,9 +53,5 @@ data class User(
 
     fun setId(uuid: UUID): User {
         return this.copy(id = uuid)
-    }
-
-    fun setRoleId(uuid: UUID): User {
-        return this.copy(roleId = uuid)
     }
 }

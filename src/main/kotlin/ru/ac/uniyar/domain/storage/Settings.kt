@@ -9,7 +9,7 @@ class Settings(settingsPath: Path) {
 
     init {
         salt = if (!settingsPath.isReadable()) {
-            System.getenv("SALT") ?: throw SettingFileError("SALT doesn't exist")
+            System.getenv("SALT") ?: throw SettingFileError("SALT env variable doesn't set")
         } else {
             val file = settingsPath.toFile()
             val jsonDocument = file.readText()

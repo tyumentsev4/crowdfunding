@@ -3,7 +3,7 @@ package ru.ac.uniyar.domain.storage
 import com.fasterxml.jackson.databind.JsonNode
 import org.http4k.contract.openapi.OpenAPIJackson.asJsonObject
 import org.http4k.contract.openapi.OpenAPIJackson.asJsonValue
-import java.util.*
+import java.util.UUID
 
 val GUEST_ROLE_ID: UUID = UUID.fromString("09933a60-dac3-11ec-9d64-0242ac120002")
 val REGISTERED_USER_ROLE_ID: UUID = UUID.fromString("1a1515e8-dac3-11ec-9d64-0242ac120002")

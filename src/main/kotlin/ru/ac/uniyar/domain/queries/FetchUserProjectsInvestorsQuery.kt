@@ -2,7 +2,7 @@ package ru.ac.uniyar.domain.queries
 
 import ru.ac.uniyar.domain.storage.InvestmentsRepository
 import ru.ac.uniyar.domain.storage.ProjectsRepository
-import java.util.*
+import java.util.UUID
 
 class FetchUserProjectsInvestorsQuery(
     private val investmentRepository: InvestmentsRepository,

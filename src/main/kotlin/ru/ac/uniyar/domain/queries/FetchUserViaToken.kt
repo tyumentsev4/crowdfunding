@@ -2,7 +2,7 @@ package ru.ac.uniyar.domain.queries
 
 import ru.ac.uniyar.domain.storage.User
 import ru.ac.uniyar.domain.storage.UsersRepository
-import java.util.*
+import java.util.UUID
 
 class FetchUserViaToken(
     private val workerRepository: UsersRepository

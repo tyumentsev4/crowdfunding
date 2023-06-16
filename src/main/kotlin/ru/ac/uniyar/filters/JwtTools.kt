@@ -7,7 +7,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException
 import java.time.LocalDate
 import java.time.Period
 import java.time.ZoneId
-import java.util.*
+import java.util.Date
 
 private const val ACCEPTED_LIFE_IN_SECONDS = 60L
 

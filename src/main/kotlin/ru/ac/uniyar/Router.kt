@@ -8,6 +8,7 @@ import org.http4k.routing.bind
 import org.http4k.routing.routes
 import org.http4k.routing.static
 
+@Suppress("LongParameterList")
 class Router(
     private val showNewUserFormHandler: HttpHandler,
     private val addUserHandler: HttpHandler,

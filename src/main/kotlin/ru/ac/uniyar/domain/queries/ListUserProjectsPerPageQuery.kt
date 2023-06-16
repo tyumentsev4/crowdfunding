@@ -3,7 +3,7 @@ package ru.ac.uniyar.domain.queries
 import ru.ac.uniyar.domain.storage.InvestmentsRepository
 import ru.ac.uniyar.domain.storage.Project
 import ru.ac.uniyar.domain.storage.ProjectsRepository
-import java.util.*
+import java.util.UUID
 
 class ListUserProjectsPerPageQuery(
     private val projectsRepository: ProjectsRepository,

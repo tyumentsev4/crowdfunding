@@ -9,7 +9,7 @@ import ru.ac.uniyar.domain.storage.UsersRepository
 import ru.ac.uniyar.handlers.ProjectFromForm
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
-import java.util.*
+import java.util.UUID
 
 class AddProjectQuery(
     private val projectsRepository: ProjectsRepository,

@@ -6,7 +6,7 @@ import ru.ac.uniyar.domain.storage.InvestmentsRepository
 import ru.ac.uniyar.domain.storage.ProjectsRepository
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
-import java.util.*
+import java.util.UUID
 
 class AddInvestmentQuery(
     private val investmentsRepository: InvestmentsRepository,

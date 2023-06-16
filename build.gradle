@@ -14,6 +14,8 @@ plugins {
     id 'java'
     id 'application'
     id 'distribution'
+    id "io.gitlab.arturbosch.detekt" version "1.19.0"
+    id "org.jlleitschuh.gradle.ktlint" version "10.2.1"
 }
 
 mainClassName = "ru.ac.uniyar.CrowdfundingKt"
@@ -59,10 +61,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
 }
 
-distributions {
-    main {
-        contents {
-            from 'src/main/resources/'
-        }
-    }
+detekt {
+    buildUponDefaultConfig = true // preconfigure defaults
+    config.setFrom("$projectDir/detekt.yml") // point to your custom config defining rules to run, overwriting default behavior
 }

@@ -9,7 +9,7 @@ import ru.ac.uniyar.domain.storage.User
 import ru.ac.uniyar.domain.storage.UsersRepository
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
-import java.util.*
+import java.util.UUID
 
 class AddUserQuery(
     private val usersRepository: UsersRepository,

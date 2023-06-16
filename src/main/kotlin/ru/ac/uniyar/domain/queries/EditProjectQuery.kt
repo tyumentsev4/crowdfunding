@@ -2,7 +2,7 @@ package ru.ac.uniyar.domain.queries
 
 import ru.ac.uniyar.domain.storage.ProjectsRepository
 import ru.ac.uniyar.handlers.ProjectFromForm
-import java.util.*
+import java.util.UUID
 
 class EditProjectQuery(
     private val projectsRepository: ProjectsRepository,

@@ -2,7 +2,7 @@ package ru.ac.uniyar.domain.storage
 
 import com.fasterxml.jackson.databind.JsonNode
 import org.http4k.format.Jackson.asJsonArray
-import java.util.*
+import java.util.UUID
 
 class UsersRepository(entrepreneurs: Iterable<User> = emptyList()) {
     private val usersMap = entrepreneurs.associateBy { it.id }.toMutableMap()

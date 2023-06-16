@@ -4,7 +4,7 @@ import ru.ac.uniyar.domain.storage.InvestmentsRepository
 import ru.ac.uniyar.domain.storage.ProjectSortSettings
 import ru.ac.uniyar.domain.storage.ProjectsRepository
 import ru.ac.uniyar.domain.storage.UsersRepository
-import java.util.*
+import java.util.UUID
 
 class FetchUserQuery(
     private val usersRepository: UsersRepository,

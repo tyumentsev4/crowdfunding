@@ -24,7 +24,7 @@ import ru.ac.uniyar.domain.storage.User
 import ru.ac.uniyar.models.NewProjectVM
 import ru.ac.uniyar.models.template.ContextAwareViewRender
 import java.time.LocalDateTime
-import java.util.*
+import java.util.UUID
 
 class ShowNewProjectFormHandler(
     private val htmlView: ContextAwareViewRender,
