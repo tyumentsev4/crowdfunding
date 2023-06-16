@@ -1,87 +1,18 @@
-image: gradle:alpine
-
-variables:
-  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
-  SERVER_HOST: 51.250.110.75
-  SERVER_SSH_USER: tde
-  DEV_ENDPOINT: http://$DEV_SERVER_HOST:$DEV_APP_PORT
-  IMAGE_NAME: $CI_REGISTRY_IMAGE
-
-before_script:
-  - GRADLE_USER_HOME="$(pwd)/.gradle"
-  - export GRADLE_USER_HOME
-
 stages:
   - build
-  - test
-  - docker
-  - deploy
 
-build:
-  tags:
-    - docker
+kaniko-build-and-push:
+  variables:
+    KANIKO_BUILD_CONTEXT: $CI_PROJECT_DIR/src/app
   stage: build
-  script: gradle --build-cache assemble
-  cache:
-    key: "$CI_COMMIT_REF_NAME"
-    policy: push
-    paths:
-      - build
-      - .gradle
-  artifacts:
-    name: "$CI_COMMIT_REF_NAME"
-    paths:
-      - "build/distributions/*.tar"
-    reports:
-      dotenv: build.env
-
-test:
-  tags:
-    - docker
-  stage: test
-  script: gradle check
-  cache:
-    key: "$CI_COMMIT_REF_NAME"
-    policy: pull
-    paths:
-      - build
-      - .gradle
-
-build_image:
-  stage: docker
-  tags:
-    - shell
-  before_script:
-    - export VERSION=$(cut -d= -f2 gradle.properties)
-    - echo "VERSION=$VERSION" > build.env
-    - tar xf build/distributions/Crowdfunding-$VERSION.tar
-    - mv Crowdfunding-$VERSION Crowdfunding
-    - tree
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
   script:
-    - docker build -t $IMAGE_NAME:$VERSION .
-  artifacts:
-    reports:
-      dotenv: build.env
+    - mkdir -p /kaniko/.docker
 
-push_image:
-  stage: docker
-  tags:
-    - shell
-  needs:
-    - build_image
-  before_script:
-    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-  script:
-    - docker push $IMAGE_NAME:$VERSION
-
-
-deploy:
-  tags:
-    - shell
-  stage: deploy
-  script: 
-    - echo deploying
-
-  environment: 
-    name: development
-    url: $DEV_ENDPOINT
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$(echo -n ${CI_REGISTRY_USER}:${CI_REGISTRY_PASSWORD} | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+    # Build and push the container. To disable push add --no-push
+    - DOCKERFILE_PATH=${DOCKERFILE_PATH:-"$KANIKO_BUILD_CONTEXT/Dockerfile"}
+    - >
+      /kaniko/executor --context $KANIKO_BUILD_CONTEXT --dockerfile $DOCKERFILE_PATH --destination $CI_REGISTRY_IMAGE:1.0.0
