@@ -1,12 +1,14 @@
-# WebApplication
+# Приложение Совместное финансирование
 
-## Package
+## Использованные технологии
+- Kotlin
+- http4k
+- Docker
 ```
 ./gradlew distZip
 ```
 
 ## Run
 ```shell
-$ apt install jo openssl
-$ jo -p salt=$(openssl rand -hex 128) > settings.json
+docker run -d -e SALT=$(openssl rand -hex 128) -p 9000:9000 registry.gitlab.com/tyumentsev4/crowdfunding_kt_lab:1.0.0
 ```
