@@ -30,7 +30,7 @@ class ContextAwareViewRender(
                 throw UnsupportedOperationException("Cannot parse a ViewModel")
             },
             {
-                    viewModel: ViewModel ->
+                viewModel: ViewModel ->
                 templateRenderer(extractContext(request), viewModel)
             }
         ).toLens()
